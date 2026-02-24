@@ -166,28 +166,28 @@
         }
 
         .metric-card.featured {
-            border: 3px solid #ff0000;
+            border: 3px solid #ff6b6b;
             background: #fff5f5;
         }
 
         .metric-card.featured::before {
-            background: #ff0000;
+            background: #ff6b6b;
         }
 
-        .risk-high { color: #ff0000; }
-        .risk-med { color: #ff8800; }
+        .risk-high { color: #ff6b6b; }
+        .risk-med { color: #ffa500; }
 
         .hidden { display: none !important; }
 
         .critique-box {
-            border-left: 4px solid black;
+            border-left: 4px solid #000;
             background: #fafafa;
             padding: 12px;
             margin-bottom: 8px;
         }
 
         .critique-box.featured {
-            border-left: 4px solid #ff0000;
+            border-left: 4px solid #ff6b6b;
             background: #fff5f5;
         }
 
@@ -200,18 +200,21 @@
             margin-right: 4px;
         }
 
-        .badge-red { background: #ff0000; color: white; }
+        .badge-orange { background: #ffa500; color: black; }
 
-        /* SHARE CARD STYLES - Optimized for image export */
+        /* SHARE CARD STYLES */
         #share-card {
             width: 1200px;
+            height: 675px;
             background: #ffffff;
             border: 4px solid #000000;
             padding: 40px;
             font-family: 'JetBrains Mono', monospace;
-            position: absolute;
+            position: fixed;
             left: -9999px;
             top: 0;
+            z-index: -1000;
+            overflow: hidden;
         }
 
         .share-header {
@@ -227,28 +230,37 @@
             font-size: 48px;
             font-weight: 800;
             letter-spacing: -2px;
+            margin: 0;
+        }
+
+        .share-subtitle {
+            font-size: 18px;
+            margin: 5px 0 0 0;
+            opacity: 0.7;
         }
 
         .share-avatar {
-            width: 120px;
-            height: 120px;
+            width: 100px;
+            height: 100px;
             border: 4px solid #000000;
-            filter: grayscale(100%);
+            object-fit: cover;
         }
 
         .share-handle {
-            font-size: 32px;
+            font-size: 36px;
             font-weight: bold;
-            margin-bottom: 10px;
+            margin-bottom: 15px;
+            color: #000;
         }
 
         .share-verdict {
             background: #000000;
             color: #ffffff;
             padding: 20px;
-            font-size: 24px;
+            font-size: 20px;
             line-height: 1.4;
             margin: 20px 0;
+            border: 2px solid #000;
         }
 
         .share-crimes {
@@ -261,47 +273,68 @@
         .share-crime {
             border: 2px solid #000000;
             padding: 15px;
-            background: #fff5f5;
+            background: #f8f8f8;
         }
 
         .share-crime-title {
             font-weight: bold;
-            font-size: 16px;
+            font-size: 14px;
             margin-bottom: 5px;
-            color: #ff0000;
+            color: #ff6b6b;
+            text-transform: uppercase;
         }
 
         .share-crime-text {
-            font-size: 14px;
+            font-size: 13px;
             line-height: 1.3;
+            color: #333;
+        }
+
+        .share-findings {
+            margin: 20px 0;
+            padding: 15px;
+            border: 2px solid #000;
+            background: #f0f0f0;
+        }
+
+        .share-findings-title {
+            font-size: 16px;
+            font-weight: bold;
+            margin: 0 0 10px 0;
+        }
+
+        .share-findings-list {
+            font-size: 13px;
+            line-height: 1.5;
+            margin: 0;
         }
 
         .share-footer {
+            position: absolute;
+            bottom: 40px;
+            left: 40px;
+            right: 40px;
             border-top: 4px solid #000000;
             padding-top: 20px;
-            margin-top: 30px;
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
 
         .share-qr {
-            width: 100px;
-            height: 100px;
+            width: 80px;
+            height: 80px;
             border: 2px solid #000000;
             display: flex;
             align-items: center;
             justify-content: center;
             font-size: 10px;
             text-align: center;
-        }
-
-        .share-branding {
-            text-align: right;
+            background: #fff;
         }
 
         .share-branding h3 {
-            font-size: 32px;
+            font-size: 28px;
             font-weight: 800;
             margin: 0;
         }
@@ -309,20 +342,28 @@
         .share-branding p {
             font-size: 14px;
             margin: 5px 0 0 0;
+            opacity: 0.7;
+        }
+
+        .share-contract {
+            font-size: 12px;
+            color: #ff6b6b;
+            margin-top: 5px;
         }
 
         .stamp {
             position: absolute;
-            top: 40px;
-            right: 40px;
-            border: 6px solid #ff0000;
-            color: #ff0000;
-            font-size: 72px;
+            top: 30px;
+            right: 30px;
+            border: 6px solid #ff6b6b;
+            color: #ff6b6b;
+            font-size: 64px;
             font-weight: 800;
-            padding: 20px 40px;
-            transform: rotate(-15deg);
-            opacity: 0.9;
-            letter-spacing: 10px;
+            padding: 15px 30px;
+            transform: rotate(-12deg);
+            opacity: 0.85;
+            letter-spacing: 8px;
+            z-index: 10;
         }
 
         ::-webkit-scrollbar {
@@ -341,11 +382,13 @@
             overflow: auto;
             border: 2px solid black;
             margin: 20px 0;
+            background: #f5f5f5;
         }
 
         #preview-container img {
             max-width: 100%;
             height: auto;
+            display: block;
         }
 
         .loading-overlay {
@@ -379,7 +422,7 @@
     <!-- Loading Overlay -->
     <div id="loading-overlay" class="loading-overlay hidden">
         <div class="spinner mb-4"></div>
-        <p class="font-mono">GENERATING EXECUTION CARD...</p>
+        <p class="font-mono">GENERATING ROAST CARD...</p>
     </div>
 
     <!-- Header -->
@@ -388,7 +431,7 @@
             <div class="flex items-center gap-3">
                 <div class="w-3 h-3 bg-black animate-pulse"></div>
                 <h1 class="text-2xl md:text-4xl font-bold glitch" data-text="DESTROYX">DESTROYX</h1>
-                <span class="text-xs border border-black px-1 hidden sm:inline">AUTOPSY_V6.0</span>
+                <span class="text-xs border border-black px-1 hidden sm:inline">ROAST_V7.0</span>
             </div>
         </div>
     </header>
@@ -398,9 +441,10 @@
         <!-- Input -->
         <section id="input-section" class="mb-12">
             <div class="text-center mb-8">
-                <h2 class="text-lg md:text-xl font-bold mb-2 uppercase tracking-widest">Public Execution</h2>
+                <h2 class="text-lg md:text-xl font-bold mb-2 uppercase tracking-widest">Friendly Account Roast</h2>
                 <p class="text-sm opacity-70 max-w-lg mx-auto">
-                    Generate shareable destruction card. 12-point forensic analysis. Viral humiliation.
+                    12-point humorous analysis. Self-aware comedy. No malice, just patterns. 
+                    <span class="text-orange-500 font-bold">All in good fun!</span>
                 </p>
             </div>
 
@@ -411,7 +455,7 @@
                         <input 
                             type="text" 
                             id="usernameInput" 
-                            placeholder="vitalikbuterin" 
+                            placeholder="elonmusk" 
                             class="w-full pl-8 pr-4 py-3 border-2 border-black font-bold uppercase focus:outline-none focus:shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] transition-all"
                             onkeypress="if(event.key==='Enter') startAnalysis()"
                         >
@@ -420,22 +464,22 @@
                         onclick="startAnalysis()" 
                         class="btn-primary px-6 py-3 font-bold brutal whitespace-nowrap"
                     >
-                        EXECUTE
+                        ROAST
                     </button>
                 </div>
-                <p id="error-msg" class="text-red-600 text-xs font-bold hidden text-center">[ERROR] VICTIM REQUIRED</p>
+                <p id="error-msg" class="text-red-600 text-xs font-bold hidden text-center">[ERROR] TARGET REQUIRED</p>
             </div>
 
             <!-- Support -->
             <div class="mt-8 text-center">
                 <div class="inline-block border-2 border-black p-4 bg-gray-50">
-                    <p class="text-xs font-bold mb-2 uppercase">Fuel The Machine</p>
+                    <p class="text-xs font-bold mb-2 uppercase">Fuel The Roasts</p>
                     <a 
                         href="https://app.uniswap.org/#/swap?outputCurrency=0x78305eF4299edb868d5fc0bb13B4AAa71cc63ba3&chain=ethereum" 
                         target="_blank"
-                        class="inline-block px-6 py-3 font-bold brutal text-sm bg-red-600 text-white border-2 border-black"
+                        class="inline-block px-6 py-3 font-bold brutal text-sm bg-orange-500 text-white border-2 border-black"
                     >
-                        BUY $DESTROY ↗
+                        BUY TOKEN ↗
                     </a>
                     <p class="text-[10px] mt-2 font-mono opacity-60 break-all">
                         0x78305eF4299edb868d5fc0bb13B4AAa71cc63ba3
@@ -449,7 +493,7 @@
             <div class="terminal p-4 mb-4">
                 <div class="scan-line"></div>
                 <div class="flex justify-between mb-2 border-b-2 border-black pb-2">
-                    <span class="font-bold text-sm">> PERFORMING_PUBLIC_EXECUTION</span>
+                    <span class="font-bold text-sm">> ANALYZING_POSTING_PATTERNS</span>
                     <span id="progress-text" class="font-bold">0%</span>
                 </div>
                 <div id="terminal-logs" class="h-48 overflow-y-auto text-xs font-mono space-y-1"></div>
@@ -476,11 +520,11 @@
                             </div>
                             <div class="text-right">
                                 <div class="text-xs uppercase font-bold mb-1">Social Value</div>
-                                <div id="worth-score" class="text-3xl font-black risk-high">NEGATIVE</div>
+                                <div id="worth-score" class="text-3xl font-black risk-high">QUESTIONABLE</div>
                             </div>
                         </div>
                         <p id="result-bio" class="mt-3 text-sm border-l-2 border-black pl-3 italic opacity-70">
-                            No personality detected.
+                            No bio detected.
                         </p>
                     </div>
                 </div>
@@ -489,7 +533,7 @@
             <!-- Share Buttons -->
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <button onclick="generateShareCard()" class="btn-share px-6 py-4 font-bold brutal text-lg">
-                    📸 GENERATE SHARE CARD
+                    📸 GENERATE ROAST CARD
                 </button>
                 <button onclick="shareTextOnly()" class="btn-primary px-6 py-4 font-bold brutal text-lg">
                     📝 COPY TEXT ONLY
@@ -501,7 +545,7 @@
                 <h3 class="font-bold mb-2">PREVIEW:</h3>
                 <div id="preview-container"></div>
                 <div class="flex gap-2 mt-4">
-                    <a id="download-link" download="destroxy-autopsy.png" class="btn-download px-6 py-3 font-bold brutal text-center flex-1 cursor-pointer">
+                    <a id="download-link" download="destroxy-roast.png" class="btn-download px-6 py-3 font-bold brutal text-center flex-1 cursor-pointer">
                         💾 DOWNLOAD IMAGE
                     </a>
                     <button onclick="shareToX()" class="btn-share px-6 py-3 font-bold brutal flex-1">
@@ -513,79 +557,79 @@
             <!-- THE VERDICT -->
             <div class="bg-black text-white p-6 border-2 border-black">
                 <h3 class="text-lg font-bold mb-4 flex items-center gap-2">
-                    <span class="text-red-500 text-2xl">⚡</span> DEATH_SENTENCE
+                    <span class="text-orange-500 text-2xl">🎯</span> ROAST_SUMMARY
                 </h3>
                 <p id="verdict-text" class="text-xl leading-relaxed font-mono mb-4">
-                    Subject under examination...
+                    Analysis pending...
                 </p>
                 <div id="verdict-tags" class="flex flex-wrap gap-2"></div>
             </div>
 
-            <!-- 12 CRITIQUE SECTIONS -->
+            <!-- 12 FUN ROAST SECTIONS -->
             <div class="metric-card featured p-6">
-                <h3 class="font-bold text-lg mb-4 border-b-2 border-red-600 pb-2 text-red-600">01. IDENTITY_DYSPHORIA</h3>
+                <h3 class="font-bold text-lg mb-4 border-b-2 border-orange-400 pb-2 text-orange-600">01. USERNAME_ARCHAEOLOGY</h3>
                 <div id="critique-identity" class="space-y-3"></div>
             </div>
 
             <div class="metric-card p-6">
-                <h3 class="font-bold text-lg mb-4 border-b-2 border-black pb-2">02. CONTENT_VOMIT_PROTOCOL</h3>
+                <h3 class="font-bold text-lg mb-4 border-b-2 border-black pb-2">02. CONTENT_RECYCLING_PLANT</h3>
                 <div id="critique-content" class="space-y-3"></div>
             </div>
 
             <div class="metric-card p-6">
-                <h3 class="font-bold text-lg mb-4 border-b-2 border-black pb-2">03. ENGAGEMENT_PROSTITUTION</h3>
+                <h3 class="font-bold text-lg mb-4 border-b-2 border-black pb-2">03. ENGAGEMENT_ENTHUSIAST</h3>
                 <div id="critique-engagement" class="space-y-3"></div>
             </div>
 
             <div class="metric-card p-6">
-                <h3 class="font-bold text-lg mb-4 border-b-2 border-black pb-2">04. REPLY_GUY_PATHOLOGY</h3>
+                <h3 class="font-bold text-lg mb-4 border-b-2 border-black pb-2">04. CONVERSATION_PARTICIPANT</h3>
                 <div id="critique-reply" class="space-y-3"></div>
             </div>
 
             <div class="metric-card p-6">
-                <h3 class="font-bold text-lg mb-4 border-b-2 border-black pb-2">05. NETWORK_MIRAGE</h3>
+                <h3 class="font-bold text-lg mb-4 border-b-2 border-black pb-2">05. SOCIAL_CIRCLE_ANALYSIS</h3>
                 <div id="critique-network" class="space-y-3"></div>
             </div>
 
             <div class="metric-card p-6">
-                <h3 class="font-bold text-lg mb-4 border-b-2 border-black pb-2">06. TEMPORAL_DELUSION</h3>
+                <h3 class="font-bold text-lg mb-4 border-b-2 border-black pb-2">06. TIME_INVESTMENT_AUDIT</h3>
                 <div id="critique-time" class="space-y-3"></div>
             </div>
 
             <div class="metric-card p-6">
-                <h3 class="font-bold text-lg mb-4 border-b-2 border-black pb-2">07. VOCABULARY_IMPOVERISHMENT</h3>
+                <h3 class="font-bold text-lg mb-4 border-b-2 border-black pb-2">07. VOCABULARY_DIVERSITY</h3>
                 <div id="critique-vocab" class="space-y-3"></div>
             </div>
 
             <div class="metric-card p-6">
-                <h3 class="font-bold text-lg mb-4 border-b-2 border-black pb-2">08. AUTHENTICITY_BANKRUPTCY</h3>
+                <h3 class="font-bold text-lg mb-4 border-b-2 border-black pb-2">08. AUTHENTICITY_DETECTOR</h3>
                 <div id="critique-authentic" class="space-y-3"></div>
             </div>
 
             <div class="metric-card p-6">
-                <h3 class="font-bold text-lg mb-4 border-b-2 border-black pb-2">09. ATTENTION_EXTRACTION_ECONOMICS</h3>
+                <h3 class="font-bold text-lg mb-4 border-b-2 border-black pb-2">09. ATTENTION_ECONOMICS</h3>
                 <div id="critique-economics" class="space-y-3"></div>
             </div>
 
             <div class="metric-card p-6">
-                <h3 class="font-bold text-lg mb-4 border-b-2 border-black pb-2">10. MEME_LITERACY_FAILURE</h3>
+                <h3 class="font-bold text-lg mb-4 border-b-2 border-black pb-2">10. MEME_CULTURE_AWARENESS</h3>
                 <div id="critique-meme" class="space-y-3"></div>
             </div>
 
             <div class="metric-card p-6">
-                <h3 class="font-bold text-lg mb-4 border-b-2 border-black pb-2">11. PLATFORM_STOCKHOLM_SYNDROME</h3>
+                <h3 class="font-bold text-lg mb-4 border-b-2 border-black pb-2">11. PLATFORM_LOYALTY_PROGRAM</h3>
                 <div id="critique-stockholm" class="space-y-3"></div>
             </div>
 
             <div class="metric-card featured p-6">
-                <h3 class="font-bold text-lg mb-4 border-b-2 border-red-600 pb-2 text-red-600">12. EXISTENTIAL_VOID_SUMMARY</h3>
+                <h3 class="font-bold text-lg mb-4 border-b-2 border-orange-400 pb-2 text-orange-600">12. EXISTENTIAL_SUMMARY</h3>
                 <div id="critique-existential" class="space-y-3"></div>
             </div>
 
             <!-- Actions -->
             <div class="flex flex-col sm:flex-row gap-4 justify-center pt-4 border-t-2 border-black">
                 <button onclick="resetAnalysis()" class="btn-primary px-8 py-3 font-bold brutal">
-                    DESTROY_ANOTHER
+                    ROAST_ANOTHER
                 </button>
             </div>
 
@@ -595,12 +639,12 @@
 
     <!-- HIDDEN SHARE CARD TEMPLATE -->
     <div id="share-card">
-        <div class="stamp">DESTROYED</div>
+        <div class="stamp">ROASTED</div>
         
         <div class="share-header">
             <div>
                 <h1 class="share-title">DESTROYX</h1>
-                <p style="font-size: 18px; margin: 0;">ACCOUNT AUTOPSY REPORT</p>
+                <p class="share-subtitle">FRIENDLY ACCOUNT ROAST REPORT</p>
             </div>
             <img id="share-avatar" src="" alt="" class="share-avatar">
         </div>
@@ -612,34 +656,36 @@
         </div>
 
         <div class="share-crimes" id="share-crimes">
-            <!-- Dynamic crimes -->
+            <!-- Dynamic -->
         </div>
 
-        <div style="margin: 20px 0; padding: 15px; border: 2px solid #000; background: #f5f5f5;">
-            <p style="font-size: 16px; font-weight: bold; margin: 0 0 10px 0;">12-POINT FORENSIC FINDINGS:</p>
-            <p style="font-size: 14px; line-height: 1.6; margin: 0;" id="share-findings">
-                Identity Crisis • Content Vomit • Engagement Prostitution • Reply Guy Pathology • 
-                Network Mirage • Temporal Waste • Vocabulary Poverty • Authenticity Bankruptcy • 
-                Attention Extraction • Meme Failure • Stockholm Syndrome • Existential Void
+        <div class="share-findings">
+            <p class="share-findings-title">12 COMEDY FINDINGS:</p>
+            <p class="share-findings-list">
+                Username Archaeology • Content Recycling • Engagement Enthusiasm • 
+                Conversation Style • Social Circle • Time Audit • Vocabulary Range • 
+                Authenticity Check • Attention Economy • Meme Awareness • 
+                Platform Loyalty • Existential Review
             </p>
         </div>
 
         <div class="share-footer">
             <div class="share-qr">
-                SCAN TO<br>DESTROY<br>SOMEONE
+                SCAN TO<br>ROAST<br>SOMEONE
             </div>
             <div class="share-branding">
                 <h3>DESTROYX</h3>
                 <p>destroix.github.io</p>
-                <p style="font-size: 12px; color: #ff0000; margin-top: 10px;">0x7830...63ba3</p>
+                <p class="share-contract">0x7830...63ba3</p>
             </div>
         </div>
     </div>
 
     <footer class="border-t-2 border-black p-4 mt-12 bg-white">
         <div class="max-w-4xl mx-auto text-center text-xs opacity-60">
-            <p>DESTROYX PUBLIC EXECUTION SYSTEM © 2024</p>
+            <p>DESTROYX FRIENDLY ROAST SYSTEM © 2024</p>
             <p class="mt-1">0x78305eF4299edb868d5fc0bb13B4AAa71cc63ba3</p>
+            <p class="mt-2 text-[10px]">All roasts are satire. Don't take it personally. Or do. We're not your therapist.</p>
         </div>
     </footer>
 
@@ -647,110 +693,123 @@
         let currentData = {};
         let generatedImage = null;
 
+        // FUN, TAJAM, TAPI TIDAK PELECEHAN
         const critiqueDatabase = {
             identity: [
-                "Numeric suffix suggests bot farm origin or identity crisis. Original handle likely suspended for being terrible.",
-                "Underscore abuse detected: 'cool_name_123' format screams 'I wanted the good handle in 2009 but failed'.",
-                "Protest too much: 'Real', 'Official', 'Verified' in handle means compensating for being neither.",
-                "Crypto billboard username: Every tweet is a sales pitch you didn't ask for. Existence = exit liquidity.",
-                "4-letter handle: Either early adopter with nothing left to say, or purchased stolen clout. Both pathetic."
+                "Username has that 'I tried 47 variations before settling' energy. The digital equivalent of a participation trophy.",
+                "Numeric suffix suggests either late to the party or very specific about being the 2,847th person with this name. Commitment: questionable.",
+                "Underscore placement indicates someone who really wanted the clean version but arrived fashionably late to the internet.",
+                "Handle length analysis: Short enough to seem cool, long enough to hide the desperation. Balanced, like a tightrope walker.",
+                "Crypto keywords in username? Bold strategy. Subtle as a billboard, confident as a first-time investor.",
+                "The 'Real' or 'Official' prefix suggests either verification anxiety or a very specific beef with impersonators. Drama potential: high."
             ],
             
             content: [
-                "Threadboi archetype: Takes 20 tweets to say 2 sentences. Confuses length with having thoughts.",
-                "Engagement farmer: 'GM', 'WAGMI', 'Drop your ETH' = digital panhandling. Zero value creation.",
-                "Reply Guy Prime: Cannot create, only respond. Parasitic attachment to viral tweets for visibility.",
-                "Motivational parasite: Repackages burnout as 'grindset'. Selling destruction as lifestyle.",
-                "Crypto shaman: Every observation routed through token price. 'Coffee up 2%' mentality."
+                "Thread enthusiast detected. Takes 15 tweets to say what fits in 2. Efficiency: not found. Engagement farming: suspected.",
+                "'GM' poster. Starts day with obligatory greeting, ends with obligatory goodnight. Routine: admirable. Variation: zero.",
+                "Quote tweet artist. Adds '👀' to news and calls it commentary. Curator? Aggregator? You decide.",
+                "Motivational content distributor. Hustle quotes at 6AM. Sleep schedule: sacrificed. Inspiration: debatable.",
+                "Crypto price commentator. 'Bitcoin is up' followed by 'Bitcoin is down' same day. Weather forecasting: more accurate.",
+                "Self-proclaimed thought leader. Thoughts: present. Leadership: under review. Followers: confused but supportive."
             ],
             
             engagement: [
-                "Like-chasing: Deletes tweets under 10 likes. Self-worth determined by algorithm.",
-                "Tag spam network: Mentions 15 accounts per post. Friendships built on notification harassment.",
-                "Comment infestation: 'First', 'Early', 'Let's go' = auditory pollution. Contribution: zero.",
-                "Ratio anxiety: Checks stats every 4 minutes. Validation addiction: clinical.",
-                "Circular amplification: Same 50 accounts boost each other infinitely. Reach: illusion."
+                "Engagement enthusiast. Likes own tweets for 'algorithm'. Confidence: self-sufficient. Algorithm: unimpressed.",
+                "Tag-heavy poster. Mentions 12 friends per post. Social strategy: notification-based. Friendship: quantified.",
+                "Reply speed demon. Comments within seconds. Refresh rate: concerning. Sleep: optional.",
+                "Ratio participant. Measures success by reply count. Quality conversations: rare. Numbers: comforting.",
+                "Hashtag strategist. Uses 47 tags per post. Visibility: maximized. Dignity: negotiated.",
+                "Engagement bait specialist. 'Drop your favorite color' followed by silence. Community building: one-way street."
             ],
             
             reply: [
-                "Reply velocity: 47 seconds average. Inhuman response time suggests automation or obsession.",
-                "Copy-paste brigade: Same comment across 200 threads. Ctrl+C, Ctrl+V, Ctrl+Dignity.",
-                "Contrarian for clout: Disagrees deliberately. Provokes for profit. Civil discourse: terminated.",
-                "Thread hijacker: Derails conversations to make it about them. Main character syndrome: terminal.",
-                "Reply guy hierarchy: Competes for 'top reply' status under celebrity tweets. Dignity: absent."
+                "Conversation contributor. Has opinion on everything. Expertise: assumed. Research: pending.",
+                "First responder. 'First' comment on viral tweets. Speed: impressive. Contribution: minimal.",
+                "Devil's advocate enthusiast. Disagrees for sport. Contrarian points: accumulated. Friends: reviewing.",
+                "Thread derailer. Makes every conversation about their interests. Topic discipline: absent. Enthusiasm: unchecked.",
+                "Reply guy energy. Visible in every viral thread. Day job: speculated. Screen time: significant.",
+                "Agreement amplifier. 'This' plus emoji. Originality: minimal. Support: unconditional."
             ],
             
             network: [
-                "Follower mirage: 50K followers, 12 likes per tweet. Audience: purchased. Influence: simulated.",
-                "Bot analysis: 60-80% estimated non-human. Talking to mirrors and Russian click farms.",
-                "Influencer cosplay: Acts like thought leader, thinks like affiliate marketer. Authority: fabricated.",
-                "Network health: TERMINAL. Following this account statistically decreases timeline quality.",
-                "Circular pact: Same accounts boost each other. Engagement: incestuous. Organic reach: zero."
+                "Follower-to-following ratio suggests either selective taste or aggressive unfollowing strategy. Mystery: intriguing.",
+                "Social circle analysis: 80% mutual follows. Echo chamber: cozy. New perspectives: filtered.",
+                "Influencer-adjacent. Not quite famous, not quite unknown. Schrödinger's clout: simultaneously there and not.",
+                "Network health: Circular boosting detected. Same 30 accounts like everything. Organic reach: simulated but appreciated.",
+                "Follower quality: Mix of bots, relatives, and confused strangers. Audience: diverse. Engagement: mysterious.",
+                "Growth strategy: Follow-for-follow nostalgia. 2012 tactics in 2024. Dedication: noted. Effectiveness: nostalgic."
             ],
             
             temporal: [
-                "Time audit: 6+ hours daily on platform. Productivity: destroyed. Life: on hold. For digital scraps.",
-                "Posting velocity: 47 tweets/day. Quality threshold: never met. Quantity over quality: always.",
-                "Doomscrolling: Active 2AM-4AM. Sleep: ruined. Mental health: compromised. For infinite scroll.",
-                "Archive analysis: 5 years, 50K tweets, zero achievements. Legacy: cautionary tale.",
-                "Opportunity cost: Hours crafting tweets vs building something real. Regret: pending."
+                "Posting schedule suggests either automation or very flexible employment. Time zones: all of them.",
+                "3AM tweet energy. Either insomniac or international. Sleep schedule: sacrificed for content.",
+                "Archive depth: 5 years, 20,000 posts. Consistency: admirable. Topic evolution: minimal.",
+                "Weekend warrior. Weekday silence, Saturday thread storms. Social battery: rechargeable. Timing: strategic.",
+                "Holiday poster. 'Happy [Holiday]' with generic graphic. Calendar awareness: strong. Originality: seasonal.",
+                "Time investment: Calculated at 4+ hours daily. ROI: questionable. Hobby status: confirmed."
             ],
             
             vocab: [
-                "Vocabulary: 200 unique words across 10K tweets. Communication range: toddler with WiFi.",
-                "Emoji substitution: Uses 🚀 instead of explaining value. Literacy: hieroglyphics.",
-                "Buzzword saturation: 'Synergy', 'Disruption', 'Web3' = verbal confetti. Meaning: evacuated.",
-                "Abbreviation decay: 'ngmi', 'wagmi', 'fud' = linguistic collapse. Complex emotions in 4 letters.",
-                "Quote tweet: 'This' + emoji = entire personality. Critical thinking: outsourced."
+                "Vocabulary range: Specialized. Knows 47 ways to say 'bullish' but struggles with 'contractionary'.",
+                "Emoji-to-word ratio: Balanced. Communication style: hieroglyphic. Shakespeare: spinning.",
+                "Buzzword bingo champion. 'Synergy', 'paradigm', 'disruption' all present. Meaning: diluted. Impression: attempted.",
+                "Abbreviation fluent. 'ngmi', 'wagmi', 'tbh', 'imo' all deployed. Character limit: respected. Clarity: optional.",
+                "Capitalization choices: Creative. Grammar: negotiable. Style: distinctive. Proofreading: sporadic.",
+                "Quote game: Strong. Shares other people's wisdom extensively. Original thought: under development."
             ],
             
             authentic: [
-                "Authenticity bankruptcy: Voice changes per trending topic. Chameleon with no base color.",
-                "Personality rental: Adopts opinions for engagement. Beliefs: transactional. Spine: absent.",
-                "Forced vulnerability: 'Opening up' for likes. Trauma: monetized. Connection: manufactured.",
-                "Brand safety: Deletes controversial tweets. Courage: zero. Legacy: sanitized nothingness.",
-                "Influencer accent: Uses 'space' and 'ecosystem' unnaturally. Performance: always on."
+                "Brand consistency: Maintained. Personality: curated. Behind-the-scenes: speculated.",
+                "Authenticity meter: Fluctuates. Real self vs online self: Venn diagram with overlap TBD.",
+                "Vulnerability posts: Scheduled. 'Opening up' followed by promo. Timing: convenient. Sincerity: debated.",
+                "Opinion alignment: Trend-responsive. Yesterday's take: different. Growth: claimed. Consistency: evolving.",
+                "Personal brand: Polished. Rough edges: sanded. Relatability: manufactured but effective.",
+                "Real talk moments: Annual. Usually November or during algorithm changes. Sincerity: performance art."
             ],
             
             economics: [
-                "Attention extraction: You are the product being sold. Dignity: collateral damage.",
-                "Platform sharecropping: Creates content for free, platform profits. Digital serfdom.",
-                "Influencer complex: Selling courses on success never achieved. Pyramid scheme of clout.",
-                "Sponsorship desperation: Promotes products never used. Integrity: negotiable. Price: low.",
-                "Engagement ROI: 10K hours invested, $12.47 returned. Hustle culture: exposed."
+                "Content-for-free model. Platform profits, user posts. Business model: volunteering with extra steps.",
+                "Influencer aspiration: Evident. Sponsorship count: minimal. Hustle: recognized. Breakthrough: pending.",
+                "Link-in-bio economy. Traffic direction: constant. Conversion rate: classified. Hope: eternal.",
+                "Engagement farming: Hobby level. Professional upgrade: considered. Current status: enthusiastic amateur.",
+                "Monetization strategy: Unclear. Passion project? Side hustle? Main character energy without main character budget.",
+                "Time-to-reward ratio: Astronomical. Persistence: admirable. Business plan: optimistic."
             ],
             
             meme: [
-                "Meme comprehension: Dead on arrival. Explains jokes in replies. Humor: surgically removed.",
-                "Format abuse: Uses 2020 templates in 2024. Cultural awareness: zero. Relevance: expired.",
-                "Reaction dependency: Cannot express emotion without GIF. Emotional intelligence: outsourced.",
-                "Meme misinterpretation: Takes satire literally. Context: lost. Irony: undetected.",
-                "Forced creation: 'How do you do, fellow kids' energy. Viral attempt #47: failed."
+                "Meme timing: Sometimes early, usually late. Cultural awareness: developing. Format freshness: variable.",
+                "Reaction GIF dependency: High. Emotional expression: outsourced to pop culture references.",
+                "Meme creation attempts: Brave. Viral success rate: classified. Effort: acknowledged.",
+                "Trend participation: Enthusiastic. Understanding of trend: partial. FOMO: confirmed.",
+                "Niche reference game: Strong in specific areas. General audience appeal: selective. Inside jokes: abundant.",
+                "Meme literacy: Functional. Can identify formats. Original adaptation: work in progress."
             ],
             
             stockholm: [
-                "Platform Stockholm: Complains about X daily, posts 47 times daily. Abuse: acknowledged.",
-                "Algorithmic submission: Posts at 'optimal times' like livestock. Autonomy: surrendered.",
-                "Verification anxiety: Blue checkmark as personality substitute. Status: purchased.",
-                "Update rage cycle: Hates every change, adapts immediately. Resistance: performative.",
-                "Sharecropping loyalty: Defends platform that exploits them. Escape plan: none."
+                "Platform loyalty: Unwavering. Complaints: frequent. Departure threats: annual. Still here: confirmed.",
+                "Algorithm understanding: Advanced. Gaming strategies: implemented. Satisfaction: complicated.",
+                "Feature adaptation: Immediate. Every update: complained about, then mastered. Flexibility: reluctant.",
+                "Verification status: Desired. Blue check significance: overestimated. Self-worth: temporarily attached.",
+                "Platform migration threats: Regular. Alternative platforms: joined briefly. Return: inevitable.",
+                "Digital homesteading. Built on rented land. Eviction risk: low. Ownership: zero. Investment: emotional."
             ],
             
             existential: [
-                "Existential audit: 10 years, 100K posts, zero impact. Legacy: digital dust.",
-                "Mortality denial: Believes tweets immortalize. Reality: server costs. Forgotten: inevitable.",
-                "Contribution analysis: Net subtractor from collective intelligence. Silence: service.",
-                "Digital epitaph: 'Here lies [user]. Posted a lot. Said nothing. Left no mark.'",
-                "Final assessment: Everything wrong with attention economy. Value: cautionary tale only."
+                "Digital footprint: Extensive. Legacy projection: uncertain. Server costs: someone else's problem.",
+                "Archive anxiety: Present. Delete history? Preserve everything? Middle ground: selective curation.",
+                "Contribution analysis: Volume: high. Impact: debatable. Intent: good. Result: mixed.",
+                "Online immortality belief: Moderate. Reality: server bills. Permanence: until next platform pivot.",
+                "Digital epitaph potential: 'Posted consistently.' Obituary: optimized for SEO. Memory: cloud-based.",
+                "Existential summary: Here for a good time, not a long time. Long time: also possible. Time will tell."
             ]
         };
 
         const verdicts = [
-            "This account is a monument to digital futility. Every tweet a cry for relevance in a void of achievement. Unfollow, block, forget.",
-            "Advanced parasitic entity. Extracts attention without contributing value. Existence justified only by ad revenue to platform.",
-            "Manufactured importance with zero foundation. Handle purchased, followers bought, opinions recycled. Originality: extinct.",
-            "Quantity without quality. 50,000 tweets, zero thoughts worth reading. Digital equivalent of spam folder that learned to type.",
-            "Everything wrong with social media, concentrated. Extraction economy participant, authenticity bankrupt, attention addicted."
+            "ROAST CONCLUSION: This account is a delightful mess of good intentions, questionable timing, and algorithmic optimism. Would invite to dinner party, would mute during work hours.",
+            "FORENSIC FINDINGS: Enthusiastic participant in the attention economy. Extraction level: minimal. Contribution: attempting. Improvement trajectory: possible.",
+            "BEHAVIORAL ANALYSIS: Classic 'trying their best in a weird digital landscape' energy. Relatable, occasionally exhausting, ultimately harmless.",
+            "PATTERN RECOGNITION: Human being with internet access and opinions. Consistency: sporadic. Authenticity: attempted. Growth: implied.",
+            "FINAL ASSESSMENT: Perfectly normal person in perfectly abnormal digital environment. Coping mechanisms: visible. Malice: absent. Entertainment value: moderate to high."
         ];
 
         async function startAnalysis() {
@@ -766,10 +825,10 @@
             document.getElementById('results-section').classList.add('hidden');
             document.getElementById('preview-wrapper').classList.add('hidden');
             
-            await performAutopsy(username);
+            await performAnalysis(username);
         }
 
-        async function performAutopsy(username) {
+        async function performAnalysis(username) {
             const logs = document.getElementById('terminal-logs');
             const progressFill = document.getElementById('progress-fill');
             const progressText = document.getElementById('progress-text');
@@ -785,35 +844,34 @@
             };
 
             const steps = [
-                `Initializing public execution for @${username}...`,
-                "Extracting avatar for evidence file...",
-                "Analyzing handle linguistics...",
-                "Scanning bio for compensation indicators...",
-                "Detecting content archetype...",
-                "Mapping engagement prostitution...",
-                "Auditing reply guy behavior...",
-                "Analyzing network mirage...",
-                "Calculating temporal waste...",
-                "Scanning vocabulary impoverishment...",
-                "Testing authenticity bankruptcy...",
-                "Analyzing attention extraction...",
-                "Evaluating meme literacy...",
-                "Diagnosing platform Stockholm...",
-                "Compiling existential void...",
-                "Preparing viral destruction card..."
+                `Initializing roast protocol for @${username}...`,
+                "Extracting avatar for evidence...",
+                "Analyzing username creativity...",
+                "Scanning bio for personality clues...",
+                "Detecting content patterns...",
+                "Mapping social behaviors...",
+                "Auditing conversation style...",
+                "Analyzing network composition...",
+                "Calculating time investment...",
+                "Scanning vocabulary range...",
+                "Testing authenticity levels...",
+                "Evaluating meme awareness...",
+                "Diagnosing platform loyalty...",
+                "Compiling existential summary...",
+                "Preparing shareable roast card..."
             ];
 
             let progress = 0;
             
             for (let i = 0; i < steps.length; i++) {
-                await new Promise(r => setTimeout(r, 200));
+                await new Promise(r => setTimeout(r, 180));
                 addLog(steps[i]);
                 progress = ((i + 1) / steps.length) * 100;
                 progressFill.style.width = progress + '%';
                 progressText.textContent = Math.floor(progress) + '%';
             }
 
-            await new Promise(r => setTimeout(r, 400));
+            await new Promise(r => setTimeout(r, 300));
             showResults(username);
         }
 
@@ -825,21 +883,21 @@
             const random = (mod) => Math.abs((Math.sin(seed++) * 10000) % mod);
             
             const bioTemplates = [
-                "Web3 enthusiast | Building the future | DYOR",
-                "Crypto investor | Alpha caller | Not financial advice",
-                "Founder | Investor | Helping others win",
-                "GM ☀️ | Coffee addict | Building in public",
-                "Professional reply guy | Thoughts my own"
+                "Building things | Coffee enthusiast | Opinions my own",
+                "Crypto curious | Learning in public | DMs open",
+                "Founder-ish | Product person | Sometimes right",
+                "GM ☀️ | Building | Probably tweeting too much",
+                "Just here for the memes and occasional insights"
             ];
             const bio = bioTemplates[random(bioTemplates.length)];
             
-            // Save current data
+            // CRITICAL: Save all data for share card
             currentData = {
-                username,
-                bio,
+                username: username,
+                bio: bio,
                 avatar: `https://unavatar.io/twitter/${username}`,
-                seed,
-                random
+                seed: seed,
+                random: random
             };
             
             // Basic Info
@@ -848,23 +906,24 @@
             document.getElementById('result-avatar').src = currentData.avatar;
             document.getElementById('result-bio').textContent = `"${bio}"`;
             
-            // Worth Score
+            // Worth Score (FUN, NOT MEAN)
             const worthValue = random(100);
             const worthScore = document.getElementById('worth-score');
-            worthScore.textContent = worthValue > 80 ? "PARASITIC" : worthValue > 50 ? "WORTHLESS" : "QUESTIONABLE";
+            const worthLabels = ["ENTERTAINING", "QUESTIONABLE", "FASCINATING", "UNIQUE", "COMMITTED"];
+            worthScore.textContent = worthLabels[random(worthLabels.length)];
             worthScore.className = "text-3xl font-black " + (worthValue > 50 ? "risk-high" : "risk-med");
             
             // Verdict
             const verdict = verdicts[random(verdicts.length)];
             document.getElementById('verdict-text').textContent = verdict;
             
-            // Tags
+            // Tags (FUN, NOT HARSH)
             const tags = document.getElementById('verdict-tags');
             tags.innerHTML = '';
-            const tagList = ["Attention Extractor", "Content Recycler", "Engagement Farmer", "Reply Guy Prime", "Network Parasite", "Authenticity Bankrupt"];
-            tagList.sort(() => 0.5 - random(1)).slice(0, 4).forEach(tag => {
+            const tagList = ["Enthusiastic Poster", "Algorithm Optimist", "Thread Enthusiast", "Engagement Explorer", "Digital Pioneer", "Content Creator"];
+            tagList.sort(() => 0.5 - random(1)).slice(0, 3).forEach(tag => {
                 const span = document.createElement('span');
-                span.className = "badge badge-red";
+                span.className = "badge badge-orange";
                 span.textContent = tag.toUpperCase();
                 tags.appendChild(span);
             });
@@ -883,7 +942,7 @@
             populateCritique('critique-stockholm', critiqueDatabase.stockholm, random, false);
             populateCritique('critique-existential', critiqueDatabase.existential, random, true);
             
-            // Prepare share card data
+            // PREPARE SHARE CARD IMMEDIATELY
             prepareShareCardData(username, verdict, bio, random);
             
             document.getElementById('results-section').scrollIntoView({ behavior: 'smooth' });
@@ -903,17 +962,24 @@
         }
 
         function prepareShareCardData(username, verdict, bio, random) {
-            // Set share card content
+            // CRITICAL FIX: Set all share card elements
             document.getElementById('share-handle').textContent = '@' + username;
-            document.getElementById('share-verdict').textContent = verdict.substring(0, 200) + '...';
+            document.getElementById('share-verdict').textContent = verdict.substring(0, 180) + '...';
             document.getElementById('share-avatar').src = currentData.avatar;
             
-            // Select top 4 crimes
+            // Select 4 fun crimes
+            const allCritiques = [
+                ...critiqueDatabase.identity.slice(0, 2),
+                ...critiqueDatabase.content.slice(0, 2),
+                ...critiqueDatabase.engagement.slice(0, 2),
+                ...critiqueDatabase.network.slice(0, 2)
+            ];
+            
             const crimes = [
-                { title: "IDENTITY CRISIS", text: critiqueDatabase.identity[random(critiqueDatabase.identity.length)] },
-                { title: "CONTENT VOMIT", text: critiqueDatabase.content[random(critiqueDatabase.content.length)] },
-                { title: "ENGAGEMENT FARMING", text: critiqueDatabase.engagement[random(critiqueDatabase.engagement.length)] },
-                { title: "NETWORK MIRAGE", text: critiqueDatabase.network[random(critiqueDatabase.network.length)] }
+                { title: "USERNAME CHOICE", text: critiqueDatabase.identity[random(critiqueDatabase.identity.length)] },
+                { title: "CONTENT STYLE", text: critiqueDatabase.content[random(critiqueDatabase.content.length)] },
+                { title: "SOCIAL STRATEGY", text: critiqueDatabase.engagement[random(critiqueDatabase.engagement.length)] },
+                { title: "NETWORK HEALTH", text: critiqueDatabase.network[random(critiqueDatabase.network.length)] }
             ];
             
             const crimesContainer = document.getElementById('share-crimes');
@@ -922,24 +988,33 @@
                 crimesContainer.innerHTML += `
                     <div class="share-crime">
                         <div class="share-crime-title">${crime.title}</div>
-                        <div class="share-crime-text">${crime.text.substring(0, 80)}...</div>
+                        <div class="share-crime-text">${crime.text.substring(0, 90)}...</div>
                     </div>
                 `;
             });
         }
 
         async function generateShareCard() {
+            if (!currentData.username) {
+                alert('Please analyze an account first!');
+                return;
+            }
+
             const loading = document.getElementById('loading-overlay');
             loading.classList.remove('hidden');
             
             try {
                 const card = document.getElementById('share-card');
                 
-                // Make sure image is loaded
-                await new Promise((resolve) => {
-                    const img = document.getElementById('share-avatar');
-                    if (img.complete) resolve();
-                    else img.onload = resolve;
+                // Force refresh avatar
+                const avatar = document.getElementById('share-avatar');
+                avatar.src = currentData.avatar + '?t=' + Date.now();
+                
+                // Wait for image load
+                await new Promise((resolve, reject) => {
+                    avatar.onload = resolve;
+                    avatar.onerror = resolve; // Continue even if error
+                    setTimeout(resolve, 500); // Timeout fallback
                 });
                 
                 // Generate canvas
@@ -949,74 +1024,81 @@
                     allowTaint: true,
                     backgroundColor: '#ffffff',
                     width: 1200,
-                    height: 675
+                    height: 675,
+                    logging: false
                 });
                 
                 generatedImage = canvas.toDataURL('image/png');
                 
                 // Show preview
                 const previewContainer = document.getElementById('preview-container');
-                previewContainer.innerHTML = `<img src="${generatedImage}" alt="Share Card">`;
+                previewContainer.innerHTML = `<img src="${generatedImage}" alt="Roast Card for @${currentData.username}">`;
                 
                 // Set download link
                 const downloadLink = document.getElementById('download-link');
                 downloadLink.href = generatedImage;
-                downloadLink.download = `destroxy-${currentData.username}.png`;
+                downloadLink.download = `destroxy-${currentData.username}-roast.png`;
                 
                 document.getElementById('preview-wrapper').classList.remove('hidden');
                 document.getElementById('preview-wrapper').scrollIntoView({ behavior: 'smooth' });
                 
             } catch (error) {
-                console.error('Error generating card:', error);
-                alert('Error generating image. Try again.');
+                console.error('Error:', error);
+                alert('Error generating image. Please try again!');
             } finally {
                 loading.classList.add('hidden');
             }
         }
 
         function shareTextOnly() {
-            const text = `🚨 AUTOPSY RESULTS: @${currentData.username} 🚨
+            if (!currentData.username) {
+                alert('Please analyze an account first!');
+                return;
+            }
+
+            const text = `🎯 FRIENDLY ROAST: @${currentData.username} 🎯
 
 "${currentData.bio}"
 
 📊 VERDICT: ${document.getElementById('verdict-text').textContent.substring(0, 100)}...
 
-🔴 12-POINT DESTRUCTION:
-• Identity: Compensating hard
-• Content: Algorithmic desperation  
-• Engagement: Digital panhandling
-• Network: 60% bot followers
-• Time wasted: 1000+ hours
-• Vocabulary: 200 unique words
+🔍 12-POINT ANALYSIS:
+• Username: Creative choices were made
+• Content: Enthusiastically consistent  
+• Engagement: Socially ambitious
+• Network: Eclectic and mysterious
+• Time: Invested significantly
+• Vocab: Specialized terminology
 
-Get destroyed too 👇
+Get roasted too 👇
 destroix.github.io
 
-#DESTROYX #AccountAutopsy @${currentData.username}`;
+@${currentData.username} #DESTROYX #FriendlyRoast`;
             
             navigator.clipboard.writeText(text).then(() => {
-                alert('TEXT COPIED! PASTE INTO X/TWITTER.');
+                alert('ROAST TEXT COPIED! Paste into X/Twitter.');
             });
         }
 
         function shareToX() {
             if (!generatedImage) {
-                alert('Generate image first!');
+                alert('Generate image first, then download and attach!');
                 return;
             }
             
-            // Download image first, then open X
+            // Download image
             const link = document.createElement('a');
-            link.download = `destroxy-${currentData.username}.png`;
+            link.download = `destroxy-${currentData.username}-roast.png`;
             link.href = generatedImage;
             link.click();
             
+            // Open X compose
             setTimeout(() => {
-                const text = encodeURIComponent(`I just got publicly executed by DESTROYX 💀
+                const text = encodeURIComponent(`Just got a friendly roast from DESTROYX 😂
 
-@${currentData.username} autopsy results are BRUTAL.
+@${currentData.username} analysis is surprisingly accurate.
 
-Get destroyed too 👇`);
+Get yours 👇`);
                 window.open(`https://twitter.com/intent/tweet?text=${text}`, '_blank');
             }, 500);
         }
@@ -1027,6 +1109,7 @@ Get destroyed too 👇`);
             document.getElementById('preview-wrapper').classList.add('hidden');
             document.getElementById('usernameInput').value = '';
             generatedImage = null;
+            currentData = {};
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
