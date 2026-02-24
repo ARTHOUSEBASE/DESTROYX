@@ -244,6 +244,7 @@
             height: 100px;
             border: 4px solid #000000;
             object-fit: cover;
+            background: #f0f0f0;
         }
 
         .share-handle {
@@ -415,6 +416,16 @@
         @keyframes spin {
             to { transform: rotate(360deg); }
         }
+
+        .avatar-fallback {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 24px;
+        }
     </style>
 </head>
 <body>
@@ -510,7 +521,7 @@
             <div class="border-2 border-black bg-white brutal">
                 <div class="flex flex-col md:flex-row">
                     <div class="w-full md:w-32 h-32 bg-gray-200 border-b-2 md:border-b-0 md:border-r-2 border-black flex items-center justify-center overflow-hidden">
-                        <img id="result-avatar" src="" alt="Profile" class="w-full h-full object-cover grayscale">
+                        <img id="result-avatar" src="" alt="Profile" class="w-full h-full object-cover grayscale" onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%22100%22 height=%22100%22><rect fill=%22%23667eea%22 width=%22100%22 height=%22100%22/><text fill=%22white%22 x=%2250%22 y=%2255%22 text-anchor=%22middle%22 font-size=%2240%22>?</text></svg>'">
                     </div>
                     <div class="p-4 flex-grow">
                         <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
@@ -690,10 +701,15 @@
     </footer>
 
     <script>
-        let currentData = {};
-        let generatedImage = null;
+        // CRITICAL FIX: Use global variable with immediate assignment
+        window.currentData = {
+            username: '',
+            bio: '',
+            avatar: '',
+            verdict: '',
+            seed: 0
+        };
 
-        // FUN, TAJAM, TAPI TIDAK PELECEHAN
         const critiqueDatabase = {
             identity: [
                 "Username has that 'I tried 47 variations before settling' energy. The digital equivalent of a participation trophy.",
@@ -891,8 +907,8 @@
             ];
             const bio = bioTemplates[random(bioTemplates.length)];
             
-            // CRITICAL: Save all data for share card
-            currentData = {
+            // CRITICAL FIX: Use window.currentData and set immediately
+            window.currentData = {
                 username: username,
                 bio: bio,
                 avatar: `https://unavatar.io/twitter/${username}`,
@@ -900,13 +916,16 @@
                 random: random
             };
             
-            // Basic Info
+            // Also save to localStorage as backup
+            localStorage.setItem('destroxy_last_analysis', JSON.stringify(window.currentData));
+            
+            // Basic Info - UPDATE DOM IMMEDIATELY
             document.getElementById('result-name').textContent = username.toUpperCase();
             document.getElementById('result-handle').textContent = '@' + username;
-            document.getElementById('result-avatar').src = currentData.avatar;
+            document.getElementById('result-avatar').src = window.currentData.avatar;
             document.getElementById('result-bio').textContent = `"${bio}"`;
             
-            // Worth Score (FUN, NOT MEAN)
+            // Worth Score
             const worthValue = random(100);
             const worthScore = document.getElementById('worth-score');
             const worthLabels = ["ENTERTAINING", "QUESTIONABLE", "FASCINATING", "UNIQUE", "COMMITTED"];
@@ -916,8 +935,9 @@
             // Verdict
             const verdict = verdicts[random(verdicts.length)];
             document.getElementById('verdict-text').textContent = verdict;
+            window.currentData.verdict = verdict; // Save for share
             
-            // Tags (FUN, NOT HARSH)
+            // Tags
             const tags = document.getElementById('verdict-tags');
             tags.innerHTML = '';
             const tagList = ["Enthusiastic Poster", "Algorithm Optimist", "Thread Enthusiast", "Engagement Explorer", "Digital Pioneer", "Content Creator"];
@@ -943,7 +963,7 @@
             populateCritique('critique-existential', critiqueDatabase.existential, random, true);
             
             // PREPARE SHARE CARD IMMEDIATELY
-            prepareShareCardData(username, verdict, bio, random);
+            prepareShareCardData();
             
             document.getElementById('results-section').scrollIntoView({ behavior: 'smooth' });
         }
@@ -961,19 +981,22 @@
             });
         }
 
-        function prepareShareCardData(username, verdict, bio, random) {
-            // CRITICAL FIX: Set all share card elements
-            document.getElementById('share-handle').textContent = '@' + username;
-            document.getElementById('share-verdict').textContent = verdict.substring(0, 180) + '...';
-            document.getElementById('share-avatar').src = currentData.avatar;
+        function prepareShareCardData() {
+            // CRITICAL FIX: Use window.currentData
+            const data = window.currentData;
+            
+            if (!data || !data.username) {
+                console.error('No data available');
+                return;
+            }
+            
+            // Set share card elements
+            document.getElementById('share-handle').textContent = '@' + data.username;
+            document.getElementById('share-verdict').textContent = (data.verdict || verdicts[0]).substring(0, 180) + '...';
+            document.getElementById('share-avatar').src = data.avatar;
             
             // Select 4 fun crimes
-            const allCritiques = [
-                ...critiqueDatabase.identity.slice(0, 2),
-                ...critiqueDatabase.content.slice(0, 2),
-                ...critiqueDatabase.engagement.slice(0, 2),
-                ...critiqueDatabase.network.slice(0, 2)
-            ];
+            const random = data.random || ((mod) => Math.abs((Math.sin(data.seed) * 10000) % mod));
             
             const crimes = [
                 { title: "USERNAME CHOICE", text: critiqueDatabase.identity[random(critiqueDatabase.identity.length)] },
@@ -992,10 +1015,28 @@
                     </div>
                 `;
             });
+            
+            console.log('Share card prepared for:', data.username);
         }
 
         async function generateShareCard() {
-            if (!currentData.username) {
+            // CRITICAL FIX: Check window.currentData first, then localStorage
+            let data = window.currentData;
+            
+            if (!data || !data.username) {
+                // Try to restore from localStorage
+                const saved = localStorage.getItem('destroxy_last_analysis');
+                if (saved) {
+                    try {
+                        data = JSON.parse(saved);
+                        window.currentData = data;
+                    } catch (e) {
+                        console.error('Failed to restore data');
+                    }
+                }
+            }
+            
+            if (!data || !data.username) {
                 alert('Please analyze an account first!');
                 return;
             }
@@ -1006,16 +1047,18 @@
             try {
                 const card = document.getElementById('share-card');
                 
-                // Force refresh avatar
+                // Force refresh avatar with cache buster
                 const avatar = document.getElementById('share-avatar');
-                avatar.src = currentData.avatar + '?t=' + Date.now();
+                avatar.src = data.avatar + '?t=' + Date.now();
                 
-                // Wait for image load
-                await new Promise((resolve, reject) => {
-                    avatar.onload = resolve;
-                    avatar.onerror = resolve; // Continue even if error
-                    setTimeout(resolve, 500); // Timeout fallback
-                });
+                // Wait for image load with timeout
+                await Promise.race([
+                    new Promise((resolve) => {
+                        avatar.onload = resolve;
+                        avatar.onerror = resolve;
+                    }),
+                    new Promise((resolve) => setTimeout(resolve, 1000))
+                ]);
                 
                 // Generate canvas
                 const canvas = await html2canvas(card, {
@@ -1028,16 +1071,19 @@
                     logging: false
                 });
                 
-                generatedImage = canvas.toDataURL('image/png');
+                const generatedImage = canvas.toDataURL('image/png');
                 
                 // Show preview
                 const previewContainer = document.getElementById('preview-container');
-                previewContainer.innerHTML = `<img src="${generatedImage}" alt="Roast Card for @${currentData.username}">`;
+                previewContainer.innerHTML = `<img src="${generatedImage}" alt="Roast Card for @${data.username}">`;
                 
                 // Set download link
                 const downloadLink = document.getElementById('download-link');
                 downloadLink.href = generatedImage;
-                downloadLink.download = `destroxy-${currentData.username}-roast.png`;
+                downloadLink.download = `destroxy-${data.username}-roast.png`;
+                
+                // Store for share function
+                window.generatedImage = generatedImage;
                 
                 document.getElementById('preview-wrapper').classList.remove('hidden');
                 document.getElementById('preview-wrapper').scrollIntoView({ behavior: 'smooth' });
@@ -1051,16 +1097,29 @@
         }
 
         function shareTextOnly() {
-            if (!currentData.username) {
-                alert('Please analyze an account first!');
-                return;
+            // CRITICAL FIX: Check data properly
+            let data = window.currentData;
+            
+            if (!data || !data.username) {
+                const saved = localStorage.getItem('destroxy_last_analysis');
+                if (saved) {
+                    try {
+                        data = JSON.parse(saved);
+                    } catch (e) {
+                        alert('Please analyze an account first!');
+                        return;
+                    }
+                } else {
+                    alert('Please analyze an account first!');
+                    return;
+                }
             }
 
-            const text = `🎯 FRIENDLY ROAST: @${currentData.username} 🎯
+            const text = `🎯 FRIENDLY ROAST: @${data.username} 🎯
 
-"${currentData.bio}"
+"${data.bio}"
 
-📊 VERDICT: ${document.getElementById('verdict-text').textContent.substring(0, 100)}...
+📊 VERDICT: ${(data.verdict || verdicts[0]).substring(0, 100)}...
 
 🔍 12-POINT ANALYSIS:
 • Username: Creative choices were made
@@ -1073,7 +1132,7 @@
 Get roasted too 👇
 destroix.github.io
 
-@${currentData.username} #DESTROYX #FriendlyRoast`;
+@${data.username} #DESTROYX #FriendlyRoast`;
             
             navigator.clipboard.writeText(text).then(() => {
                 alert('ROAST TEXT COPIED! Paste into X/Twitter.');
@@ -1081,22 +1140,22 @@ destroix.github.io
         }
 
         function shareToX() {
-            if (!generatedImage) {
+            if (!window.generatedImage) {
                 alert('Generate image first, then download and attach!');
                 return;
             }
             
             // Download image
             const link = document.createElement('a');
-            link.download = `destroxy-${currentData.username}-roast.png`;
-            link.href = generatedImage;
+            link.download = `destroxy-${window.currentData.username || 'user'}-roast.png`;
+            link.href = window.generatedImage;
             link.click();
             
             // Open X compose
             setTimeout(() => {
                 const text = encodeURIComponent(`Just got a friendly roast from DESTROYX 😂
 
-@${currentData.username} analysis is surprisingly accurate.
+@${window.currentData.username || 'someone'} analysis is surprisingly accurate.
 
 Get yours 👇`);
                 window.open(`https://twitter.com/intent/tweet?text=${text}`, '_blank');
@@ -1108,10 +1167,25 @@ Get yours 👇`);
             document.getElementById('input-section').classList.remove('hidden');
             document.getElementById('preview-wrapper').classList.add('hidden');
             document.getElementById('usernameInput').value = '';
-            generatedImage = null;
-            currentData = {};
+            window.currentData = { username: '', bio: '', avatar: '', verdict: '', seed: 0 };
+            window.generatedImage = null;
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
+
+        // Restore last analysis on page load
+        window.addEventListener('load', () => {
+            const saved = localStorage.getItem('destroxy_last_analysis');
+            if (saved) {
+                try {
+                    const data = JSON.parse(saved);
+                    if (data.username) {
+                        console.log('Previous analysis found for:', data.username);
+                    }
+                } catch (e) {
+                    console.error('Failed to parse saved data');
+                }
+            }
+        });
 
         document.getElementById('usernameInput').focus();
     </script>
