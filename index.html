@@ -3,73 +3,364 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DESTROYX | Simple Roast</title>
+    <title>DESTROYX // ACCOUNT_AUTOPSY.exe</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700;800&display=swap" rel="stylesheet">
     <style>
-        body {
-            background: #ffffff;
-            color: #000000;
-            font-family: 'JetBrains Mono', monospace;
+        :root {
+            --bg: #ffffff;
+            --fg: #000000;
+            --accent: #0000ff;
+        }
+        
+        * { 
+            box-sizing: border-box;
             margin: 0;
+            padding: 0;
+        }
+        
+        body {
+            background: var(--bg);
+            color: var(--fg);
+            font-family: 'JetBrains Mono', monospace;
             min-height: 100vh;
+            line-height: 1.6;
         }
-        .brutal {
-            border: 2px solid black;
-            box-shadow: 4px 4px 0px 0px black;
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
         }
-        .btn {
-            background: black;
-            color: white;
-            border: 2px solid black;
-            padding: 12px 24px;
+
+        /* Header */
+        .header {
+            border: 3px solid var(--fg);
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 6px 6px 0px 0px var(--fg);
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            letter-spacing: -2px;
+        }
+
+        .header .meta {
+            font-size: 0.75rem;
+            opacity: 0.7;
+            margin-top: 8px;
+            border-top: 2px solid var(--fg);
+            padding-top: 8px;
+        }
+
+        .blink {
+            animation: blink 1s step-end infinite;
+        }
+
+        @keyframes blink {
+            50% { opacity: 0; }
+        }
+
+        /* Input Section */
+        .input-section {
+            border: 3px solid var(--fg);
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 6px 6px 0px 0px var(--fg);
+        }
+
+        .input-group {
+            display: flex;
+            gap: 10px;
+        }
+
+        input[type="text"] {
+            flex: 1;
+            background: #fff;
+            border: 3px solid var(--fg);
+            color: var(--fg);
+            padding: 12px 16px;
+            font-family: inherit;
+            font-size: 1rem;
+            outline: none;
             font-weight: bold;
+        }
+
+        input[type="text"]:focus {
+            background: #f5f5f5;
+        }
+
+        input[type="text"]::placeholder {
+            color: #999;
+        }
+
+        /* Buttons */
+        .btn {
+            background: #fff;
+            border: 3px solid var(--fg);
+            color: var(--fg);
+            padding: 12px 24px;
+            font-family: inherit;
+            font-weight: 800;
             cursor: pointer;
-            display: inline-block;
-            text-decoration: none;
+            text-transform: uppercase;
+            transition: all 0.1s;
+            box-shadow: 4px 4px 0px 0px var(--fg);
         }
+
         .btn:hover {
-            background: white;
-            color: black;
+            background: var(--fg);
+            color: #fff;
+            transform: translate(-2px, -2px);
+            box-shadow: 6px 6px 0px 0px var(--fg);
         }
-        .btn-blue {
-            background: #1DA1F2;
-            color: white;
-            border-color: black;
+
+        .btn:active {
+            transform: translate(2px, 2px);
+            box-shadow: 2px 2px 0px 0px var(--fg);
         }
-        .btn-blue:hover {
-            background: #0d8bd9;
-            color: white;
+
+        .btn-primary {
+            background: var(--fg);
+            color: #fff;
         }
-        .card {
-            border: 2px solid black;
-            background: white;
-            margin-bottom: 16px;
+
+        .btn-primary:hover {
+            background: #fff;
+            color: var(--fg);
+        }
+
+        .btn-support {
+            background: var(--accent);
+            border-color: var(--fg);
+            color: #fff;
+            width: 100%;
+            margin-top: 15px;
             padding: 16px;
+            font-size: 0.9rem;
+            text-align: center;
+            display: block;
+            text-decoration: none;
+            box-shadow: 4px 4px 0px 0px var(--fg);
         }
+
+        .btn-support:hover {
+            background: #0000cc;
+            transform: translate(-2px, -2px);
+            box-shadow: 6px 6px 0px 0px var(--fg);
+        }
+
+        .btn-support .main {
+            font-weight: 800;
+            display: block;
+            margin-bottom: 4px;
+        }
+
+        .btn-support .sub {
+            font-size: 0.7rem;
+            opacity: 0.9;
+            display: block;
+        }
+
+        /* Terminal Output */
+        .terminal {
+            border: 3px solid var(--fg);
+            background: #f5f5f5;
+            padding: 15px;
+            margin-bottom: 20px;
+            min-height: 200px;
+            font-size: 0.85rem;
+            box-shadow: 6px 6px 0px 0px var(--fg);
+        }
+
+        .terminal-line {
+            margin-bottom: 4px;
+            font-weight: bold;
+        }
+
+        /* Progress Bar */
+        .progress-container {
+            margin-top: 15px;
+            border: 3px solid var(--fg);
+            padding: 3px;
+            background: #fff;
+        }
+
+        .progress-bar {
+            height: 24px;
+            background: var(--fg);
+            width: 0%;
+            transition: width 0.1s;
+        }
+
+        /* Results Card */
+        .result-card {
+            border: 3px solid var(--fg);
+            margin-bottom: 20px;
+            background: #fff;
+            box-shadow: 6px 6px 0px 0px var(--fg);
+        }
+
+        .result-header {
+            border-bottom: 3px solid var(--fg);
+            padding: 15px;
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+
+        .avatar {
+            width: 64px;
+            height: 64px;
+            border: 3px solid var(--fg);
+            filter: grayscale(100%) contrast(120%);
+        }
+
+        .result-body {
+            padding: 15px;
+        }
+
+        .handle {
+            font-size: 1.5rem;
+            font-weight: 800;
+        }
+
+        .handle span {
+            opacity: 0.5;
+            font-size: 1rem;
+        }
+
+        /* Share Section */
+        .share-box {
+            border: 3px solid var(--fg);
+            padding: 15px;
+            margin-bottom: 20px;
+            background: #fff;
+            box-shadow: 6px 6px 0px 0px var(--fg);
+        }
+
+        .share-box h3 {
+            border-bottom: 2px solid var(--fg);
+            padding-bottom: 8px;
+            margin-bottom: 12px;
+            font-size: 0.9rem;
+        }
+
+        textarea {
+            width: 100%;
+            background: #f5f5f5;
+            border: 3px solid var(--fg);
+            color: var(--fg);
+            padding: 12px;
+            font-family: inherit;
+            font-size: 0.85rem;
+            resize: none;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 10px;
+        }
+
+        .btn-group .btn {
+            flex: 1;
+        }
+
+        /* Roast List */
+        .roast-list {
+            border: 3px solid var(--fg);
+            padding: 15px;
+            background: #fff;
+            box-shadow: 6px 6px 0px 0px var(--fg);
+        }
+
+        .roast-list h3 {
+            border-bottom: 3px solid var(--fg);
+            padding-bottom: 10px;
+            margin-bottom: 15px;
+        }
+
+        .roast-item {
+            padding: 12px;
+            margin-bottom: 10px;
+            border-left: 4px solid var(--fg);
+            background: #f5f5f5;
+            font-size: 0.9rem;
+            font-weight: bold;
+        }
+
+        .roast-item::before {
+            content: "> ";
+            font-weight: 800;
+        }
+
+        /* Footer */
+        .footer {
+            border-top: 3px solid var(--fg);
+            padding-top: 20px;
+            margin-top: 30px;
+            font-size: 0.75rem;
+        }
+
+        .footer-line {
+            margin-bottom: 4px;
+            font-weight: bold;
+        }
+
+        .contract {
+            border: 2px solid var(--fg);
+            padding: 8px;
+            background: #f5f5f5;
+            word-break: break-all;
+            font-weight: bold;
+            margin-top: 8px;
+        }
+
         .hidden { display: none !important; }
     </style>
 </head>
-<body class="p-4">
-
-    <div class="max-w-2xl mx-auto">
+<body>
+    
+    <div class="container">
         
         <!-- Header -->
-        <div class="text-center mb-8">
-            <h1 class="text-3xl font-bold mb-2">DESTROYX</h1>
-            <p class="text-sm opacity-70">Simple X Account Roast</p>
+        <div class="header">
+            <h1>DESTROYX<span class="blink">_</span></h1>
+            <div class="meta">
+                SYS: ONLINE | VER: 7.1.0 | MODE: FRIENDLY_ROAST<br>
+                TARGET: X_ACCOUNT | OUTPUT: HUMOROUS_ANALYSIS
+            </div>
         </div>
 
         <!-- Input -->
-        <div id="input-section" class="mb-8">
-            <div class="flex gap-2 mb-4">
+        <div id="input-section" class="input-section">
+            <div class="terminal-line mb-2">$ init_autopsy_protocol --target</div>
+            <div class="input-group">
                 <input 
                     type="text" 
                     id="username" 
-                    placeholder="Enter X username..." 
-                    class="flex-1 p-3 border-2 border-black font-bold"
+                    placeholder="ENTER_USERNAME..."
+                    autocomplete="off"
                 >
-                <button onclick="roast()" class="btn">ROAST</button>
+                <button onclick="execute()" class="btn btn-primary">EXECUTE</button>
+            </div>
+            
+            <!-- Support Button -->
+            <a href="https://app.uniswap.org/#/swap?outputCurrency=0x78305eF4299edb868d5fc0bb13B4AAa71cc63ba3&chain=ethereum" target="_blank" class="btn-support">
+                <span class="main">[ SUPPORT US TO DEVELOP FURTHER ]</span>
+                <span class="sub">BUY OUR TOKEN: 0x78305eF4299edb868d5fc0bb13B4AAa71cc63ba3</span>
+            </a>
+        </div>
+
+        <!-- Terminal -->
+        <div id="terminal" class="terminal hidden">
+            <div id="terminal-output"></div>
+            <div class="progress-container">
+                <div id="progress" class="progress-bar"></div>
             </div>
         </div>
 
@@ -77,123 +368,179 @@
         <div id="results" class="hidden">
             
             <!-- Profile -->
-            <div class="card brutal flex gap-4 items-center">
-                <img id="avatar" src="" width="80" height="80" class="border-2 border-black grayscale">
-                <div>
-                    <h2 id="display-name" class="text-xl font-bold"></h2>
-                    <p id="handle" class="text-sm opacity-60"></p>
-                    <p id="bio" class="text-sm mt-2 italic"></p>
+            <div class="result-card">
+                <div class="result-header">
+                    <img id="avatar" src="" class="avatar" alt="target">
+                    <div>
+                        <div class="handle" id="display-name">UNKNOWN</div>
+                        <div id="handle-display" class="text-sm opacity-70"></div>
+                    </div>
+                </div>
+                <div class="result-body">
+                    <div class="terminal-line mb-2">$ cat bio.txt</div>
+                    <p id="bio-display" class="italic"></p>
                 </div>
             </div>
 
-            <!-- Share Box -->
-            <div class="card brutal bg-gray-50">
-                <h3 class="font-bold mb-3">SHARE THIS ROAST:</h3>
-                <textarea id="share-text" class="w-full h-32 p-3 border-2 border-black font-mono text-sm mb-3" readonly></textarea>
-                <div class="flex gap-2">
-                    <button onclick="copyText()" class="btn flex-1">COPY TEXT</button>
-                    <a id="tweet-link" href="#" target="_blank" class="btn btn-blue flex-1 text-center">POST TO X</a>
+            <!-- Share -->
+            <div class="share-box">
+                <h3>[ OUTPUT_BUFFER - READY_TO_SHARE ]</h3>
+                <textarea id="share-buffer" rows="6" readonly></textarea>
+                <div class="btn-group">
+                    <button onclick="copyToClipboard()" class="btn">[ COPY_TEXT ]</button>
+                    <a id="tweet-btn" href="#" target="_blank" class="btn btn-primary text-center">[ POST_TO_X ]</a>
                 </div>
             </div>
 
             <!-- Roasts -->
-            <div class="card brutal">
-                <h3 class="font-bold mb-3 border-b-2 border-black pb-2">THE ROAST:</h3>
-                <div id="roast-list" class="space-y-3 text-sm"></div>
+            <div class="roast-list">
+                <h3>[ ANALYSIS_RESULTS - 5_FINDINGS ]</h3>
+                <div id="roast-container"></div>
             </div>
 
-            <button onclick="reset()" class="btn w-full mt-4">ROAST ANOTHER</button>
+            <button onclick="reset()" class="btn w-full mt-4">[ RESET_SYSTEM ]</button>
         </div>
 
-        <!-- Support -->
-        <div class="text-center mt-8 p-4 border-2 border-black">
-            <p class="text-xs mb-2">Support:</p>
-            <p class="text-xs font-mono">0x78305eF4299edb868d5fc0bb13B4AAa71cc63ba3</p>
+        <!-- Footer -->
+        <div class="footer">
+            <div class="footer-line">$ echo "DESTROYX_PROTOCOL // 2026"</div>
+            <div class="footer-line">$ cat contract_address.txt</div>
+            <div class="contract">0x78305eF4299edb868d5fc0bb13B4AAa71cc63ba3</div>
         </div>
 
     </div>
 
     <script>
-        const roasts = [
-            "Username gives 'I arrived late to the party' energy. Fashionably late, but still late.",
-            "Thread enthusiast. Takes 10 tweets to say what fits in 2. Efficiency is not their strong suit.",
-            "Reply speed: suspicious. Either very dedicated or very unemployed. Jury is out.",
-            "Engagement bait specialist. 'Drop your favorite color' followed by radio silence. Community building: one-way street.",
-            "Crypto price commentator. 'Bitcoin up' then 'Bitcoin down' within hours. Weather app: more accurate.",
-            "GM poster. Starts day with obligatory greeting, ends with obligatory goodnight. Routine: admirable. Variation: zero.",
-            "Quote tweet artist. Adds '👀' and calls it commentary. Curator? Aggregator? You decide.",
-            "Follower count vs engagement: math doesn't add up. Audience: mysterious. Reach: questionable.",
-            "Bio claims 'thoughts are my own' which is good because no one else wants them.",
-            "3AM tweet energy. Sleep schedule: sacrificed. Content: questionable. Dedication: undeniable.",
-            "Hashtag abuser. #Uses #47 #tags #per #post. Visibility: maximized. Dignity: negotiated.",
-            "Meme game: work in progress. Format freshness: expired. Effort: acknowledged.",
-            "Platform loyalty: unwavering. Complaints: frequent. Departure: never. Stockholm syndrome: advanced.",
-            "Digital footprint: extensive. Legacy: uncertain. Server bills: someone else's problem.",
-            "Here for a good time, not a long time. Long time: also possible. Time will tell."
+        const roastDB = [
+            "Username archaeology: Gives 'fashionably late to the internet' energy. Not early adopter, not late majority, just... timing.",
+            "Thread enthusiast detected. Efficiency rating: 15 tweets to convey 2 sentences. Verbosity: maxed out.",
+            "Reply velocity: suspicious. Either very dedicated or very online. Employment status: unconfirmed.",
+            "Engagement bait strategy: 'Drop your favorite color' followed by void. Community building: one-way transmission.",
+            "Crypto commentary pattern: 'Up' then 'Down' within hours. Meteorological accuracy: higher than this.",
+            "GM protocol: Obligatory morning greeting, obligatory night sign-off. Routine: military-grade. Variation: zero.",
+            "Quote tweet art: Adding '👀' constitutes curation. Gallery opening: pending.",
+            "Follower mathematics: Count vs engagement doesn't compute. Audience composition: classified.",
+            "Bio disclaimer: 'Thoughts are my own' - good, because market research shows 0% demand elsewhere.",
+            "Temporal analysis: 3AM activity detected. Sleep sacrificed for... this. Commitment: absolute.",
+            "Hashtag strategy: Quantity over quality. Visibility: maximized. Dignity: deprecated.",
+            "Meme format freshness: Expired. Effort: acknowledged. Viral potential: recalculating.",
+            "Platform loyalty: Stockholm syndrome levels. Complaints: frequent. Departure: never.",
+            "Digital legacy projection: Extensive footprint, uncertain impact. Server costs: externalized.",
+            "Existential status: Here for good time, possibly long time. Timeline: TBD."
         ];
 
-        let currentUser = '';
+        let targetUser = '';
 
-        function roast() {
-            const username = document.getElementById('username').value.trim().replace('@', '');
-            if (!username) return;
-
-            currentUser = username;
+        async function execute() {
+            const input = document.getElementById('username');
+            const username = input.value.trim().replace(/[@]/g, '');
             
-            // Set profile
+            if (!username) {
+                alert('[ ERROR: NULL_USERNAME ]');
+                return;
+            }
+
+            targetUser = username;
+            
+            // UI switch
+            document.getElementById('input-section').classList.add('hidden');
+            document.getElementById('terminal').classList.remove('hidden');
+            
+            const output = document.getElementById('terminal-output');
+            const progress = document.getElementById('progress');
+            
+            const logs = [
+                `$ init_autopsy --target=${username}`,
+                `[ OK ] Resolving handle...`,
+                `[ OK ] Fetching avatar...`,
+                `[ WARN ] Bio empty or generic`,
+                `[ OK ] Analyzing post patterns...`,
+                `[ OK ] Calculating engagement metrics...`,
+                `[ OK ] Generating roasts...`,
+                `[ OK ] Buffer ready for export`
+            ];
+            
+            for (let i = 0; i < logs.length; i++) {
+                await sleep(200);
+                const line = document.createElement('div');
+                line.className = 'terminal-line';
+                line.textContent = logs[i];
+                output.appendChild(line);
+                progress.style.width = ((i + 1) / logs.length * 100) + '%';
+            }
+            
+            await sleep(300);
+            showResults(username);
+        }
+
+        function showResults(username) {
+            document.getElementById('terminal').classList.add('hidden');
+            document.getElementById('results').classList.remove('hidden');
+            
+            // Profile
             document.getElementById('avatar').src = `https://unavatar.io/twitter/${username}`;
-            document.getElementById('display-name').textContent = username;
-            document.getElementById('handle').textContent = '@' + username;
-            document.getElementById('bio').textContent = '"Probably tweeting too much | Opinions mine | DMs open"';
+            document.getElementById('display-name').textContent = username.toUpperCase();
+            document.getElementById('handle-display').textContent = `@${username}`;
+            document.getElementById('bio-display').textContent = '"Building in public | Probably tweeting too much | DMs open"';
             
             // Generate roasts
-            const seed = username.split('').reduce((a,b) => a + b.charCodeAt(0), 0);
+            const seed = username.split('').reduce((a, b) => a + b.charCodeAt(0), 0);
             const random = (n) => Math.abs((Math.sin(seed + n) * 10000) % 1);
             
             const selected = [];
             for (let i = 0; i < 5; i++) {
-                const idx = Math.floor(random(i) * roasts.length);
-                selected.push(roasts[idx]);
+                const idx = Math.floor(random(i) * roastDB.length);
+                selected.push(roastDB[idx]);
             }
             
             // Display roasts
-            const list = document.getElementById('roast-list');
-            list.innerHTML = selected.map((r, i) => `<p><strong>${i+1}.</strong> ${r}</p>`).join('');
+            const container = document.getElementById('roast-container');
+            container.innerHTML = selected.map((r, i) => 
+                `<div class="roast-item">[${String(i+1).padStart(2,'0')}] ${r}</div>`
+            ).join('');
             
             // Generate share text
-            const shareText = `🎯 FRIENDLY ROAST: @${username}
+            const shareText = `🎯 DESTROYX ANALYSIS: @${username}
 
-${selected.slice(0, 3).join('\n\n')}
+${selected.slice(0,3).map((r,i) => `${i+1}. ${r.substring(0,60)}...`).join('\n')}
 
-Get roasted 👇
-destroix.vercel.app
+Full roast ↓
+https://destroyx.vercel.app/
 
 #DESTROYX #FriendlyRoast`;
             
-            document.getElementById('share-text').value = shareText;
+            document.getElementById('share-buffer').value = shareText;
             
             // Set tweet link
-            const tweetUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(shareText)}`;
-            document.getElementById('tweet-link').href = tweetUrl;
-            
-            // Show results
-            document.getElementById('input-section').classList.add('hidden');
-            document.getElementById('results').classList.remove('hidden');
+            document.getElementById('tweet-btn').href = 
+                `https://twitter.com/intent/tweet?text=${encodeURIComponent(shareText)}`;
         }
 
-        function copyText() {
-            const text = document.getElementById('share-text');
-            text.select();
+        function copyToClipboard() {
+            const textarea = document.getElementById('share-buffer');
+            textarea.select();
             document.execCommand('copy');
-            alert('Copied! Now paste into X.');
+            alert('[ COPIED_TO_CLIPBOARD ]');
         }
 
         function reset() {
             document.getElementById('username').value = '';
+            document.getElementById('terminal-output').innerHTML = '';
+            document.getElementById('progress').style.width = '0%';
             document.getElementById('results').classList.add('hidden');
+            document.getElementById('terminal').classList.add('hidden');
             document.getElementById('input-section').classList.remove('hidden');
-            currentUser = '';
+            targetUser = '';
         }
+
+        function sleep(ms) {
+            return new Promise(r => setTimeout(r, ms));
+        }
+
+        // Enter key support
+        document.getElementById('username').addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') execute();
+        });
     </script>
 
 </body>
