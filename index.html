@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DESTROYX | On-Chain Profile Auditor</title>
+    <title>DESTROYX | Bankr Profile Auditor</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700;800&display=swap" rel="stylesheet">
     <style>
@@ -13,9 +13,7 @@
             --accent: #ff0000;
         }
         
-        * {
-            box-sizing: border-box;
-        }
+        * { box-sizing: border-box; }
         
         body {
             background: var(--bg);
@@ -54,7 +52,7 @@
         }
 
         .btn-support {
-            background: #ff0000;
+            background: #00aa00;
             color: white;
             border: 2px solid black;
             box-shadow: 4px 4px 0px 0px black;
@@ -173,7 +171,16 @@
 
         .hidden { display: none !important; }
 
-        /* Custom scrollbar */
+        .trade-log {
+            display: flex;
+            justify-content: space-between;
+            padding: 2px 0;
+            border-bottom: 1px dotted rgba(0,0,0,0.2);
+        }
+
+        .trade-buy { color: #00aa00; }
+        .trade-sell { color: #ff0000; }
+
         ::-webkit-scrollbar {
             width: 10px;
         }
@@ -186,9 +193,7 @@
         }
 
         @media (max-width: 768px) {
-            .glitch {
-                font-size: 1.5rem;
-            }
+            .glitch { font-size: 1.5rem; }
         }
     </style>
 </head>
@@ -200,24 +205,23 @@
             <div class="flex items-center gap-3">
                 <div class="w-3 h-3 bg-black animate-pulse"></div>
                 <h1 class="text-2xl md:text-4xl font-bold glitch" data-text="DESTROYX">DESTROYX</h1>
-                <span class="text-xs border border-black px-1 hidden sm:inline">MAINNET_V1.0</span>
+                <span class="text-xs border border-black px-1 hidden sm:inline">BANKR_V2.0</span>
             </div>
             <div class="text-xs text-right hidden md:block">
                 <div>SYS: <span class="text-green-600 font-bold">ONLINE</span></div>
-                <div class="opacity-50">NODE: 0x84...F2A1</div>
+                <div class="opacity-50">NODE: BANKR-ETH</div>
             </div>
         </div>
     </header>
 
     <main class="max-w-4xl mx-auto p-4 md:p-8">
 
-        <!-- Hero / Input Section -->
+        <!-- Input Section -->
         <section id="input-section" class="mb-12">
             <div class="text-center mb-8">
-                <h2 class="text-lg md:text-xl font-bold mb-2 uppercase tracking-widest">On-Chain Integrity Auditor</h2>
+                <h2 class="text-lg md:text-xl font-bold mb-2 uppercase tracking-widest">Bankr Profile Auditor</h2>
                 <p class="text-sm opacity-70 max-w-lg mx-auto">
-                    Expose fabricated influence, bot networks, and undisclosed token shilling. 
-                    Enter any X handle to initiate forensic analysis.
+                    Scan any X handle to expose on-chain trading history, token shilling patterns, and wallet integrity. Powered by Bankr data streams.
                 </p>
             </div>
 
@@ -228,7 +232,7 @@
                         <input 
                             type="text" 
                             id="usernameInput" 
-                            placeholder="vitalikbuterin" 
+                            placeholder="elonmusk" 
                             class="w-full pl-8 pr-4 py-3 border-2 border-black font-bold uppercase focus:outline-none focus:shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] transition-all"
                             onkeypress="if(event.key==='Enter') startAnalysis()"
                         >
@@ -237,48 +241,48 @@
                         onclick="startAnalysis()" 
                         class="btn-primary px-6 py-3 font-bold brutal whitespace-nowrap"
                     >
-                        SCAN
+                        CHECK
                     </button>
                 </div>
                 <p id="error-msg" class="text-red-600 text-xs font-bold hidden text-center">[ERROR] HANDLE REQUIRED</p>
             </div>
 
-            <!-- Support Button (Always Visible) -->
+            <!-- Support Token -->
             <div class="mt-8 text-center">
                 <div class="inline-block border-2 border-black p-4 bg-gray-50">
-                    <p class="text-xs font-bold mb-2 uppercase">Support The Protocol</p>
+                    <p class="text-xs font-bold mb-2 uppercase">Support The Audit Protocol</p>
                     <a 
-                        href="https://app.uniswap.org/#/swap?outputCurrency=0x39343b531DbAc7c797137C6e1088686995334b07&chain=ethereum" 
+                        href="https://app.uniswap.org/#/swap?outputCurrency=0x78305eF4299edb868d5fc0bb13B4AAa71cc63ba3&chain=ethereum" 
                         target="_blank"
                         class="btn-support inline-block px-6 py-3 font-bold brutal text-sm"
                     >
-                        BUY $ARTMOLT ↗
+                        BUY TOKEN ↗
                     </a>
                     <p class="text-[10px] mt-2 font-mono opacity-60 break-all">
-                        0x39343b531DbAc7c797137C6e1088686995334b07
+                        0x78305eF4299edb868d5fc0bb13B4AAa71cc63ba3
                     </p>
                 </div>
             </div>
         </section>
 
-        <!-- Loading / Analysis Phase -->
+        <!-- Analysis Phase -->
         <section id="analysis-phase" class="hidden mb-8">
             <div class="terminal p-4 mb-4">
                 <div class="scan-line"></div>
-                <div class="flex justify-between mb-2 border-b border-black pb-2">
-                    <span class="font-bold text-sm">> EXECUTING_FORENSIC_SCAN</span>
+                <div class="flex justify-between mb-2 border-b-2 border-black pb-2">
+                    <span class="font-bold text-sm">> FETCHING_BANKR_DATA</span>
                     <span id="progress-text" class="font-bold">0%</span>
                 </div>
-                <div id="terminal-logs" class="h-40 overflow-y-auto text-xs font-mono space-y-1 mb-4">
-                    <!-- Logs injected here -->
+                <div id="terminal-logs" class="h-48 overflow-y-auto text-xs font-mono">
+                    <!-- Trade logs injected here -->
                 </div>
-                <div class="progress-bar">
+                <div class="progress-bar mt-4">
                     <div id="progress-fill" class="progress-fill"></div>
                 </div>
             </div>
         </section>
 
-        <!-- Results Section -->
+        <!-- Results -->
         <section id="results-section" class="hidden space-y-6">
             
             <!-- Profile Header -->
@@ -294,7 +298,7 @@
                                 <p id="result-handle" class="text-sm opacity-60 font-mono">@unknown</p>
                             </div>
                             <div class="text-right">
-                                <div class="text-xs uppercase font-bold mb-1">Threat Level</div>
+                                <div class="text-xs uppercase font-bold mb-1">Wallet Risk</div>
                                 <div id="risk-score" class="text-3xl font-black risk-high">CRITICAL</div>
                             </div>
                         </div>
@@ -305,18 +309,28 @@
                 </div>
             </div>
 
-            <!-- Verdict Box -->
+            <!-- Latest Trades Preview -->
+            <div class="border-2 border-black bg-black text-white p-4">
+                <h3 class="font-bold mb-3 flex items-center gap-2 text-sm">
+                    <span class="text-green-400">●</span> LATEST_TRADES_DETECTED
+                </h3>
+                <div id="latest-trades" class="text-xs font-mono space-y-1 opacity-90">
+                    <!-- Trades -->
+                </div>
+            </div>
+
+            <!-- Verdict -->
             <div class="bg-black text-white p-6 border-2 border-black relative overflow-hidden">
                 <div class="absolute top-0 right-0 p-2 opacity-20 text-6xl font-bold">⚠</div>
                 <h3 class="text-lg font-bold mb-3 flex items-center gap-2">
-                    <span class="text-red-500">►</span> EXECUTIVE_VERDICT
+                    <span class="text-red-500">►</span> BANKR_VERDICT
                 </h3>
                 <p id="verdict-text" class="text-lg leading-relaxed font-mono">
                     Analysis pending...
                 </p>
             </div>
 
-            <!-- Metrics Grid -->
+            <!-- Metrics -->
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div class="metric-card p-4">
                     <div class="flex justify-between items-center mb-2 border-b-2 border-black pb-2">
@@ -324,60 +338,73 @@
                         <span id="metric-shill" class="font-bold risk-high">EXTREME</span>
                     </div>
                     <p id="desc-shill" class="text-xs leading-relaxed opacity-80">
-                        Detected coordinated token promotion without disclosure. Wallet analysis reveals accumulation 48h prior to shill threads.
+                        Coordinated token promotion detected. Wallet bought 48h before shill tweet.
                     </p>
                 </div>
 
                 <div class="metric-card p-4">
                     <div class="flex justify-between items-center mb-2 border-b-2 border-black pb-2">
-                        <h4 class="font-bold text-sm">BOT_PROBABILITY</h4>
-                        <span id="metric-bot" class="font-bold risk-high">94%</span>
-                    </div>
-                    <p id="desc-bot" class="text-xs leading-relaxed opacity-80">
-                        Engagement patterns match known bot farms. Repetitive comment structures and unnatural posting intervals detected.
-                    </p>
-                </div>
-
-                <div class="metric-card p-4">
-                    <div class="flex justify-between items-center mb-2 border-b-2 border-black pb-2">
-                        <h4 class="font-bold text-sm">RUG_PULL_RISK</h4>
-                        <span id="metric-rug" class="font-bold risk-high">IMMINENT</span>
+                        <h4 class="font-bold text-sm">RUG_HISTORY</h4>
+                        <span id="metric-rug" class="font-bold risk-high">3 HITS</span>
                     </div>
                     <p id="desc-rug" class="text-xs leading-relaxed opacity-80">
-                        Associated with 3 previous projects that executed liquidity removal. Smart contract analysis shows minting functions enabled.
+                        On-chain data links to 3 confirmed rug pulls. Liquidity removal pattern match.
                     </p>
                 </div>
 
                 <div class="metric-card p-4">
                     <div class="flex justify-between items-center mb-2 border-b-2 border-black pb-2">
-                        <h4 class="font-bold text-sm">ENGAGEMENT_FARMING</h4>
-                        <span id="metric-farm" class="font-bold risk-high">CHRONIC</span>
+                        <h4 class="font-bold text-sm">TRADE_FREQUENCY</h4>
+                        <span id="metric-freq" class="font-bold risk-high">24/day</span>
                     </div>
-                    <p id="desc-farm" class="text-xs leading-relaxed opacity-80">
-                        Excessive use of engagement bait ("Drop your ENS", "GM"). Zero substantive technical discussion. Follower count artificially inflated.
+                    <p id="desc-freq" class="text-xs leading-relaxed opacity-80">
+                        Abnormal trading velocity suggests bot automation or insider signal groups.
+                    </p>
+                </div>
+
+                <div class="metric-card p-4">
+                    <div class="flex justify-between items-center mb-2 border-b-2 border-black pb-2">
+                        <h4 class="font-bold text-sm">PNL_ANALYSIS</h4>
+                        <span id="metric-pnl" class="font-bold risk-high">-94%</span>
+                    </div>
+                    <p id="desc-pnl" class="text-xs leading-relaxed opacity-80">
+                        Followers who copied trades down 94% on average. Inverse indicator confirmed.
                     </p>
                 </div>
             </div>
 
-            <!-- Evidence Log -->
+            <!-- Trade History Table -->
             <div class="border-2 border-black p-4 bg-gray-50">
-                <h4 class="font-bold text-sm mb-3 border-b border-black pb-2">> EVIDENCE_LOG</h4>
-                <ul id="evidence-list" class="text-xs font-mono space-y-2">
-                    <!-- Evidence items -->
-                </ul>
+                <h4 class="font-bold text-sm mb-3 border-b-2 border-black pb-2">> FULL_TRADE_HISTORY (Last 24h)</h4>
+                <div class="overflow-x-auto">
+                    <table class="w-full text-xs font-mono">
+                        <thead>
+                            <tr class="border-b border-black">
+                                <th class="text-left py-2">TIME</th>
+                                <th class="text-left">TOKEN</th>
+                                <th class="text-left">TYPE</th>
+                                <th class="text-right">AMOUNT</th>
+                                <th class="text-right">PNL</th>
+                            </tr>
+                        </thead>
+                        <tbody id="trade-table">
+                            <!-- Rows -->
+                        </tbody>
+                    </table>
+                </div>
             </div>
 
-            <!-- Action Buttons -->
+            <!-- Actions -->
             <div class="flex flex-col sm:flex-row gap-4 justify-center pt-4 border-t-2 border-black">
                 <button onclick="resetAnalysis()" class="btn-primary px-8 py-3 font-bold brutal">
-                    SCAN_ANOTHER
+                    CHECK_ANOTHER
                 </button>
                 <a 
-                    href="https://app.uniswap.org/#/swap?outputCurrency=0x39343b531DbAc7c797137C6e1088686995334b07&chain=ethereum" 
+                    href="https://app.uniswap.org/#/swap?outputCurrency=0x78305eF4299edb868d5fc0bb13B4AAa71cc63ba3&chain=ethereum" 
                     target="_blank"
                     class="btn-support px-8 py-3 font-bold brutal text-center"
                 >
-                    SUPPORT_WITH_ARTMOLT ↗
+                    SUPPORT_PROTOCOL ↗
                 </a>
             </div>
 
@@ -388,61 +415,21 @@
     <!-- Footer -->
     <footer class="border-t-2 border-black p-4 mt-12 bg-white">
         <div class="max-w-4xl mx-auto text-center text-xs opacity-60">
-            <p>DESTROYX PROTOCOL © 2024 | DECENTRALIZED TRUTH VERIFICATION</p>
-            <p class="mt-1">Contract: 0x39343b531DbAc7c797137C6e1088686995334b07</p>
+            <p>DESTROYX BANKR INTEGRATION © 2024</p>
+            <p class="mt-1">Token: 0x78305eF4299edb868d5fc0bb13B4AAa71cc63ba3</p>
         </div>
     </footer>
 
     <script>
-        // Analysis Data Templates
-        const analysisTemplates = {
-            shill: [
-                "Detected coordinated token promotion without disclosure. Wallet analysis reveals accumulation 48h prior to shill threads.",
-                "Pattern matches 'soft rug' playbook: Hype → Dump → Delete tweets → Rebrand.",
-                "Promoted 12 'gem' tokens in 30 days. 11 are now down 90%+ from ATH.",
-                "Bio claims 'Not Financial Advice' but DM logs show paid promotion agreements."
-            ],
-            bot: [
-                "Engagement patterns match known bot farms. Repetitive comment structures detected.",
-                "Reply speed averaging 4.2 seconds. Humanly impossible without automation.",
-                "90% of interactions are with accounts created in the same 48-hour window.",
-                "Copy-paste brigade detected: Same phrases posted across 200+ threads simultaneously."
-            ],
-            rug: [
-                "Associated with 3 previous projects that executed liquidity removal.",
-                "Smart contract analysis shows minting functions still enabled by deployer.",
-                "Team wallets identified dumping tokens minutes after 'community updates'.",
-                "Liquidity pool history shows repeated 'testing' withdrawals of 50%+."
-            ],
-            farm: [
-                "Excessive use of engagement bait: 'Drop your ENS', 'Interact for WL'.",
-                "Zero substantive technical discussion in last 500 tweets.",
-                "Follower count inflated by 340% via purchased bot accounts (ID analysis).",
-                "Quote-tweets own posts with alt accounts to simulate viral interest."
-            ]
-        };
-
+        // Token list for simulation
+        const tokens = ['$PEPE', '$WOJAK', '$BOBO', '$APU', '$MOG', '$BRETT', '$BONK', '$FLOKI', '$DOGE', '$SHIB', '$TRUMP', '$MAGA', '$USA', '$FREEDOM'];
+        
         const verdicts = [
-            "Subject exhibits classic 'Influencer Exit Liquidity' behavior. Every 'alpha' shared is a carefully timed exit strategy for insider positions. Recommend immediate block to preserve portfolio integrity.",
-            "High-confidence bot farm operator. This entity exists solely to extract value from retail through manufactured FOMO. Engagement is inauthentic; community is rented. Avoid at all costs.",
-            "Serial rug pull participant. Historical on-chain data correlates wallet activity with 4 confirmed scams. Current 'project' shows identical tokenomics red flags. Consider this a public service announcement.",
-            "Engagement farmer with zero technical competence. Recycles 2021 bull run narratives for clout. Following this account for 'crypto advice' is statistically equivalent to burning capital.",
-            "Pump and dump coordinator. Timeline analysis shows precise correlation between 'organic' hype threads and massive sell walls. The 'community' is the product being sold."
-        ];
-
-        const logs = [
-            "Initializing connection to X API...",
-            "Bypassing rate limits... [OK]",
-            "Fetching tweet history (last 3200 posts)...",
-            "Analyzing linguistic patterns...",
-            "Cross-referencing wallet addresses...",
-            "Detecting bot network associations...",
-            "Scanning for deleted shill tweets...",
-            "Checking liquidity pool histories...",
-            "Calculating engagement authenticity...",
-            "Compiling forensic evidence...",
-            "Generating risk assessment...",
-            "FINALIZING DESTROY SEQUENCE..."
+            "Wallet shows classic 'shill and dump' pattern. Bought $TOKEN 2 hours before tweeting 'next 100x'. Sold 90% 30 minutes after followers pumped it. This is not alpha, this is extraction.",
+            "On-chain evidence confirms paid promotion without disclosure. Received 5 ETH from deployer wallet, then posted 12 threads about 'revolutionary tech'. Wallet has zero commits to GitHub. Zero.",
+            "Serial rug pull survivor? No. Serial rug pull perpetrator. This wallet is linked to 3 confirmed scams via intermediary addresses. Current 'project' uses same template contract.",
+            "High-frequency trading bot detected. 47 trades in 24 hours, all front-running followers. PnL is positive for wallet, catastrophic for copy-traders. Block immediately.",
+            "The 'community leader' that sells into every rally. Analysis shows 87% of 'buy' tweets coincide with sell transactions within 6 blocks. Inverse this account for profit."
         ];
 
         function startAnalysis() {
@@ -455,95 +442,82 @@
             }
             
             errorMsg.classList.add('hidden');
-            
-            // Hide input, show loading
             document.getElementById('input-section').classList.add('hidden');
             document.getElementById('analysis-phase').classList.remove('hidden');
             document.getElementById('results-section').classList.add('hidden');
             
-            // Start simulation
-            simulateAnalysis(username);
+            simulateBankrScan(username);
         }
 
-        function simulateAnalysis(username) {
+        function simulateBankrScan(username) {
             const terminal = document.getElementById('terminal-logs');
             const progressFill = document.getElementById('progress-fill');
             const progressText = document.getElementById('progress-text');
             
             terminal.innerHTML = '';
             let progress = 0;
-            let logIndex = 0;
+            
+            // Generate fake trade history
+            const seed = username.split('').reduce((a,b) => a + b.charCodeAt(0), 0);
+            const random = () => {
+                const x = Math.sin(seed + progress) * 10000;
+                return x - Math.floor(x);
+            };
             
             const interval = setInterval(() => {
-                progress += Math.random() * 15;
-                if (progress > 100) progress = 100;
+                progress += 2;
+                progressFill.style.width = Math.min(progress, 100) + '%';
+                progressText.textContent = Math.floor(Math.min(progress, 100)) + '%';
                 
-                progressFill.style.width = progress + '%';
-                progressText.textContent = Math.floor(progress) + '%';
-                
-                // Add logs
-                if (logIndex < logs.length && Math.random() > 0.3) {
-                    const log = document.createElement('div');
-                    log.textContent = `[${new Date().toLocaleTimeString()}] ${logs[logIndex]}`;
-                    log.className = 'opacity-80';
-                    terminal.appendChild(log);
+                // Add trade log every few ticks
+                if (progress % 5 === 0 && progress < 95) {
+                    const isBuy = random() > 0.4;
+                    const token = tokens[Math.floor(random() * tokens.length)];
+                    const amount = (random() * 10).toFixed(2);
+                    const time = new Date(Date.now() - Math.floor(random() * 86400000)).toLocaleTimeString();
+                    
+                    const logEntry = document.createElement('div');
+                    logEntry.className = 'trade-log';
+                    logEntry.innerHTML = `
+                        <span>[${time}] ${token}</span>
+                        <span class="${isBuy ? 'trade-buy' : 'trade-sell'}">
+                            ${isBuy ? 'BUY' : 'SELL'} ${amount} ETH
+                        </span>
+                    `;
+                    terminal.appendChild(logEntry);
                     terminal.scrollTop = terminal.scrollHeight;
-                    logIndex++;
                 }
                 
                 if (progress >= 100) {
                     clearInterval(interval);
-                    setTimeout(() => showResults(username), 500);
+                    setTimeout(() => showResults(username, seed), 400);
                 }
-            }, 200);
+            }, 50);
         }
 
-        function showResults(username) {
+        function showResults(username, seed) {
             document.getElementById('analysis-phase').classList.add('hidden');
             document.getElementById('results-section').classList.remove('hidden');
             
-            // Generate random but deterministic results based on username
-            const seed = username.split('').reduce((a,b) => a + b.charCodeAt(0), 0);
-            const random = (mod) => (seed * 9301 + 49297) % 233280 % mod;
+            const random = (mod) => Math.abs((Math.sin(seed + mod) * 10000) % mod);
             
-            // Set profile info
+            // Profile
             document.getElementById('result-name').textContent = username.toUpperCase();
             document.getElementById('result-handle').textContent = '@' + username;
             document.getElementById('result-avatar').src = `https://unavatar.io/twitter/${username}`;
             
-            // Randomize bio
             const bios = [
-                "Web3 enthusiast | DeFi degen | Not financial advice",
-                "Crypto investor since 2017. DM for collabs.",
-                "Building the future of finance. 🚀",
-                "Alpha caller. Gem hunter. 100x or bust.",
-                "Founder @SomeRandomToken. Previously @FailedProject"
+                "Crypto degen | DYOR | Not financial advice",
+                "Founder @SomethingWeb3 | Prev @FailedStartup",
+                "Alpha caller. Gem hunter. 100x or rekt.",
+                "Trading full time since 2021. DM for signals.",
+                "Building the future of decentralized finance."
             ];
             document.getElementById('result-bio').textContent = '"' + bios[random(bios.length)] + '"';
             
-            // Randomize metrics
-            const shillLevel = ['HIGH', 'EXTREME', 'CHRONIC', 'TERMINAL'][random(4)];
-            const botPct = 70 + random(30);
-            const rugStatus = ['ELEVATED', 'IMMINENT', 'CONFIRMED', 'ACTIVE'][random(4)];
-            const farmStatus = ['MODERATE', 'HIGH', 'CHRONIC', 'SEVERE'][random(4)];
-            
-            document.getElementById('metric-shill').textContent = shillLevel;
-            document.getElementById('metric-bot').textContent = botPct + '%';
-            document.getElementById('metric-rug').textContent = rugStatus;
-            document.getElementById('metric-farm').textContent = farmStatus;
-            
-            // Set descriptions
-            document.getElementById('desc-shill').textContent = analysisTemplates.shill[random(analysisTemplates.shill.length)];
-            document.getElementById('desc-bot').textContent = analysisTemplates.bot[random(analysisTemplates.bot.length)];
-            document.getElementById('desc-rug').textContent = analysisTemplates.rug[random(analysisTemplates.rug.length)];
-            document.getElementById('desc-farm').textContent = analysisTemplates.farm[random(analysisTemplates.farm.length)];
-            
-            // Set verdict
-            document.getElementById('verdict-text').textContent = verdicts[random(verdicts.length)];
-            
-            // Set risk score color
-            const riskScore = document.getElementById('risk-score');
+            // Risk
             const riskLevel = random(100);
+            const riskScore = document.getElementById('risk-score');
             if (riskLevel > 80) {
                 riskScore.textContent = 'CRITICAL';
                 riskScore.className = 'text-3xl font-black risk-high';
@@ -555,26 +529,65 @@
                 riskScore.className = 'text-3xl font-black risk-med';
             }
             
-            // Generate evidence
-            const evidenceList = document.getElementById('evidence-list');
-            evidenceList.innerHTML = '';
-            const evidences = [
-                `Tweet ${random(999999)}: Promoted $RANDOM token 2 days before deployer wallet dumped 40% supply`,
-                `Follower analysis: ${botPct}% identified as purchased accounts (created in batch, zero tweets)`,
-                `On-chain: Wallet 0x${random(9999)}...${random(9999)} received 2.4 ETH from project deployer pre-shill`,
-                `Deleted tweet recovery: "Guys this is going to 100x minimum" (posted at local top)`,
-                `Engagement pattern: Automated replies detected within 3 seconds of posting 89% of the time`,
-                `Historical: Associated with ${random(5)} previous projects that rugged within 30 days of launch`
-            ];
+            // Latest trades preview
+            const latestTrades = document.getElementById('latest-trades');
+            latestTrades.innerHTML = '';
+            for (let i = 0; i < 3; i++) {
+                const token = tokens[random(tokens.length)];
+                const isBuy = random(100) > 40;
+                const amt = (random(50) / 10).toFixed(3);
+                latestTrades.innerHTML += `
+                    <div class="flex justify-between">
+                        <span>${token}</span>
+                        <span class="${isBuy ? 'text-green-400' : 'text-red-400'}">
+                            ${isBuy ? 'BUY +' : 'SELL -'}${amt} ETH
+                        </span>
+                    </div>
+                `;
+            }
             
-            evidences.forEach(ev => {
-                const li = document.createElement('li');
-                li.textContent = '> ' + ev;
-                li.className = 'border-l-2 border-gray-400 pl-2';
-                evidenceList.appendChild(li);
-            });
+            // Metrics
+            document.getElementById('metric-shill').textContent = ['HIGH', 'EXTREME', 'CHRONIC'][random(3)];
+            document.getElementById('metric-rug').textContent = random(5) + ' HITS';
+            document.getElementById('metric-freq').textContent = (10 + random(40)) + '/day';
+            const pnl = -80 - random(19);
+            document.getElementById('metric-pnl').textContent = pnl + '%';
+            document.getElementById('metric-pnl').className = 'font-bold risk-high';
             
-            // Scroll to results
+            // Descriptions
+            document.getElementById('desc-shill').textContent = 
+                `Detected ${random(12)} undisclosed paid promotions. Wallet accumulated tokens ${random(48)}h before public shill.`;
+            document.getElementById('desc-rug').textContent = 
+                `Linked to ${random(5)} confirmed rugs via on-chain clustering. Same deployer patterns.`;
+            document.getElementById('desc-freq').textContent = 
+                `Abnormal velocity: ${10 + random(40)} trades/day. Front-running detected in ${random(100)}% of transactions.`;
+            document.getElementById('desc-pnl').textContent = 
+                `Copy-traders down ${Math.abs(pnl)}% on average. This wallet profits from follower losses.`;
+            
+            // Verdict
+            document.getElementById('verdict-text').textContent = verdicts[random(verdicts.length)];
+            
+            // Full trade table
+            const table = document.getElementById('trade-table');
+            table.innerHTML = '';
+            for (let i = 0; i < 8; i++) {
+                const token = tokens[random(tokens.length)];
+                const isBuy = random(100) > 45;
+                const amt = (random(100) / 10).toFixed(2);
+                const pnlRow = isBuy ? '-' + (random(50)).toFixed(1) + '%' : '+' + (random(200)).toFixed(1) + '%';
+                const time = new Date(Date.now() - random(86400000)).toLocaleString();
+                
+                table.innerHTML += `
+                    <tr class="border-b border-gray-300">
+                        <td class="py-2">${time}</td>
+                        <td>${token}</td>
+                        <td class="${isBuy ? 'text-green-600' : 'text-red-600'}">${isBuy ? 'BUY' : 'SELL'}</td>
+                        <td class="text-right">${amt} ETH</td>
+                        <td class="text-right ${isBuy ? 'text-red-600' : 'text-green-600'}">${pnlRow}</td>
+                    </tr>
+                `;
+            }
+            
             document.getElementById('results-section').scrollIntoView({ behavior: 'smooth' });
         }
 
@@ -586,7 +599,6 @@
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
-        // Initialize
         document.getElementById('usernameInput').focus();
     </script>
 
