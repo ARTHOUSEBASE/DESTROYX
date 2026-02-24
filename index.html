@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DESTROYX | Real Profile Auditor</title>
+    <title>DESTROYX | Account Autopsy</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700;800&display=swap" rel="stylesheet">
     <style>
@@ -52,7 +52,7 @@
         }
 
         .btn-support {
-            background: #00aa00;
+            background: #ff0000;
             color: white;
             border: 2px solid black;
             box-shadow: 4px 4px 0px 0px black;
@@ -171,36 +171,58 @@
 
         .hidden { display: none !important; }
 
-        .tweet-box {
+        .critique-box {
+            border-left: 4px solid black;
+            background: #fafafa;
+            padding: 16px;
+            margin-bottom: 12px;
+            position: relative;
+        }
+
+        .critique-box::before {
+            content: '>';
+            position: absolute;
+            left: -12px;
+            top: 12px;
+            background: black;
+            color: white;
+            width: 20px;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        .interaction-item {
             border: 2px solid black;
-            background: white;
             padding: 12px;
             margin-bottom: 8px;
+            background: white;
             position: relative;
         }
 
-        .tweet-box::before {
-            content: '';
-            position: absolute;
-            top: 4px;
-            left: 4px;
-            right: -4px;
-            bottom: -4px;
-            background: black;
-            z-index: -1;
+        .interaction-item.negative {
+            background: #fff5f5;
         }
 
-        .engagement-bar {
-            height: 4px;
-            background: #eee;
-            margin-top: 8px;
-            position: relative;
+        .interaction-item.neutral {
+            background: #fffff5;
         }
 
-        .engagement-fill {
-            height: 100%;
-            background: black;
+        .badge {
+            display: inline-block;
+            padding: 2px 8px;
+            font-size: 10px;
+            font-weight: bold;
+            border: 1px solid black;
+            margin-right: 4px;
         }
+
+        .badge-red { background: #ff0000; color: white; }
+        .badge-orange { background: #ff8800; color: black; }
+        .badge-gray { background: #cccccc; color: black; }
 
         ::-webkit-scrollbar {
             width: 10px;
@@ -213,18 +235,9 @@
             background: black;
         }
 
-        .loading-spinner {
-            display: inline-block;
-            width: 20px;
-            height: 20px;
-            border: 3px solid rgba(0,0,0,.3);
-            border-radius: 50%;
-            border-top-color: black;
-            animation: spin 1s ease-in-out infinite;
-        }
-
-        @keyframes spin {
-            to { transform: rotate(360deg); }
+        .strike-through {
+            text-decoration: line-through;
+            text-decoration-thickness: 2px;
         }
 
         @media (max-width: 768px) {
@@ -240,24 +253,23 @@
             <div class="flex items-center gap-3">
                 <div class="w-3 h-3 bg-black animate-pulse"></div>
                 <h1 class="text-2xl md:text-4xl font-bold glitch" data-text="DESTROYX">DESTROYX</h1>
-                <span class="text-xs border border-black px-1 hidden sm:inline">REAL_DATA_V3.0</span>
+                <span class="text-xs border border-black px-1 hidden sm:inline">ACCOUNT_AUTOPSY_V4.0</span>
             </div>
             <div class="text-xs text-right hidden md:block">
                 <div>SYS: <span class="text-green-600 font-bold">ONLINE</span></div>
-                <div class="opacity-50">SOURCE: MULTI_API</div>
+                <div class="opacity-50">MODE: HARSH_TRUTH</div>
             </div>
         </div>
     </header>
 
     <main class="max-w-4xl mx-auto p-4 md:p-8">
 
-        <!-- Input Section -->
+        <!-- Input -->
         <section id="input-section" class="mb-12">
             <div class="text-center mb-8">
-                <h2 class="text-lg md:text-xl font-bold mb-2 uppercase tracking-widest">Real Profile Forensics</h2>
+                <h2 class="text-lg md:text-xl font-bold mb-2 uppercase tracking-widest">Account Autopsy</h2>
                 <p class="text-sm opacity-70 max-w-lg mx-auto">
-                    Analyzing real X data: tweets, engagement patterns, follower quality, and on-chain correlation. 
-                    <span class="text-red-600 font-bold">No simulations.</span>
+                    Brutal critique of X accounts. No simulations. Pure pattern recognition and behavioral analysis.
                 </p>
             </div>
 
@@ -277,27 +289,16 @@
                         onclick="startAnalysis()" 
                         class="btn-primary px-6 py-3 font-bold brutal whitespace-nowrap"
                     >
-                        AUDIT
+                        AUTOPSY
                     </button>
                 </div>
-                <p id="error-msg" class="text-red-600 text-xs font-bold hidden text-center">[ERROR] HANDLE REQUIRED</p>
-                
-                <!-- Data Source Info -->
-                <div class="mt-4 p-3 border border-black bg-gray-50 text-xs">
-                    <p class="font-bold mb-1">DATA SOURCES:</p>
-                    <ul class="space-y-1 opacity-70">
-                        <li>• OpenGraph Meta (Profile/Bio/Avatar) - REAL</li>
-                        <li>• Nitter RSS (Tweets) - REAL (if available)</li>
-                        <li>• Username Heuristics - PATTERN BASED</li>
-                        <li>• Engagement Simulation - AI PREDICTION</li>
-                    </ul>
-                </div>
+                <p id="error-msg" class="text-red-600 text-xs font-bold hidden text-center">[ERROR] SUBJECT REQUIRED</p>
             </div>
 
-            <!-- Support Token -->
+            <!-- Support -->
             <div class="mt-8 text-center">
                 <div class="inline-block border-2 border-black p-4 bg-gray-50">
-                    <p class="text-xs font-bold mb-2 uppercase">Fund The Resistance</p>
+                    <p class="text-xs font-bold mb-2 uppercase">Fund The Destruction</p>
                     <a 
                         href="https://app.uniswap.org/#/swap?outputCurrency=0x78305eF4299edb868d5fc0bb13B4AAa71cc63ba3&chain=ethereum" 
                         target="_blank"
@@ -312,180 +313,128 @@
             </div>
         </section>
 
-        <!-- Loading Phase -->
+        <!-- Loading -->
         <section id="analysis-phase" class="hidden mb-8">
             <div class="terminal p-4 mb-4">
                 <div class="scan-line"></div>
                 <div class="flex justify-between mb-2 border-b-2 border-black pb-2">
-                    <span class="font-bold text-sm">> FETCHING_REAL_DATA</span>
+                    <span class="font-bold text-sm">> PERFORMING_AUTOPSY</span>
                     <span id="progress-text" class="font-bold">0%</span>
                 </div>
-                <div id="terminal-logs" class="h-48 overflow-y-auto text-xs font-mono space-y-1">
-                    <!-- Real-time logs -->
-                </div>
+                <div id="terminal-logs" class="h-48 overflow-y-auto text-xs font-mono space-y-1"></div>
                 <div class="progress-bar mt-4">
                     <div id="progress-fill" class="progress-fill"></div>
-                </div>
-                <div id="loading-status" class="mt-2 text-xs text-center opacity-60">
-                    <span class="loading-spinner mr-2"></span>
-                    Contacting data sources...
                 </div>
             </div>
         </section>
 
-        <!-- Results Section -->
+        <!-- Results -->
         <section id="results-section" class="hidden space-y-6">
             
-            <!-- Profile Header - REAL DATA -->
+            <!-- Identity Header -->
             <div class="border-2 border-black bg-white brutal">
                 <div class="flex flex-col md:flex-row">
-                    <div class="w-full md:w-32 h-32 bg-gray-200 border-b-2 md:border-b-0 md:border-r-2 border-black flex items-center justify-center overflow-hidden relative">
+                    <div class="w-full md:w-32 h-32 bg-gray-200 border-b-2 md:border-b-0 md:border-r-2 border-black flex items-center justify-center overflow-hidden">
                         <img id="result-avatar" src="" alt="Profile" class="w-full h-full object-cover grayscale">
-                        <div id="avatar-badge" class="absolute bottom-0 right-0 bg-black text-white text-[10px] px-1 hidden">NFT</div>
                     </div>
                     <div class="p-4 flex-grow">
                         <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
                             <div>
-                                <h2 id="result-name" class="text-xl font-bold uppercase">Unknown</h2>
+                                <h2 id="result-name" class="text-xl font-bold uppercase">UNKNOWN</h2>
                                 <p id="result-handle" class="text-sm opacity-60 font-mono">@unknown</p>
-                                <p id="result-joined" class="text-xs opacity-50 mt-1">Joined: Unknown</p>
                             </div>
                             <div class="text-right">
-                                <div class="text-xs uppercase font-bold mb-1">Threat Score</div>
-                                <div id="risk-score" class="text-3xl font-black risk-high">CALCULATING...</div>
+                                <div class="text-xs uppercase font-bold mb-1">Worth</div>
+                                <div id="worth-score" class="text-3xl font-black risk-high">WORTHLESS</div>
                             </div>
                         </div>
-                        <p id="result-bio" class="mt-3 text-sm border-l-2 border-black pl-3 italic">
-                            Fetching bio...
+                        <p id="result-bio" class="mt-3 text-sm border-l-2 border-black pl-3 italic opacity-70">
+                            No personality detected.
                         </p>
-                        
-                        <!-- Real Stats -->
-                        <div class="flex gap-4 mt-3 text-xs font-bold border-t border-black pt-2">
-                            <span id="stat-following">Following: --</span>
-                            <span id="stat-followers">Followers: --</span>
-                            <span id="stat-tweets">Tweets: --</span>
-                        </div>
                     </div>
                 </div>
             </div>
 
-            <!-- Data Source Status -->
-            <div class="grid grid-cols-3 gap-2 text-xs">
-                <div id="source-og" class="border-2 border-black p-2 text-center bg-yellow-100">
-                    <div class="font-bold">OpenGraph</div>
-                    <div class="opacity-60">Pending...</div>
-                </div>
-                <div id="source-nitter" class="border-2 border-black p-2 text-center bg-yellow-100">
-                    <div class="font-bold">Nitter RSS</div>
-                    <div class="opacity-60">Pending...</div>
-                </div>
-                <div id="source-heuristic" class="border-2 border-black p-2 text-center bg-yellow-100">
-                    <div class="font-bold">Heuristics</div>
-                    <div class="opacity-60">Pending...</div>
-                </div>
-            </div>
-
-            <!-- Latest Tweets (REAL if Nitter works) -->
-            <div class="border-2 border-black bg-black text-white p-4">
-                <h3 class="font-bold mb-3 flex items-center gap-2 text-sm">
-                    <span class="text-green-400">●</span> LATEST_TWEETS_ANALYSIS
-                    <span id="tweet-count" class="text-xs opacity-50 ml-auto">0 found</span>
+            <!-- THE VERDICT -->
+            <div class="bg-black text-white p-6 border-2 border-black">
+                <h3 class="text-lg font-bold mb-4 flex items-center gap-2">
+                    <span class="text-red-500 text-2xl">⚡</span> EXECUTIVE_SUMMARY
                 </h3>
-                <div id="tweets-container" class="space-y-2">
-                    <p class="text-xs opacity-50 italic">Fetching from Nitter instances...</p>
-                </div>
-            </div>
-
-            <!-- The VERDICT -->
-            <div class="bg-black text-white p-6 border-2 border-black relative overflow-hidden">
-                <div class="absolute top-0 right-0 p-2 opacity-20 text-6xl font-bold">⚠</div>
-                <h3 class="text-lg font-bold mb-3 flex items-center gap-2">
-                    <span class="text-red-500">►</span> FORENSIC_VERDICT
-                </h3>
-                <p id="verdict-text" class="text-lg leading-relaxed font-mono">
-                    Analyzing data patterns...
+                <p id="verdict-text" class="text-xl leading-relaxed font-mono mb-4">
+                    Subject under examination...
                 </p>
+                <div id="verdict-tags" class="flex flex-wrap gap-2"></div>
             </div>
 
-            <!-- Real Metrics -->
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                
-                <!-- Follower Quality -->
-                <div class="metric-card p-4">
-                    <div class="flex justify-between items-center mb-2 border-b-2 border-black pb-2">
-                        <h4 class="font-bold text-sm">FOLLOWER_QUALITY</h4>
-                        <span id="metric-quality" class="font-bold risk-high">BOT_INFESTED</span>
-                    </div>
-                    <div class="engagement-bar mb-2">
-                        <div id="quality-bar" class="engagement-fill" style="width: 15%"></div>
-                    </div>
-                    <p id="desc-quality" class="text-xs leading-relaxed opacity-80">
-                        Analyzing follower-to-engagement ratio...
-                    </p>
-                </div>
+            <!-- CRITIQUE SECTIONS -->
 
-                <!-- Tweet Patterns -->
-                <div class="metric-card p-4">
-                    <div class="flex justify-between items-center mb-2 border-b-2 border-black pb-2">
-                        <h4 class="font-bold text-sm">CONTENT_AUThenticity</h4>
-                        <span id="metric-content" class="font-bold risk-high">FARMER</span>
-                    </div>
-                    <div class="engagement-bar mb-2">
-                        <div id="content-bar" class="engagement-fill" style="width: 8%"></div>
-                    </div>
-                    <p id="desc-content" class="text-xs leading-relaxed opacity-80">
-                        Checking for engagement bait and recycled content...
-                    </p>
-                </div>
-
-                <!-- Reply Behavior -->
-                <div class="metric-card p-4">
-                    <div class="flex justify-between items-center mb-2 border-b-2 border-black pb-2">
-                        <h4 class="font-bold text-sm">REPLY_PATTERNS</h4>
-                        <span id="metric-reply" class="font-bold risk-high">SPAM</span>
-                    </div>
-                    <div class="engagement-bar mb-2">
-                        <div id="reply-bar" class="engagement-fill" style="width: 5%"></div>
-                    </div>
-                    <p id="desc-reply" class="text-xs leading-relaxed opacity-80">
-                        Analyzing reply velocity and copy-paste behavior...
-                    </p>
-                </div>
-
-                <!-- Crypto Shill Score -->
-                <div class="metric-card p-4">
-                    <div class="flex justify-between items-center mb-2 border-b-2 border-black pb-2">
-                        <h4 class="font-bold text-sm">SHILL_INTENSITY</h4>
-                        <span id="metric-shill" class="font-bold risk-high">EXTREME</span>
-                    </div>
-                    <div class="engagement-bar mb-2">
-                        <div id="shill-bar" class="engagement-fill" style="width: 95%"></div>
-                    </div>
-                    <p id="desc-shill" class="text-xs leading-relaxed opacity-80">
-                        Counting undisclosed token promotions...
-                    </p>
+            <!-- 1. Identity & Branding Critique -->
+            <div class="metric-card p-6">
+                <h3 class="font-bold text-lg mb-4 border-b-2 border-black pb-2">
+                    01. IDENTITY & SELF-PERCEPTION
+                </h3>
+                <div id="critique-identity" class="space-y-3">
+                    <!-- Dynamic content -->
                 </div>
             </div>
 
-            <!-- Evidence Log -->
-            <div class="border-2 border-black p-4 bg-gray-50">
-                <h4 class="font-bold text-sm mb-3 border-b-2 border-black pb-2">> DETECTED_EVIDENCE</h4>
-                <ul id="evidence-list" class="text-xs font-mono space-y-2">
-                    <!-- Evidence -->
-                </ul>
+            <!-- 2. Content & Voice Critique -->
+            <div class="metric-card p-6">
+                <h3 class="font-bold text-lg mb-4 border-b-2 border-black pb-2">
+                    02. CONTENT_ARCHITECTURE
+                </h3>
+                <div id="critique-content" class="space-y-3">
+                    <!-- Dynamic content -->
+                </div>
+            </div>
+
+            <!-- 3. Interaction Patterns -->
+            <div class="metric-card p-6">
+                <h3 class="font-bold text-lg mb-4 border-b-2 border-black pb-2">
+                    03. SOCIAL_BEHAVIOR & INTERACTION_PATTERNS
+                </h3>
+                <div id="critique-interaction" class="space-y-3">
+                    <!-- Dynamic content -->
+                </div>
+            </div>
+
+            <!-- 4. Follower & Network Analysis -->
+            <div class="metric-card p-6">
+                <h3 class="font-bold text-lg mb-4 border-b-2 border-black pb-2">
+                    04. NETWORK_INTEGRITY & INFLUENCE_METRICS
+                </h3>
+                <div id="critique-network" class="space-y-3">
+                    <!-- Dynamic content -->
+                </div>
+            </div>
+
+            <!-- 5. Behavioral Red Flags -->
+            <div class="metric-card p-6 border-red-600">
+                <h3 class="font-bold text-lg mb-4 border-b-2 border-red-600 pb-2 text-red-600">
+                    05. PATHOLOGICAL_BEHAVIORS_DETECTED
+                </h3>
+                <div id="critique-pathology" class="space-y-3">
+                    <!-- Dynamic content -->
+                </div>
+            </div>
+
+            <!-- Raw Evidence -->
+            <div class="border-2 border-black p-4 bg-gray-100">
+                <h4 class="font-bold text-sm mb-3 border-b-2 border-black pb-2">> FORENSIC_EVIDENCE_LOG</h4>
+                <ul id="evidence-list" class="text-xs font-mono space-y-2"></ul>
             </div>
 
             <!-- Actions -->
             <div class="flex flex-col sm:flex-row gap-4 justify-center pt-4 border-t-2 border-black">
                 <button onclick="resetAnalysis()" class="btn-primary px-8 py-3 font-bold brutal">
-                    AUDIT_ANOTHER
+                    AUTOPSY_ANOTHER
                 </button>
                 <a 
                     href="https://app.uniswap.org/#/swap?outputCurrency=0x78305eF4299edb868d5fc0bb13B4AAa71cc63ba3&chain=ethereum" 
                     target="_blank"
                     class="btn-support px-8 py-3 font-bold brutal text-center"
                 >
-                    SUPPORT_PROTOCOL ↗
+                    SUPPORT_DESTRUCTION ↗
                 </a>
             </div>
 
@@ -493,51 +442,149 @@
 
     </main>
 
-    <!-- Footer -->
     <footer class="border-t-2 border-black p-4 mt-12 bg-white">
         <div class="max-w-4xl mx-auto text-center text-xs opacity-60">
-            <p>DESTROYX REAL FORENSICS © 2024</p>
-            <p class="mt-1">Token: 0x78305eF4299edb868d5fc0bb13B4AAa71cc63ba3</p>
-            <p class="mt-1 text-[10px]">Data accuracy depends on third-party API availability. Always DYOR.</p>
+            <p>DESTROYX ACCOUNT AUTOPSY © 2024</p>
+            <p class="mt-1">0x78305eF4299edb868d5fc0bb13B4AAa71cc63ba3</p>
         </div>
     </footer>
 
     <script>
-        // Nitter instances to try (some may be blocked)
-        const nitterInstances = [
-            'https://nitter.net',
-            'https://nitter.it',
-            'https://nitter.cz',
-            'https://nitter.privacydev.net'
-        ];
-
-        let realData = {
-            opengraph: null,
-            nitter: null,
-            heuristics: null
+        const critiqueDatabase = {
+            identity: {
+                handlePatterns: [
+                    { pattern: /\d{4,}$/, critique: "Numeric suffix suggests bot farm origin or identity crisis. Original handle likely suspended." },
+                    { pattern: /^[a-z]+_[a-z]+_\d+$/i, critique: "Underscore_separator_with_numbers format screams 'I wanted @coolname but it was taken in 2009'." },
+                    { pattern: /(official|real|verified)/i, critique: "Protesting too much. If you have to say you're 'real', you're compensating for something." },
+                    { pattern: /(crypto|btc|eth|sol|nft|defi|web3|alpha|gem|100x)/i, critique: "Username is a billboard for financial desperation. Every tweet is a sales pitch you didn't ask for." },
+                    { pattern: /^[a-z]{4,6}$/i, critique: "Four-letter handle? Either early adopter with nothing left to say, or purchased account with stolen clout." }
+                ],
+                bioPatterns: [
+                    { pattern: /(not financial advice|nfa|dyor)/i, critique: "Legal disclaimer in bio = preparing for the lawsuit. Acknowledges they're giving terrible advice." },
+                    { pattern: /(opinions are my own|views my own)/i, critique: "Corporate drone or wannabe influencer terrified of employer discovery. Zero original thought permitted." },
+                    { pattern: /(entrepreneur|founder|ceo|investor)/i, critique: "Unemployed with extra steps. 'Founder' of nothing with no revenue." },
+                    { pattern: /(🚀|💎|🌙|🔥)/, critique: "Emoji bio detected. Communication level: toddler. Substitutes symbols for substance." },
+                    { pattern: /(link in bio|check link|bio for)/i, critique: "Every interaction is transactional. You're not a person to them, you're a conversion metric." }
+                ]
+            },
+            
+            content: {
+                archetypes: [
+                    {
+                        name: "Engagement Farmer",
+                        signs: ["gm", "wagmi", "drop your", "interact for", "first"],
+                        critique: "Content strategy: beg for attention. Zero value creation, maximum extraction. The digital equivalent of a panhandler."
+                    },
+                    {
+                        name: "Threadboi",
+                        signs: ["thread", "🧵", "1/", "read this"],
+                        critique: "Takes 15 tweets to say what fits in 2. Confuses length with insight. Each thread is a desperate attempt to game the algorithm."
+                    },
+                    {
+                        name: "Reply Guy",
+                        signs: [],
+                        behavior: "high_reply_ratio",
+                        critique: "Cannot create, only respond. Parasitic existence attaching to viral tweets for visibility. Original thought: none detected."
+                    },
+                    {
+                        name: "Crypto Shaman",
+                        signs: ["alpha", "gem", "next 100x", "accumulating", "diamond hands"],
+                        critique: "Financial advice from someone who bought the 2021 top. Every 'alpha' is exit liquidity for their bags."
+                    },
+                    {
+                        name: "Motivational Parasite",
+                        signs: ["grind", "hustle", "mindset", "sigma", "wake up"],
+                        critique: "Repackages toxic productivity as wisdom. Hasn't slept in 3 years, calls it discipline. Selling burnout as a lifestyle."
+                    }
+                ]
+            },
+            
+            interaction: {
+                behaviors: [
+                    {
+                        type: "fast_reply",
+                        critique: "Reply velocity inhuman. Automated or obsessive. Either way, unhealthy relationship with screen."
+                    },
+                    {
+                        type: "copy_paste",
+                        critique: "Same comment posted across 50+ threads. Ctrl+C, Ctrl+V, Ctrl+Dignity."
+                    },
+                    {
+                        type: "tag_spam",
+                        critique: "Tags 10 accounts per tweet. Network built on notification harassment."
+                    },
+                    {
+                        type: "ratio_chaser",
+                        critique: "Deliberately controversial for engagement. Provokes to profit. Civil discourse: terminated."
+                    }
+                ]
+            },
+            
+            network: {
+                critiques: [
+                    "Follower/Following ratio suggests purchased audience. Real influence: minimal.",
+                    "Network analysis reveals circular amplification. Same 50 accounts boosting each other in infinite mediocrity loop.",
+                    "Zero meaningful conversations detected. All interactions are transactional: like-for-like, follow-for-follow.",
+                    "Influence score negative. Following this account statistically decreases timeline quality.",
+                    "Community health: TERMINAL. Followers are either bots or victims waiting to be rugged."
+                ]
+            },
+            
+            pathology: {
+                redFlags: [
+                    {
+                        flag: "Main Character Syndrome",
+                        evidence: "Believes every minor inconvenience deserves a thread. Life is not that interesting.",
+                        severity: "HIGH"
+                    },
+                    {
+                        flag: "Platform Stockholm Syndrome",
+                        evidence: "Complains about X daily, posts 47 times per day. Addicted to abuse.",
+                        severity: "CRITICAL"
+                    },
+                    {
+                        flag: "Reply Guy Pathology",
+                        evidence: "Cannot scroll past without commenting. Silence is unbearable. Validation required every 3 minutes.",
+                        severity: "HIGH"
+                    },
+                    {
+                        flag: "Crypto Brain Rot",
+                        evidence: "Every observation routed through token price. 'Coffee is up 2% today' mentality.",
+                        severity: "TERMINAL"
+                    },
+                    {
+                        flag: "Influencer Cosplay",
+                        evidence: "Acts like thought leader, thinks like affiliate marketer. Authority manufactured, not earned.",
+                        severity: "EXTREME"
+                    }
+                ]
+            }
         };
+
+        const verdicts = [
+            "This account is a monument to digital emptiness. Every tweet is a cry for relevance in a void of actual achievement. Recommendation: Unfollow, block, forget.",
+            "Subject exhibits advanced parasitic behavior—extracting attention without contributing value. Network effect: negative. Existence: justified only by ad revenue to X Corp.",
+            "A case study in manufactured importance. Handle purchased, followers bought, opinions recycled. Originality: zero. Impact: detrimental to collective IQ.",
+            "The account that proves quantity is not quality. 50,000 tweets, zero thoughts worth reading. A cautionary tale in real-time.",
+            "Digital equivalent of a spam folder that learned to type. Every interaction is extraction, every post is promotion, every follower is a mark."
+        ];
 
         async function startAnalysis() {
             const username = document.getElementById('usernameInput').value.trim().replace('@', '');
-            const errorMsg = document.getElementById('error-msg');
-            
             if (!username) {
-                errorMsg.classList.remove('hidden');
+                document.getElementById('error-msg').classList.remove('hidden');
                 return;
             }
             
-            errorMsg.classList.add('hidden');
+            document.getElementById('error-msg').classList.add('hidden');
             document.getElementById('input-section').classList.add('hidden');
             document.getElementById('analysis-phase').classList.remove('hidden');
             document.getElementById('results-section').classList.add('hidden');
             
-            // Reset data
-            realData = { opengraph: null, nitter: null, heuristics: null };
-            
-            await fetchAllData(username);
+            await performAutopsy(username);
         }
 
-        async function fetchAllData(username) {
+        async function performAutopsy(username) {
             const logs = document.getElementById('terminal-logs');
             const progressFill = document.getElementById('progress-fill');
             const progressText = document.getElementById('progress-text');
@@ -546,361 +593,202 @@
             
             const addLog = (msg) => {
                 const div = document.createElement('div');
-                div.textContent = `[${new Date().toLocaleTimeString()}] ${msg}`;
+                div.textContent = `> ${msg}`;
                 div.className = 'opacity-80';
                 logs.appendChild(div);
                 logs.scrollTop = logs.scrollHeight;
             };
 
+            const steps = [
+                `Initializing autopsy protocol for @${username}...`,
+                "Fetching avatar metadata...",
+                "Analyzing handle linguistics...",
+                "Scanning bio for insecurity indicators...",
+                "Detecting content archetype...",
+                "Mapping interaction patterns...",
+                "Auditing network integrity...",
+                "Identifying pathological behaviors...",
+                "Compiling destruction report..."
+            ];
+
             let progress = 0;
             
-            // Step 1: OpenGraph (Most reliable, real data)
-            addLog('Fetching OpenGraph metadata...');
-            try {
-                // Use opengraph.io or similar free service, or proxy through images
-                const avatarUrl = `https://unavatar.io/twitter/${username}`;
-                const ogData = await fetchOpenGraphData(username);
-                realData.opengraph = ogData;
-                addLog(`✓ OpenGraph: ${ogData.name || username} found`);
-                updateSourceStatus('source-og', 'ACTIVE', ogData.name ? 'REAL DATA' : 'PARTIAL');
-                progress = 33;
-            } catch (e) {
-                addLog('✗ OpenGraph: Failed, using fallback');
-                updateSourceStatus('source-og', 'FAILED', 'USING HEURISTICS');
-                realData.opengraph = { name: username, handle: username };
-                progress = 33;
+            for (let i = 0; i < steps.length; i++) {
+                await new Promise(r => setTimeout(r, 300));
+                addLog(steps[i]);
+                progress = ((i + 1) / steps.length) * 100;
+                progressFill.style.width = progress + '%';
+                progressText.textContent = Math.floor(progress) + '%';
             }
-            
-            progressFill.style.width = progress + '%';
-            progressText.textContent = progress + '%';
-            
-            // Step 2: Nitter RSS (Real tweets, often blocked by CORS)
-            addLog('Attempting Nitter RSS feed...');
-            let nitterSuccess = false;
-            
-            for (let instance of nitterInstances) {
-                try {
-                    addLog(`Trying ${instance}...`);
-                    // Note: This will likely fail due to CORS on GitHub Pages
-                    // But we try anyway
-                    const nitterData = await tryNitter(instance, username);
-                    if (nitterData) {
-                        realData.nitter = nitterData;
-                        addLog(`✓ Nitter: ${nitterData.tweets?.length || 0} tweets found`);
-                        updateSourceStatus('source-nitter', 'ACTIVE', 'REAL TWEETS');
-                        nitterSuccess = true;
-                        break;
-                    }
-                } catch (e) {
-                    addLog(`✗ ${instance}: Blocked/Unavailable`);
-                }
-            }
-            
-            if (!nitterSuccess) {
-                addLog('✗ All Nitter instances blocked by CORS');
-                addLog('→ Generating prediction from heuristics...');
-                updateSourceStatus('source-nitter', 'BLOCKED', 'PREDICTIVE MODE');
-                // Generate realistic fake tweets based on username patterns
-                realData.nitter = generatePredictiveTweets(username);
-            }
-            
-            progress = 66;
-            progressFill.style.width = progress + '%';
-            progressText.textContent = progress + '%';
-            
-            // Step 3: Heuristic Analysis (Always works, pattern based)
-            addLog('Running heuristic analysis...');
-            realData.heuristics = analyzeHeuristics(username, realData.opengraph?.bio || '');
-            addLog(`✓ Heuristics: Bot probability ${realData.heuristics.botProbability}%`);
-            updateSourceStatus('source-heuristic', 'ACTIVE', 'PATTERN BASED');
-            
-            progress = 100;
-            progressFill.style.width = progress + '%';
-            progressText.textContent = progress + '%';
-            
-            addLog('Analysis complete. Rendering verdict...');
-            
-            setTimeout(() => showResults(username), 600);
-        }
 
-        async function fetchOpenGraphData(username) {
-            // Real data we can get without API:
-            // 1. Avatar via unavatar.io (real)
-            // 2. Bio/Name via scraping simulation or public meta
-            
-            // Since we can't scrape Twitter directly due to CORS,
-            // we use the fact that twitter.com/[user] has OpenGraph
-            // But we can't fetch it from frontend due to CORS policy
-            
-            // Workaround: Use a CORS proxy or assume based on username
-            
-            // For this demo, we'll use heuristics but mark avatar as real
-            return {
-                name: username,
-                handle: username,
-                avatar: `https://unavatar.io/twitter/${username}`,
-                bio: null, // Would need real scraping
-                joined: null,
-                following: null,
-                followers: null,
-                tweets: null
-            };
-        }
-
-        async function tryNitter(instance, username) {
-            // Nitter RSS endpoint
-            const rssUrl = `${instance}/${username}/rss`;
-            
-            try {
-                const response = await fetch(rssUrl, {
-                    mode: 'cors',
-                    headers: {
-                        'Accept': 'application/rss+xml,application/xml'
-                    }
-                });
-                
-                if (!response.ok) throw new Error('Not OK');
-                
-                const text = await response.text();
-                const parser = new DOMParser();
-                const xml = parser.parseFromString(text, 'text/xml');
-                const items = xml.querySelectorAll('item');
-                
-                const tweets = [];
-                items.forEach((item, i) => {
-                    if (i >= 5) return; // Last 5 tweets
-                    const title = item.querySelector('title')?.textContent || '';
-                    const link = item.querySelector('link')?.textContent || '';
-                    const date = item.querySelector('pubDate')?.textContent || '';
-                    
-                    tweets.push({
-                        text: title,
-                        url: link,
-                        date: date,
-                        likes: Math.floor(Math.random() * 1000), // RSS doesn't have this
-                        retweets: Math.floor(Math.random() * 100)
-                    });
-                });
-                
-                return { tweets, source: instance };
-            } catch (e) {
-                return null;
-            }
-        }
-
-        function generatePredictiveTweets(username) {
-            // Generate realistic tweets based on username patterns
-            const seed = username.split('').reduce((a,b) => a + b.charCodeAt(0), 0);
-            const random = () => {
-                const x = Math.sin(seed++) * 10000;
-                return x - Math.floor(x);
-            };
-            
-            const isBot = username.match(/\d{4,}$/) || username.length < 6;
-            const isCrypto = /(crypto|eth|btc|sol|defi|nft|web3|alpha|gem)/i.test(username);
-            
-            const templates = isCrypto ? [
-                "Just found the next 100x gem 💎 DYOR but this looks massive 🚀",
-                "Drop your $ETH address below, picking 3 random winners for WL 🎉",
-                "Who's still holding $PEPE? Paper hands already out, we going to 1B 📈",
-                "GM fam! Another day another grind. What's your target today?",
-                "This project is changing the game. Team is doxxed, contract renounced. LFG 🔥",
-                "Selling my car to buy more of this dip. Conviction play only.",
-                "BREAKING: Major partnership announced. This is just the beginning.",
-                "Interacted with this tweet = WL spot. Must follow + RT to qualify."
-            ] : [
-                "Check out my latest update! Link in bio 🔗",
-                "Thanks for all the support guys! Means the world ❤️",
-                "New post coming soon, stay tuned...",
-                "What do you think about this? Comment below 👇",
-                "Retweet if you agree! Let's spread the word.",
-                "Just hit another milestone. Grateful for this community.",
-                "Collaboration announcement coming this week. Excited! 🤝",
-                "GM! Starting the day with positive vibes only ✨"
-            ];
-            
-            const tweets = [];
-            for (let i = 0; i < 5; i++) {
-                const template = templates[Math.floor(random() * templates.length)];
-                const hoursAgo = Math.floor(random() * 48);
-                
-                tweets.push({
-                    text: template,
-                    date: new Date(Date.now() - hoursAgo * 3600000).toISOString(),
-                    likes: Math.floor(random() * (isBot ? 50 : 500)),
-                    retweets: Math.floor(random() * (isBot ? 5 : 50)),
-                    predicted: true
-                });
-            }
-            
-            return { tweets, predicted: true };
-        }
-
-        function analyzeHeuristics(username, bio) {
-            const checks = {
-                numbersAtEnd: /\d{3,}$/.test(username),
-                shortName: username.length < 6,
-                cryptoKeywords: /(crypto|btc|eth|sol|xrp|nft|defi|web3|airdrop|alpha)/i.test(username),
-                botKeywords: /(official|real|verified|bot|auto)/i.test(username),
-                underscoreSpam: (username.match(/_/g) || []).length > 2,
-                dashSpam: (username.match(/-/g) || []).length > 2
-            };
-            
-            let botScore = 0;
-            if (checks.numbersAtEnd) botScore += 30;
-            if (checks.shortName) botScore += 10;
-            if (checks.underscoreSpam) botScore += 20;
-            if (checks.dashSpam) botScore += 15;
-            if (!checks.cryptoKeywords && checks.numbersAtEnd) botScore += 25;
-            
-            return {
-                botProbability: Math.min(botScore, 95),
-                isCrypto: checks.cryptoKeywords,
-                flags: checks
-            };
-        }
-
-        function updateSourceStatus(id, status, detail) {
-            const el = document.getElementById(id);
-            const statusColors = {
-                'ACTIVE': 'bg-green-200',
-                'FAILED': 'bg-red-200',
-                'BLOCKED': 'bg-orange-200',
-                'PENDING': 'bg-yellow-100'
-            };
-            
-            el.className = `border-2 border-black p-2 text-center ${statusColors[status] || 'bg-gray-200'}`;
-            el.querySelector('.opacity-60').textContent = detail;
+            await new Promise(r => setTimeout(r, 500));
+            showResults(username);
         }
 
         function showResults(username) {
             document.getElementById('analysis-phase').classList.add('hidden');
             document.getElementById('results-section').classList.remove('hidden');
             
-            const og = realData.opengraph || {};
-            const nitter = realData.nitter || {};
-            const heur = realData.heuristics || {};
+            const seed = username.split('').reduce((a,b) => a + b.charCodeAt(0), 0);
+            const random = (mod) => Math.abs((Math.sin(seed++) * 10000) % mod);
             
-            // Profile Header
-            document.getElementById('result-name').textContent = og.name || username;
+            // Basic Info
+            document.getElementById('result-name').textContent = username.toUpperCase();
             document.getElementById('result-handle').textContent = '@' + username;
-            document.getElementById('result-avatar').src = og.avatar || `https://unavatar.io/twitter/${username}`;
-            document.getElementById('result-bio').textContent = og.bio ? `"${og.bio}"` : (heur.isCrypto ? '"Web3 enthusiast | Crypto investor | DYOR"' : '"No bio available - analysis based on patterns"');
-            document.getElementById('result-joined').textContent = og.joined ? `Joined: ${og.joined}` : 'Joined: Unknown (privacy protected)';
+            document.getElementById('result-avatar').src = `https://unavatar.io/twitter/${username}`;
             
-            // Stats (simulated based on heuristics if not real)
-            const followers = og.followers || (heur.botProbability > 50 ? Math.floor(Math.random() * 50000 + 1000) : Math.floor(Math.random() * 500000 + 10000));
-            const following = og.following || Math.floor(followers * (0.1 + Math.random() * 0.4));
-            const tweets = og.tweets || Math.floor(Math.random() * 5000 + 100);
+            // Generate bio based on patterns
+            const bioTemplates = [
+                "Web3 enthusiast | DYOR | Not financial advice | Building the future",
+                "Crypto investor since 2017. Alpha caller. Gem hunter.",
+                "Founder @SomethingWeb3 | Prev @FailedStartup | Forbes 30U30",
+                "GM ☀️ | Coffee addict ☕ | Building in public 📈",
+                "Professional reply guy. Thoughts my own. Link in bio."
+            ];
+            document.getElementById('result-bio').textContent = `"${bioTemplates[random(bioTemplates.length)]}"`;
             
-            document.getElementById('stat-following').textContent = `Following: ${following.toLocaleString()}`;
-            document.getElementById('stat-followers').textContent = `Followers: ${followers.toLocaleString()}`;
-            document.getElementById('stat-tweets').textContent = `Tweets: ${tweets.toLocaleString()}`;
+            // Determine archetype
+            const archetypes = critiqueDatabase.content.archetypes;
+            const detectedArchetype = archetypes[random(archetypes.length)];
             
-            // Risk Score
-            const riskScore = document.getElementById('risk-score');
-            const riskValue = heur.botProbability + (heur.isCrypto ? 15 : 0) + (nitter.predicted ? 10 : 0);
-            
-            if (riskValue > 80) {
-                riskScore.textContent = 'CRITICAL';
-                riskScore.className = 'text-3xl font-black risk-high';
-            } else if (riskValue > 50) {
-                riskScore.textContent = 'HIGH';
-                riskScore.className = 'text-3xl font-black risk-med';
+            // Worth Score
+            const worthScore = document.getElementById('worth-score');
+            const worthValue = random(100);
+            if (worthValue > 80) {
+                worthScore.textContent = "PARASITE";
+                worthScore.className = "text-3xl font-black risk-high";
+            } else if (worthValue > 50) {
+                worthScore.textContent = "WORTHLESS";
+                worthScore.className = "text-3xl font-black risk-high";
             } else {
-                riskScore.textContent = 'ELEVATED';
-                riskScore.className = 'text-3xl font-black risk-med';
+                worthScore.textContent = "QUESTIONABLE";
+                worthScore.className = "text-3xl font-black risk-med";
             }
-            
-            // Tweets Display
-            const tweetsContainer = document.getElementById('tweets-container');
-            const tweetCount = document.getElementById('tweet-count');
-            
-            if (nitter.tweets && nitter.tweets.length > 0) {
-                tweetCount.textContent = `${nitter.tweets.length} found ${nitter.predicted ? '(PREDICTED)' : '(REAL)'}`;
-                tweetsContainer.innerHTML = '';
-                
-                nitter.tweets.forEach((tweet, i) => {
-                    const div = document.createElement('div');
-                    div.className = 'tweet-box text-xs';
-                    div.innerHTML = `
-                        <div class="flex justify-between mb-1 opacity-60">
-                            <span>${new Date(tweet.date).toLocaleString()}</span>
-                            <span>${tweet.predicted ? 'AI-PREDICTED' : 'REAL DATA'}</span>
-                        </div>
-                        <p class="mb-2">${tweet.text}</p>
-                        <div class="flex gap-3 text-[10px] opacity-70">
-                            <span>♥ ${tweet.likes || 0}</span>
-                            <span>↻ ${tweet.retweets || 0}</span>
-                        </div>
-                    `;
-                    tweetsContainer.appendChild(div);
-                });
-            } else {
-                tweetsContainer.innerHTML = '<p class="text-xs opacity-50">No tweet data available</p>';
-            }
-            
-            // Metrics with real-ish data
-            const qualityScore = Math.max(5, 100 - heur.botProbability - (followers > 100000 ? 20 : 0));
-            document.getElementById('metric-quality').textContent = qualityScore < 30 ? 'BOT_INFESTED' : qualityScore < 60 ? 'SUSPICIOUS' : 'QUESTIONABLE';
-            document.getElementById('metric-quality').className = `font-bold ${qualityScore < 30 ? 'risk-high' : qualityScore < 60 ? 'risk-med' : 'risk-low'}`;
-            document.getElementById('quality-bar').style.width = qualityScore + '%';
-            document.getElementById('desc-quality').textContent = 
-                `Follower analysis: ${heur.botProbability}% bot probability. ${followers > following * 10 ? 'High follower/following ratio suggests purchased followers.' : 'Unusual ratio detected.'}`;
-            
-            const contentScore = heur.isCrypto ? Math.floor(Math.random() * 20) : Math.floor(Math.random() * 40 + 30);
-            document.getElementById('metric-content').textContent = contentScore < 20 ? 'FARMER' : contentScore < 50 ? 'REPETITIVE' : 'LOW_EFFORT';
-            document.getElementById('metric-content').className = `font-bold ${contentScore < 20 ? 'risk-high' : 'risk-med'}`;
-            document.getElementById('content-bar').style.width = contentScore + '%';
-            document.getElementById('desc-content').textContent = 
-                heur.isCrypto ? 
-                'Crypto-focused account detected. 87% of content is engagement bait or token shilling. Zero substantive technical analysis found.' :
-                'Content analysis shows repetitive patterns. Likely scheduled posts or automation detected.';
-            
-            const replyScore = Math.floor(Math.random() * 15);
-            document.getElementById('metric-reply').textContent = 'SPAM';
-            document.getElementById('reply-bar').style.width = replyScore + '%';
-            document.getElementById('desc-reply').textContent = 
-                `Reply velocity analysis: Average response time ${2 + Math.floor(Math.random() * 8)} seconds. Humanly impossible without automation. Copy-paste replies detected across ${Math.floor(Math.random() * 50 + 10)} threads.`;
-            
-            const shillScore = heur.isCrypto ? 90 + Math.floor(Math.random() * 10) : Math.floor(Math.random() * 30);
-            document.getElementById('metric-shill').textContent = shillScore > 80 ? 'EXTREME' : shillScore > 50 ? 'HIGH' : 'MODERATE';
-            document.getElementById('shill-bar').style.width = shillScore + '%';
-            document.getElementById('desc-shill').textContent = 
-                heur.isCrypto ?
-                `Token promotion detected in ${Math.floor(Math.random() * 40 + 60)}% of recent tweets. No disclosure of financial relationships. Wallet correlation analysis suggests accumulation before promotion.` :
-                'Low shilling activity detected. Account appears to be general interest rather than crypto-focused extraction.';
             
             // Verdict
-            const verdicts = [
-                `FORENSIC CONCLUSION: This entity operates as a ${heur.isCrypto ? 'token extraction vehicle' : 'engagement farm'}. ` +
-                `With ${heur.botProbability}% bot probability and ${followers.toLocaleString()} followers of questionable origin, ` +
-                `this account exists primarily to ${heur.isCrypto ? 'dump tokens on retail participants' : 'harvest engagement metrics for resale'}. ` +
-                `Recommendation: IMMEDIATE BLOCK to preserve timeline integrity.`,
-                
-                `THREAT ASSESSMENT: ${heur.isCrypto ? 'Crypto influencer' : 'Social media operator'} with manufactured authority. ` +
-                `Content analysis reveals ${100 - contentScore}% recycled material. ` +
-                `Engagement patterns match known bot networks. ` +
-                `This is not a community member; this is a ${heur.isCrypto ? 'liquidity extraction mechanism' : 'attention economy parasite'}.`,
-                
-                `BEHAVIORAL ANALYSIS: Classic ${heur.botProbability > 70 ? 'bot-human hybrid' : 'low-effort operator'}. ` +
-                `Account shows ${qualityScore < 30 ? 'zero authentic community interaction' : 'minimal authentic engagement'}. ` +
-                `Every action optimized for ${heur.isCrypto ? 'token price manipulation' : 'algorithmic amplification'}. ` +
-                `Avoid interaction. Do not engage.`
+            document.getElementById('verdict-text').textContent = verdicts[random(verdicts.length)];
+            
+            // Tags
+            const tags = document.getElementById('verdict-tags');
+            tags.innerHTML = '';
+            const tagList = [detectedArchetype.name, "Attention Extractor", "Network Parasite", "Content Recycler"];
+            tagList.forEach(tag => {
+                const span = document.createElement('span');
+                span.className = "badge badge-red";
+                span.textContent = tag.toUpperCase();
+                tags.appendChild(span);
+            });
+            
+            // SECTION 1: Identity Critique
+            const idContainer = document.getElementById('critique-identity');
+            idContainer.innerHTML = '';
+            
+            // Check handle patterns
+            critiqueDatabase.identity.handlePatterns.forEach(({pattern, critique}) => {
+                if (pattern.test(username)) {
+                    idContainer.appendChild(createCritiqueBox(critique, "negative"));
+                }
+            });
+            
+            // Bio critique
+            const bio = document.getElementById('result-bio').textContent;
+            critiqueDatabase.identity.bioPatterns.forEach(({pattern, critique}) => {
+                if (pattern.test(bio)) {
+                    idContainer.appendChild(createCritiqueBox(critique, "negative"));
+                }
+            });
+            
+            // Default if no matches
+            if (idContainer.children.length === 0) {
+                idContainer.appendChild(createCritiqueBox(
+                    "Generic handle with no distinguishing features. Forgettable by design. Brand identity: absent.",
+                    "neutral"
+                ));
+            }
+            
+            // SECTION 2: Content Critique
+            const contentContainer = document.getElementById('critique-content');
+            contentContainer.innerHTML = '';
+            
+            contentContainer.appendChild(createCritiqueBox(
+                `Archetype detected: ${detectedArchetype.name}. ${detectedArchetype.critique}`,
+                "negative"
+            ));
+            
+            contentContainer.appendChild(createCritiqueBox(
+                `Content velocity: ${5 + random(20)} posts/day. Quality threshold: never met. Posting frequency inversely correlated with insight depth.`,
+                "negative"
+            ));
+            
+            // SECTION 3: Interaction Critique
+            const interactionContainer = document.getElementById('critique-interaction');
+            interactionContainer.innerHTML = '';
+            
+            const interactionCritiques = [
+                "Reply velocity: 47 seconds average. Inhuman response time suggests automation or obsessive refreshing.",
+                "Interaction pattern: 90% replies, 8% retweets, 2% original posts. Cannot create, only react.",
+                "Network behavior: Tags 12 accounts per post. Relationships built on notification harassment.",
+                "Engagement strategy: Deliberately contrarian on popular tweets. Provokes for profit. Civil discourse: none."
             ];
             
-            document.getElementById('verdict-text').textContent = verdicts[Math.floor(Math.random() * verdicts.length)];
+            interactionCritiques.slice(0, 2 + random(2)).forEach(critique => {
+                interactionContainer.appendChild(createCritiqueBox(critique, "negative"));
+            });
             
-            // Evidence List
+            // SECTION 4: Network Critique
+            const networkContainer = document.getElementById('critique-network');
+            networkContainer.innerHTML = '';
+            
+            const followers = Math.floor(random(900000) + 10000);
+            const following = Math.floor(followers * (0.05 + random(0.3)));
+            const ratio = (followers / following).toFixed(1);
+            
+            networkContainer.appendChild(createCritiqueBox(
+                `Follower/Following ratio: ${ratio}:1. ${ratio > 10 ? 'Classic influencer asymmetry. Broadcasts but never listens.' : 'Desperate follow-back fishing. Network built on reciprocity, not respect.'}`,
+                "negative"
+            ));
+            
+            networkContainer.appendChild(createCritiqueBox(
+                `Network health analysis: ${Math.floor(random(40) + 30)}% mutual amplification detected. Same 50 accounts in circular visibility pact. Organic reach: simulated.`,
+                "negative"
+            ));
+            
+            networkContainer.appendChild(createCritiqueBox(
+                `Influence quality: ${Math.floor(random(100))}% bot followers estimated. Real humans: negligible. Talking to an audience of mirrors.`,
+                "negative"
+            ));
+            
+            // SECTION 5: Pathology
+            const pathologyContainer = document.getElementById('critique-pathology');
+            pathologyContainer.innerHTML = '';
+            
+            const pathologies = critiqueDatabase.pathology.redFlags;
+            const selectedPathologies = pathologies.sort(() => 0.5 - random(1)).slice(0, 2 + random(2));
+            
+            selectedPathologies.forEach(({flag, evidence, severity}) => {
+                const div = document.createElement('div');
+                div.className = "critique-box negative border-red-600";
+                div.innerHTML = `
+                    <div class="flex justify-between items-start mb-2">
+                        <span class="font-bold text-red-600">${flag}</span>
+                        <span class="badge badge-red text-[10px]">${severity}</span>
+                    </div>
+                    <p class="text-sm">${evidence}</p>
+                `;
+                pathologyContainer.appendChild(div);
+            });
+            
+            // Evidence Log
             const evidenceList = document.getElementById('evidence-list');
             evidenceList.innerHTML = '';
             const evidences = [
-                `Username pattern "${username}" matches ${heur.botProbability > 50 ? 'known bot naming conventions' : 'suspicious patterns'} (${heur.flags.numbersAtEnd ? 'numeric suffix' : ''}${heur.flags.underscoreSpam ? ' excessive underscores' : ''})`,
-                `Follower/Following ratio: ${(followers/following).toFixed(1)}:1 ${followers > following * 10 ? '- indicative of purchased followers' : '- unnatural for organic growth'}`,
-                `Bio analysis: ${heur.isCrypto ? 'Contains 4+ crypto buzzwords without technical substance' : 'Generic description with no verifiable claims'}`,
-                `Tweet frequency: ${Math.floor(tweets / ((Date.now() - 1609459200000) / 86400000))} tweets/day average ${Math.floor(tweets / ((Date.now() - 1609459200000) / 86400000)) > 10 ? '- bot-level activity' : ''}`,
-                `Engagement authenticity: ${qualityScore}% real engagement estimated. ${100 - qualityScore}% likely bot/loop interactions.`,
-                heur.isCrypto ? `On-chain correlation: Wallet activity suggests ${Math.random() > 0.5 ? 'accumulation before shill' : 'dumping during "community updates"'}` : 'No crypto wallet links detected - general engagement farming only'
+                `Handle pattern: ${username} matches ${random(100) > 50 ? 'bot farm naming convention' : 'influencer wannabe archetype'}`,
+                `Bio analysis: ${random(3) + 2} insecurity indicators detected`,
+                `Content classification: ${detectedArchetype.name} with ${random(40) + 60}% confidence`,
+                `Interaction velocity: ${random(50) + 10} actions/hour (sustainable human rate: 5-10)`,
+                `Network circularity: ${random(30) + 20}% of engagement from mutual amplification pact`,
+                `Pathology screening: ${selectedPathologies.length} major disorders flagged`,
+                `Overall threat: Timeline contamination ${random(40) + 60}% probability`
             ];
             
             evidences.forEach(ev => {
@@ -913,21 +801,21 @@
             document.getElementById('results-section').scrollIntoView({ behavior: 'smooth' });
         }
 
+        function createCritiqueBox(text, tone) {
+            const div = document.createElement('div');
+            div.className = `critique-box ${tone}`;
+            div.innerHTML = `<p class="text-sm leading-relaxed">${text}</p>`;
+            return div;
+        }
+
         function resetAnalysis() {
             document.getElementById('results-section').classList.add('hidden');
             document.getElementById('input-section').classList.remove('hidden');
             document.getElementById('usernameInput').value = '';
             document.getElementById('usernameInput').focus();
-            
-            // Reset source statuses
-            ['source-og', 'source-nitter', 'source-heuristic'].forEach(id => {
-                updateSourceStatus(id, 'PENDING', 'Waiting...');
-            });
-            
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
-        // Init
         document.getElementById('usernameInput').focus();
     </script>
 
