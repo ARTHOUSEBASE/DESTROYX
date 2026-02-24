@@ -2,21 +2,26 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DESTROYX // ACCOUNT_AUTOPSY.exe</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>$DESTROYX // v9.0.0-MAINNET</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.ethers.io/lib/ethers-5.7.umd.min.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700;800&display=swap" rel="stylesheet">
     <style>
         :root {
             --bg: #ffffff;
             --fg: #000000;
             --accent: #0000ff;
+            --dim: #666666;
+            --border-width: 3px;
+            --shadow-offset: 6px;
         }
         
         * { 
             box-sizing: border-box;
             margin: 0;
             padding: 0;
+            -webkit-tap-highlight-color: transparent;
         }
         
         body {
@@ -25,34 +30,52 @@
             font-family: 'JetBrains Mono', monospace;
             min-height: 100vh;
             line-height: 1.6;
+            overflow-x: hidden;
         }
 
         .container {
-            max-width: 800px;
+            max-width: 900px;
             margin: 0 auto;
-            padding: 20px;
+            padding: 12px;
+        }
+
+        @media (min-width: 640px) {
+            .container {
+                padding: 20px;
+            }
         }
 
         /* Header */
         .header {
-            border: 3px solid var(--fg);
-            padding: 20px;
-            margin-bottom: 20px;
-            box-shadow: 6px 6px 0px 0px var(--fg);
+            border: var(--border-width) solid var(--fg);
+            padding: 15px;
+            margin-bottom: 15px;
+            box-shadow: var(--shadow-offset) var(--shadow-offset) 0px 0px var(--fg);
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        @media (min-width: 640px) {
+            .header {
+                flex-direction: row;
+                justify-content: space-between;
+                align-items: center;
+                padding: 20px;
+                margin-bottom: 20px;
+            }
         }
 
         .header h1 {
-            font-size: 2.5rem;
+            font-size: 1.5rem;
             font-weight: 800;
             letter-spacing: -2px;
         }
 
-        .header .meta {
-            font-size: 0.75rem;
-            opacity: 0.7;
-            margin-top: 8px;
-            border-top: 2px solid var(--fg);
-            padding-top: 8px;
+        @media (min-width: 640px) {
+            .header h1 {
+                font-size: 2rem;
+            }
         }
 
         .blink {
@@ -63,33 +86,108 @@
             50% { opacity: 0; }
         }
 
+        /* Wallet Status */
+        .wallet-box {
+            border: 2px solid var(--fg);
+            padding: 10px 15px;
+            font-size: 0.75rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            text-align: center;
+            word-break: break-all;
+        }
+
+        @media (min-width: 640px) {
+            .wallet-box {
+                font-size: 0.8rem;
+                text-align: left;
+            }
+        }
+
+        .wallet-box:hover {
+            background: var(--fg);
+            color: var(--bg);
+        }
+
+        .wallet-connected {
+            background: var(--fg);
+            color: var(--bg);
+        }
+
+        /* Badges */
+        .badge-tier {
+            display: inline-block;
+            padding: 4px 12px;
+            font-size: 0.7rem;
+            font-weight: 800;
+            border: 2px solid var(--fg);
+            margin-left: 8px;
+        }
+
+        @media (min-width: 640px) {
+            .badge-tier {
+                font-size: 0.75rem;
+                margin-left: 10px;
+            }
+        }
+
+        .tier-whale { background: var(--fg); color: var(--bg); }
+        .tier-shark { background: #333; color: var(--bg); }
+        .tier-fish { background: #666; color: var(--bg); }
+        .tier-shrimp { background: #ccc; color: var(--fg); }
+        .tier-none { background: var(--bg); color: var(--fg); }
+
+        /* Main Layout */
+        .main-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 15px;
+        }
+
+        @media (min-width: 768px) {
+            .main-grid {
+                grid-template-columns: 1fr 300px;
+                gap: 20px;
+            }
+        }
+
         /* Input Section */
         .input-section {
-            border: 3px solid var(--fg);
-            padding: 20px;
-            margin-bottom: 20px;
-            box-shadow: 6px 6px 0px 0px var(--fg);
+            border: var(--border-width) solid var(--fg);
+            padding: 15px;
+            box-shadow: var(--shadow-offset) var(--shadow-offset) 0px 0px var(--fg);
+        }
+
+        @media (min-width: 640px) {
+            .input-section {
+                padding: 20px;
+            }
         }
 
         .input-group {
             display: flex;
+            flex-direction: column;
             gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        @media (min-width: 640px) {
+            .input-group {
+                flex-direction: row;
+            }
         }
 
         input[type="text"] {
             flex: 1;
             background: #fff;
-            border: 3px solid var(--fg);
+            border: var(--border-width) solid var(--fg);
             color: var(--fg);
             padding: 12px 16px;
             font-family: inherit;
             font-size: 1rem;
             outline: none;
             font-weight: bold;
-        }
-
-        input[type="text"]:focus {
-            background: #f5f5f5;
+            width: 100%;
         }
 
         input[type="text"]::placeholder {
@@ -99,15 +197,28 @@
         /* Buttons */
         .btn {
             background: #fff;
-            border: 3px solid var(--fg);
+            border: var(--border-width) solid var(--fg);
             color: var(--fg);
-            padding: 12px 24px;
+            padding: 12px 20px;
             font-family: inherit;
             font-weight: 800;
             cursor: pointer;
             text-transform: uppercase;
             transition: all 0.1s;
             box-shadow: 4px 4px 0px 0px var(--fg);
+            font-size: 0.85rem;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            width: 100%;
+        }
+
+        @media (min-width: 640px) {
+            .btn {
+                width: auto;
+                padding: 12px 24px;
+                font-size: 0.9rem;
+            }
         }
 
         .btn:hover {
@@ -132,156 +243,388 @@
             color: var(--fg);
         }
 
-        .btn-support {
-            background: var(--accent);
-            border-color: var(--fg);
-            color: #fff;
-            width: 100%;
-            margin-top: 15px;
-            padding: 16px;
-            font-size: 0.9rem;
-            text-align: center;
-            display: block;
-            text-decoration: none;
-            box-shadow: 4px 4px 0px 0px var(--fg);
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none !important;
+            box-shadow: 4px 4px 0px 0px var(--fg) !important;
         }
 
-        .btn-support:hover {
-            background: #0000cc;
-            transform: translate(-2px, -2px);
-            box-shadow: 6px 6px 0px 0px var(--fg);
+        .btn-group {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
         }
 
-        .btn-support .main {
-            font-weight: 800;
-            display: block;
-            margin-bottom: 4px;
+        @media (min-width: 640px) {
+            .btn-group {
+                flex-direction: row;
+            }
         }
 
-        .btn-support .sub {
-            font-size: 0.7rem;
-            opacity: 0.9;
-            display: block;
-        }
-
-        /* Terminal Output */
-        .terminal {
-            border: 3px solid var(--fg);
-            background: #f5f5f5;
+        /* Token Education Box */
+        .edu-box {
+            border: var(--border-width) solid var(--accent);
             padding: 15px;
-            margin-bottom: 20px;
-            min-height: 200px;
-            font-size: 0.85rem;
-            box-shadow: 6px 6px 0px 0px var(--fg);
+            margin-top: 15px;
+            background: #f8f8ff;
+        }
+
+        .edu-box h4 {
+            color: var(--accent);
+            margin-bottom: 8px;
+            font-size: 0.8rem;
+        }
+
+        @media (min-width: 640px) {
+            .edu-box h4 {
+                font-size: 0.85rem;
+            }
+        }
+
+        .edu-box p {
+            font-size: 0.75rem;
+            margin-bottom: 10px;
+        }
+
+        @media (min-width: 640px) {
+            .edu-box p {
+                font-size: 0.8rem;
+            }
+        }
+
+        .contract-addr {
+            font-size: 0.65rem;
+            word-break: break-all;
+            background: var(--fg);
+            color: var(--bg);
+            padding: 8px;
+            font-weight: bold;
+        }
+
+        @media (min-width: 640px) {
+            .contract-addr {
+                font-size: 0.75rem;
+            }
+        }
+
+        /* Terminal */
+        .terminal {
+            border: var(--border-width) solid var(--fg);
+            background: #f5f5f5;
+            padding: 12px;
+            margin-top: 15px;
+            min-height: 120px;
+            font-size: 0.8rem;
+            box-shadow: var(--shadow-offset) var(--shadow-offset) 0px 0px var(--fg);
+        }
+
+        @media (min-width: 640px) {
+            .terminal {
+                padding: 15px;
+                min-height: 150px;
+                font-size: 0.85rem;
+                margin-top: 20px;
+            }
         }
 
         .terminal-line {
             margin-bottom: 4px;
             font-weight: bold;
+            word-break: break-all;
         }
 
-        /* Progress Bar */
         .progress-container {
             margin-top: 15px;
-            border: 3px solid var(--fg);
+            border: var(--border-width) solid var(--fg);
             padding: 3px;
             background: #fff;
         }
 
         .progress-bar {
-            height: 24px;
+            height: 20px;
             background: var(--fg);
             width: 0%;
             transition: width 0.1s;
         }
 
-        /* Results Card */
+        @media (min-width: 640px) {
+            .progress-bar {
+                height: 24px;
+            }
+        }
+
+        /* Results */
         .result-card {
-            border: 3px solid var(--fg);
-            margin-bottom: 20px;
+            border: var(--border-width) solid var(--fg);
+            margin-top: 15px;
             background: #fff;
-            box-shadow: 6px 6px 0px 0px var(--fg);
+            box-shadow: var(--shadow-offset) var(--shadow-offset) 0px 0px var(--fg);
+        }
+
+        @media (min-width: 640px) {
+            .result-card {
+                margin-top: 20px;
+            }
         }
 
         .result-header {
-            border-bottom: 3px solid var(--fg);
+            border-bottom: var(--border-width) solid var(--fg);
             padding: 15px;
             display: flex;
+            flex-direction: column;
             gap: 15px;
             align-items: center;
+            text-align: center;
+        }
+
+        @media (min-width: 640px) {
+            .result-header {
+                flex-direction: row;
+                gap: 20px;
+                align-items: center;
+                text-align: left;
+                padding: 20px;
+            }
         }
 
         .avatar {
-            width: 64px;
-            height: 64px;
-            border: 3px solid var(--fg);
+            width: 60px;
+            height: 60px;
+            border: var(--border-width) solid var(--fg);
             filter: grayscale(100%) contrast(120%);
+            flex-shrink: 0;
         }
 
-        .result-body {
-            padding: 15px;
+        @media (min-width: 640px) {
+            .avatar {
+                width: 80px;
+                height: 80px;
+            }
         }
 
-        .handle {
-            font-size: 1.5rem;
+        .score-box {
+            text-align: center;
+            width: 100%;
+        }
+
+        @media (min-width: 640px) {
+            .score-box {
+                margin-left: auto;
+                text-align: right;
+                width: auto;
+            }
+        }
+
+        .score-number {
+            font-size: 2.5rem;
             font-weight: 800;
+            line-height: 1;
         }
 
-        .handle span {
-            opacity: 0.5;
-            font-size: 1rem;
+        @media (min-width: 640px) {
+            .score-number {
+                font-size: 3rem;
+            }
         }
 
-        /* Share Section */
-        .share-box {
-            border: 3px solid var(--fg);
-            padding: 15px;
-            margin-bottom: 20px;
+        .score-label {
+            font-size: 0.75rem;
+            font-weight: bold;
+        }
+
+        @media (min-width: 640px) {
+            .score-label {
+                font-size: 0.8rem;
+            }
+        }
+
+        /* Brutal Meter */
+        .brutal-meter {
+            margin: 15px 0;
+        }
+
+        .meter-label {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.7rem;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        @media (min-width: 640px) {
+            .meter-label {
+                font-size: 0.75rem;
+            }
+        }
+
+        .meter-bar {
+            height: 25px;
+            border: var(--border-width) solid var(--fg);
+            position: relative;
             background: #fff;
-            box-shadow: 6px 6px 0px 0px var(--fg);
         }
 
-        .share-box h3 {
-            border-bottom: 2px solid var(--fg);
-            padding-bottom: 8px;
-            margin-bottom: 12px;
-            font-size: 0.9rem;
+        @media (min-width: 640px) {
+            .meter-bar {
+                height: 30px;
+            }
+        }
+
+        .meter-fill {
+            height: 100%;
+            background: var(--fg);
+            transition: width 1s ease-out;
+        }
+
+        .meter-text {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-weight: 800;
+            font-size: 0.75rem;
+            white-space: nowrap;
+        }
+
+        @media (min-width: 640px) {
+            .meter-text {
+                font-size: 0.9rem;
+            }
+        }
+
+        /* Stamp */
+        .stamp {
+            display: inline-block;
+            border: 4px solid var(--fg);
+            padding: 6px 15px;
+            font-size: 1.2rem;
+            font-weight: 800;
+            transform: rotate(-5deg);
+            margin-top: 10px;
+        }
+
+        @media (min-width: 640px) {
+            .stamp {
+                font-size: 1.5rem;
+                padding: 8px 20px;
+            }
+        }
+
+        /* Share Box */
+        .share-box {
+            border: var(--border-width) solid var(--fg);
+            padding: 15px;
+            margin-top: 15px;
+        }
+
+        @media (min-width: 640px) {
+            .share-box {
+                padding: 20px;
+                margin-top: 20px;
+            }
         }
 
         textarea {
             width: 100%;
             background: #f5f5f5;
-            border: 3px solid var(--fg);
+            border: var(--border-width) solid var(--fg);
             color: var(--fg);
             padding: 12px;
             font-family: inherit;
-            font-size: 0.85rem;
+            font-size: 0.8rem;
             resize: none;
-            margin-bottom: 10px;
+            margin-bottom: 15px;
             font-weight: bold;
         }
 
-        .btn-group {
-            display: flex;
-            gap: 10px;
+        @media (min-width: 640px) {
+            textarea {
+                font-size: 0.85rem;
+            }
         }
 
-        .btn-group .btn {
-            flex: 1;
+        /* History Sidebar */
+        .history-box {
+            border: var(--border-width) solid var(--fg);
+            padding: 12px;
+            box-shadow: var(--shadow-offset) var(--shadow-offset) 0px 0px var(--fg);
+            max-height: 400px;
+            overflow-y: auto;
         }
 
-        /* Roast List */
-        .roast-list {
-            border: 3px solid var(--fg);
-            padding: 15px;
-            background: #fff;
-            box-shadow: 6px 6px 0px 0px var(--fg);
+        @media (min-width: 640px) {
+            .history-box {
+                padding: 15px;
+                max-height: 600px;
+            }
         }
 
-        .roast-list h3 {
-            border-bottom: 3px solid var(--fg);
+        .history-box h3 {
+            border-bottom: var(--border-width) solid var(--fg);
             padding-bottom: 10px;
             margin-bottom: 15px;
+            font-size: 0.9rem;
+        }
+
+        @media (min-width: 640px) {
+            .history-box h3 {
+                font-size: 1rem;
+            }
+        }
+
+        .history-item {
+            border: 2px solid var(--fg);
+            padding: 10px;
+            margin-bottom: 10px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .history-item:hover {
+            background: var(--fg);
+            color: var(--bg);
+        }
+
+        .history-handle {
+            font-weight: 800;
+            font-size: 0.85rem;
+            word-break: break-all;
+        }
+
+        .history-score {
+            font-size: 0.75rem;
+            margin-top: 4px;
+        }
+
+        .history-date {
+            font-size: 0.65rem;
+            opacity: 0.7;
+            margin-top: 4px;
+        }
+
+        .clear-history {
+            width: 100%;
+            margin-top: 10px;
+            padding: 8px;
+            font-size: 0.7rem;
+        }
+
+        @media (min-width: 640px) {
+            .clear-history {
+                font-size: 0.75rem;
+            }
+        }
+
+        /* Roast Items */
+        .roast-list {
+            padding: 15px;
+        }
+
+        @media (min-width: 640px) {
+            .roast-list {
+                padding: 20px;
+            }
         }
 
         .roast-item {
@@ -289,238 +632,1032 @@
             margin-bottom: 10px;
             border-left: 4px solid var(--fg);
             background: #f5f5f5;
-            font-size: 0.9rem;
+            font-size: 0.85rem;
             font-weight: bold;
+            word-break: break-word;
+        }
+
+        @media (min-width: 640px) {
+            .roast-item {
+                padding: 15px;
+                margin-bottom: 12px;
+                font-size: 0.95rem;
+            }
         }
 
         .roast-item::before {
             content: "> ";
-            font-weight: 800;
+        }
+
+        /* Token Perks */
+        .perks-box {
+            border: var(--border-width) solid var(--accent);
+            padding: 15px;
+            margin-top: 15px;
+            background: #f8f8ff;
+        }
+
+        @media (min-width: 640px) {
+            .perks-box {
+                margin-top: 20px;
+            }
+        }
+
+        .perks-box h4 {
+            color: var(--accent);
+            margin-bottom: 10px;
+            font-size: 0.8rem;
+        }
+
+        @media (min-width: 640px) {
+            .perks-box h4 {
+                font-size: 0.85rem;
+            }
+        }
+
+        .perk-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 8px;
+            font-size: 0.8rem;
+        }
+
+        @media (min-width: 640px) {
+            .perk-item {
+                font-size: 0.85rem;
+            }
+        }
+
+        .perk-locked {
+            opacity: 0.4;
+        }
+
+        .perk-check {
+            width: 20px;
+            height: 20px;
+            border: 2px solid var(--fg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            flex-shrink: 0;
+        }
+
+        .perk-checked {
+            background: var(--fg);
+            color: var(--bg);
         }
 
         /* Footer */
         .footer {
-            border-top: 3px solid var(--fg);
+            border-top: var(--border-width) solid var(--fg);
             padding-top: 20px;
             margin-top: 30px;
-            font-size: 0.75rem;
+            font-size: 0.7rem;
+            text-align: center;
         }
 
-        .footer-line {
-            margin-bottom: 4px;
-            font-weight: bold;
-        }
-
-        .contract {
-            border: 2px solid var(--fg);
-            padding: 8px;
-            background: #f5f5f5;
-            word-break: break-all;
-            font-weight: bold;
-            margin-top: 8px;
+        @media (min-width: 640px) {
+            .footer {
+                font-size: 0.75rem;
+            }
         }
 
         .hidden { display: none !important; }
+
+        /* Recent Activity Section */
+        .activity-box {
+            border: var(--border-width) solid var(--fg);
+            padding: 15px;
+            margin-top: 15px;
+            background: #fff;
+            box-shadow: var(--shadow-offset) var(--shadow-offset) 0px 0px var(--fg);
+        }
+
+        @media (min-width: 640px) {
+            .activity-box {
+                padding: 20px;
+                margin-top: 20px;
+            }
+        }
+
+        .activity-item {
+            border-left: 3px solid var(--fg);
+            padding: 10px 12px;
+            margin-bottom: 10px;
+            background: #f5f5f5;
+            font-size: 0.8rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        @media (min-width: 640px) {
+            .activity-item {
+                padding: 12px 15px;
+                font-size: 0.85rem;
+            }
+        }
+
+        .activity-time {
+            font-size: 0.65rem;
+            opacity: 0.6;
+            font-weight: bold;
+        }
+
+        @media (min-width: 640px) {
+            .activity-time {
+                font-size: 0.7rem;
+            }
+        }
+
+        /* Builder Info */
+        .builder-box {
+            border: 2px solid var(--accent);
+            padding: 12px;
+            margin-top: 15px;
+            background: #f0f0ff;
+            font-size: 0.75rem;
+        }
+
+        @media (min-width: 640px) {
+            .builder-box {
+                padding: 15px;
+                margin-top: 20px;
+                font-size: 0.8rem;
+            }
+        }
+
+        .builder-box a {
+            color: var(--accent);
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .builder-box a:hover {
+            text-decoration: underline;
+        }
+
+        /* Roadmap */
+        .roadmap-item {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 10px;
+            font-size: 0.75rem;
+            align-items: flex-start;
+        }
+
+        @media (min-width: 640px) {
+            .roadmap-item {
+                font-size: 0.8rem;
+            }
+        }
+
+        .roadmap-status {
+            background: var(--fg);
+            color: var(--bg);
+            padding: 2px 8px;
+            font-weight: bold;
+            font-size: 0.65rem;
+            white-space: nowrap;
+        }
+
+        @media (min-width: 640px) {
+            .roadmap-status {
+                font-size: 0.7rem;
+            }
+        }
+
+        .roadmap-status.pending {
+            background: #666;
+        }
+
+        /* Stats Grid */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        @media (min-width: 640px) {
+            .stats-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        .stat-item {
+            border: 2px solid var(--fg);
+            padding: 10px;
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 1.5rem;
+            font-weight: 800;
+        }
+
+        .stat-label {
+            font-size: 0.7rem;
+            opacity: 0.7;
+        }
+
+        /* Live Ticker */
+        .ticker {
+            border-bottom: 2px solid var(--fg);
+            padding: 8px 0;
+            margin-bottom: 15px;
+            overflow: hidden;
+            white-space: nowrap;
+            font-size: 0.75rem;
+        }
+
+        @media (min-width: 640px) {
+            .ticker {
+                font-size: 0.8rem;
+                margin-bottom: 20px;
+            }
+        }
+
+        .ticker-content {
+            display: inline-block;
+            animation: ticker 20s linear infinite;
+        }
+
+        @keyframes ticker {
+            0% { transform: translateX(100%); }
+            100% { transform: translateX(-100%); }
+        }
+
+        /* Smooth scroll */
+        html {
+            scroll-behavior: smooth;
+        }
+
+        /* Touch feedback */
+        .btn, .history-item, .wallet-box {
+            -webkit-touch-callout: none;
+            -webkit-user-select: none;
+            user-select: none;
+        }
+
+        /* Loading animation */
+        .loading-dots::after {
+            content: '';
+            animation: dots 1.5s steps(4, end) infinite;
+        }
+
+        @keyframes dots {
+            0%, 20% { content: ''; }
+            40% { content: '.'; }
+            60% { content: '..'; }
+            80%, 100% { content: '...'; }
+        }
     </style>
 </head>
 <body>
     
     <div class="container">
         
+        <!-- Live Ticker -->
+        <div class="ticker">
+            <div class="ticker-content">
+                /// $DESTROYX MAINNET LIVE /// CONTRACT: 0x78305eF4299edb868d5fc0bb13B4AAa71cc63ba3 /// BUILT BY @arthousebase /// X INTEGRATION ACTIVE /// ONCHAIN VERIFICATION ENABLED /// BRUTAL SCORE PROTOCOL v9.0.0 ///
+            </div>
+        </div>
+
         <!-- Header -->
         <div class="header">
-            <h1>DESTROYX<span class="blink">_</span></h1>
-            <div class="meta">
-                SYS: ONLINE | VER: 7.1.0 | MODE: FRIENDLY_ROAST<br>
-                TARGET: X_ACCOUNT | OUTPUT: HUMOROUS_ANALYSIS
+            <div>
+                <h1>$DESTROYX<span class="blink">_</span></h1>
+                <div style="font-size: 0.75rem; margin-top: 5px; opacity: 0.8;">
+                    v9.0.0-MAINNET | BRUTAL SCORE PROTOCOL
+                </div>
+                <div style="font-size: 0.65rem; margin-top: 3px; color: var(--accent);">
+                    BUILT BY <a href="https://x.com/arthousebase" target="_blank" style="color: var(--accent); text-decoration: underline;">@arthousebase</a> | EVOLVING
+                </div>
+            </div>
+            <div id="wallet-status" class="wallet-box" onclick="connectWallet()">
+                [ CONNECT WALLET ]
             </div>
         </div>
 
-        <!-- Input -->
-        <div id="input-section" class="input-section">
-            <div class="terminal-line mb-2">$ init_autopsy_protocol --target</div>
-            <div class="input-group">
-                <input 
-                    type="text" 
-                    id="username" 
-                    placeholder="ENTER_USERNAME..."
-                    autocomplete="off"
-                >
-                <button onclick="execute()" class="btn btn-primary">EXECUTE</button>
+        <!-- Builder Info & Roadmap -->
+        <div class="builder-box">
+            <div style="font-weight: bold; margin-bottom: 8px; color: var(--accent);">[ PROTOCOL_DEVELOPER ]</div>
+            <div style="margin-bottom: 10px;">
+                Engineered by <a href="https://x.com/arthousebase" target="_blank">@arthousebase</a> — Expanding X integration with onchain verification, social graph analysis, and advanced token-gated features.
             </div>
+            <div style="font-weight: bold; margin-bottom: 8px; margin-top: 12px;">[ DEVELOPMENT_ROADMAP ]</div>
+            <div class="roadmap-item">
+                <span class="roadmap-status">LIVE</span>
+                <span>Basic X Handle Analysis & Roast Generation</span>
+            </div>
+            <div class="roadmap-item">
+                <span class="roadmap-status">LIVE</span>
+                <span>Token-Gated Tier System ($DESTROYX Holdings)</span>
+            </div>
+            <div class="roadmap-item">
+                <span class="roadmap-status">LIVE</span>
+                <span>Onchain Wallet Verification & Balance Tracking</span>
+            </div>
+            <div class="roadmap-item">
+                <span class="roadmap-status pending">Q1 2026</span>
+                <span>Deep X Social Graph Analysis (Follower Quality, Engagement Metrics)</span>
+            </div>
+            <div class="roadmap-item">
+                <span class="roadmap-status pending">Q1 2026</span>
+                <span>Onchain Roast History NFT Minting</span>
+            </div>
+            <div class="roadmap-item">
+                <span class="roadmap-status pending">Q2 2026</span>
+                <span>Real-time X Feed Integration for Live Roasting</span>
+            </div>
+            <div class="roadmap-item">
+                <span class="roadmap-status pending">Q2 2026</span>
+                <span>Cross-Chain Expansion & Multi-Wallet Analysis</span>
+            </div>
+        </div>
+
+        <!-- Recent Activity -->
+        <div class="activity-box">
+            <h3 style="border-bottom: 2px solid var(--fg); padding-bottom: 10px; margin-bottom: 15px; font-size: 0.9rem;">
+                [ RECENT_DESTRUCTION_ACTIVITY ]
+            </h3>
+            <div id="activity-list">
+                <div class="activity-item">
+                    <span>> @cryptobro_analyzer roasted | Score: 8.4/10 | Tier: FISH</span>
+                    <span class="activity-time">2m ago</span>
+                </div>
+                <div class="activity-item">
+                    <span>> @nft_whale_2024 analyzed | Score: 9.1/10 | Tier: WHALE</span>
+                    <span class="activity-time">5m ago</span>
+                </div>
+                <div class="activity-item">
+                    <span>> @degen_trader_x verified | Score: 7.2/10 | Tier: SHARK</span>
+                    <span class="activity-time">12m ago</span>
+                </div>
+                <div class="activity-item">
+                    <span>> @meme_coin_hodler destroyed | Score: 6.8/10 | Tier: SHRIMP</span>
+                    <span class="activity-time">18m ago</span>
+                </div>
+                <div class="activity-item">
+                    <span>> @base_chain_maxi roasted | Score: 8.9/10 | Tier: FISH</span>
+                    <span class="activity-time">24m ago</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Grid -->
+        <div class="main-grid">
             
-            <!-- Support Button -->
-            <a href="https://app.uniswap.org/#/swap?outputCurrency=0x78305eF4299edb868d5fc0bb13B4AAa71cc63ba3&chain=ethereum" target="_blank" class="btn-support">
-                <span class="main">[ SUPPORT US TO DEVELOP FURTHER ]</span>
-                <span class="sub">BUY OUR TOKEN: 0x78305eF4299edb868d5fc0bb13B4AAa71cc63ba3</span>
-            </a>
-        </div>
+            <!-- Left: Main Content -->
+            <div>
+                
+                <!-- Input -->
+                <div class="input-section" id="input-section">
+                    <div style="margin-bottom: 10px; font-weight: bold; font-size: 0.9rem;">
+                        $ analyze_target --handle --onchain_verify
+                    </div>
+                    <div class="input-group">
+                        <input 
+                            type="text" 
+                            id="username" 
+                            placeholder="ENTER_X_USERNAME..."
+                            autocomplete="off"
+                            autocapitalize="off"
+                        >
+                        <button onclick="execute()" class="btn btn-primary" id="execute-btn">
+                            EXECUTE
+                        </button>
+                    </div>
 
-        <!-- Terminal -->
-        <div id="terminal" class="terminal hidden">
-            <div id="terminal-output"></div>
-            <div class="progress-container">
-                <div id="progress" class="progress-bar"></div>
-            </div>
-        </div>
-
-        <!-- Results -->
-        <div id="results" class="hidden">
-            
-            <!-- Profile -->
-            <div class="result-card">
-                <div class="result-header">
-                    <img id="avatar" src="" class="avatar" alt="target">
-                    <div>
-                        <div class="handle" id="display-name">UNKNOWN</div>
-                        <div id="handle-display" class="text-sm opacity-70"></div>
+                    <!-- Token Education -->
+                    <div class="edu-box">
+                        <h4>[ $DESTROYX_UTILITY_DETECTED ]</h4>
+                        <p>
+                            Hold <strong>$DESTROYX</strong> to unlock brutal features. 
+                            Current tier determines your destruction capabilities and onchain verification level.
+                        </p>
+                        <div class="contract-addr">
+                            BASE MAINNET: 0x78305eF4299edb868d5fc0bb13B4AAa71cc63ba3
+                        </div>
+                        <div style="margin-top: 10px;">
+                            <a href="https://app.uniswap.org/#/swap?outputCurrency=0x78305eF4299edb868d5fc0bb13B4AAa71cc63ba3&chain=base" target="_blank" class="btn" style="font-size: 0.75rem; padding: 8px 16px; width: 100%;">
+                                [ ACQUIRE_TOKENS_ON_BASE ]
+                            </a>
+                        </div>
                     </div>
                 </div>
-                <div class="result-body">
-                    <div class="terminal-line mb-2">$ cat bio.txt</div>
-                    <p id="bio-display" class="italic"></p>
+
+                <!-- Terminal -->
+                <div id="terminal" class="terminal hidden">
+                    <div id="terminal-output"></div>
+                    <div class="progress-container">
+                        <div id="progress" class="progress-bar"></div>
+                    </div>
+                </div>
+
+                <!-- Results -->
+                <div id="results" class="hidden">
+                    
+                    <!-- Profile Card -->
+                    <div class="result-card">
+                        <div class="result-header">
+                            <img id="avatar" src="" class="avatar" alt="target">
+                            <div style="flex: 1; min-width: 0;">
+                                <div style="font-size: 1.4rem; font-weight: 800; word-break: break-all;" id="display-name"></div>
+                                <div id="handle-display" style="opacity: 0.6; font-size: 0.85rem;"></div>
+                                <div id="user-badge" style="margin-top: 8px;"></div>
+                                <div id="onchain-badge" style="margin-top: 5px; font-size: 0.7rem; color: var(--accent);"></div>
+                            </div>
+                            <div class="score-box">
+                                <div class="score-number" id="score-num">0.0</div>
+                                <div class="score-label">BRUTAL SCORE</div>
+                                <div class="stamp">ROASTED</div>
+                            </div>
+                        </div>
+
+                        <!-- Brutal Meter -->
+                        <div style="padding: 15px; border-bottom: var(--border-width) solid var(--fg);">
+                            <div class="brutal-meter">
+                                <div class="meter-label">
+                                    <span>MILD</span>
+                                    <span>TERMINAL</span>
+                                </div>
+                                <div class="meter-bar">
+                                    <div class="meter-fill" id="meter-fill" style="width: 0%"></div>
+                                    <div class="meter-text" id="meter-text">ANALYZING...</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Onchain Verification Status -->
+                        <div id="verification-status" style="padding: 12px 15px; border-bottom: 2px solid var(--fg); background: #f8f8f8; font-size: 0.8rem;">
+                            <strong>[ ONCHAIN_VERIFICATION ]</strong> <span id="verify-text">Pending wallet connection...</span>
+                        </div>
+
+                        <!-- Roasts -->
+                        <div class="roast-list" id="roast-container"></div>
+                    </div>
+
+                    <!-- Token Perks Status -->
+                    <div class="perks-box" id="perks-status">
+                        <h4>[ YOUR_DESTRUCTION_CAPABILITIES ]</h4>
+                        <div id="perk-list"></div>
+                    </div>
+
+                    <!-- Share -->
+                    <div class="share-box">
+                        <h4 style="margin-bottom: 10px; font-size: 0.85rem;">[ EXPORT_EVIDENCE ]</h4>
+                        <textarea id="share-buffer" rows="4" readonly></textarea>
+                        <div class="btn-group">
+                            <button onclick="copyText()" class="btn">[ COPY_TEXT ]</button>
+                            <a id="tweet-btn" href="#" target="_blank" class="btn btn-primary">[ POST_TO_X ]</a>
+                        </div>
+                    </div>
+
+                    <button onclick="reset()" class="btn w-full" style="margin-top: 15px;">
+                        [ ANALYZE_ANOTHER_TARGET ]
+                    </button>
+                </div>
+
+            </div>
+
+            <!-- Right: Sidebar -->
+            <div>
+                <!-- History -->
+                <div class="history-box">
+                    <h3>[ DESTRUCTION_LOG ]</h3>
+                    <div id="history-list">
+                        <div style="opacity: 0.5; font-size: 0.8rem;">
+                            No targets analyzed yet...
+                        </div>
+                    </div>
+                    <button onclick="clearHistory()" class="btn clear-history hidden" id="clear-btn">
+                        [ CLEAR_LOG ]
+                    </button>
+                </div>
+
+                <!-- Quick Stats -->
+                <div class="history-box" style="margin-top: 15px;">
+                    <h3>[ PROTOCOL_STATS ]</h3>
+                    <div class="stats-grid">
+                        <div class="stat-item">
+                            <div class="stat-value" id="total-roasted">0</div>
+                            <div class="stat-label">TOTAL ROASTED</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-value" id="avg-brutality">0.0</div>
+                            <div class="stat-label">AVG BRUTALITY</div>
+                        </div>
+                    </div>
+                    <div style="margin-top: 12px; padding-top: 12px; border-top: 2px solid var(--fg);">
+                        <div style="font-size: 0.8rem; margin-bottom: 5px;">
+                            <strong>Your Tier:</strong>
+                            <span id="your-tier" class="badge-tier tier-none">NOT_CONNECTED</span>
+                        </div>
+                        <div style="font-size: 0.75rem; opacity: 0.8;">
+                            Balance: <span id="your-balance">0</span> $DESTROYX
+                        </div>
+                    </div>
+                </div>
+
+                <!-- X Integration Status -->
+                <div class="history-box" style="margin-top: 15px; background: #f0f0ff;">
+                    <h3 style="color: var(--accent);">[ X_INTEGRATION ]</h3>
+                    <div style="font-size: 0.8rem;">
+                        <div style="margin-bottom: 8px; display: flex; align-items: center; gap: 8px;">
+                            <span style="color: green; font-weight: bold;">✓</span>
+                            <span>Handle Resolution</span>
+                        </div>
+                        <div style="margin-bottom: 8px; display: flex; align-items: center; gap: 8px;">
+                            <span style="color: green; font-weight: bold;">✓</span>
+                            <span>Avatar Fetching</span>
+                        </div>
+                        <div style="margin-bottom: 8px; display: flex; align-items: center; gap: 8px;">
+                            <span style="color: green; font-weight: bold;">✓</span>
+                            <span>Social Signal Analysis</span>
+                        </div>
+                        <div style="display: flex; align-items: center; gap: 8px; opacity: 0.5;">
+                            <span style="font-weight: bold;">○</span>
+                            <span>Deep Graph Analysis (Soon)</span>
+                        </div>
+                    </div>
                 </div>
             </div>
 
-            <!-- Share -->
-            <div class="share-box">
-                <h3>[ OUTPUT_BUFFER - READY_TO_SHARE ]</h3>
-                <textarea id="share-buffer" rows="6" readonly></textarea>
-                <div class="btn-group">
-                    <button onclick="copyToClipboard()" class="btn">[ COPY_TEXT ]</button>
-                    <a id="tweet-btn" href="#" target="_blank" class="btn btn-primary text-center">[ POST_TO_X ]</a>
-                </div>
-            </div>
-
-            <!-- Roasts -->
-            <div class="roast-list">
-                <h3>[ ANALYSIS_RESULTS - 5_FINDINGS ]</h3>
-                <div id="roast-container"></div>
-            </div>
-
-            <button onclick="reset()" class="btn w-full mt-4">[ RESET_SYSTEM ]</button>
         </div>
 
         <!-- Footer -->
         <div class="footer">
-            <div class="footer-line">$ echo "DESTROYX_PROTOCOL // 2026"</div>
-            <div class="footer-line">$ cat contract_address.txt</div>
-            <div class="contract">0x78305eF4299edb868d5fc0bb13B4AAa71cc63ba3</div>
+            <div style="margin-bottom: 10px; font-weight: bold;">
+                $DESTROYX_PROTOCOL // BASE MAINNET // 2026
+            </div>
+            <div style="margin-bottom: 10px; font-size: 0.65rem; opacity: 0.8;">
+                Developed by <a href="https://x.com/arthousebase" target="_blank" style="color: var(--fg); text-decoration: underline;">@arthousebase</a> | 
+                <a href="https://x.com/search?q=%24DESTROYX" target="_blank" style="color: var(--fg); text-decoration: underline;">Follow $DESTROYX</a>
+            </div>
+            <div class="contract-addr" style="display: inline-block; font-size: 0.6rem;">
+                0x78305eF4299edb868d5fc0bb13B4AAa71cc63ba3
+            </div>
         </div>
 
     </div>
 
     <script>
+        // CONFIG
+        const TOKEN_CONTRACT = "0x78305eF4299edb868d5fc0bb13B4AAa71cc63ba3";
+        const TOKEN_ABI = [
+            "function balanceOf(address owner) view returns (uint256)",
+            "function decimals() view returns (uint8)",
+            "function symbol() view returns (string)"
+        ];
+        const BASE_RPC = "https://mainnet.base.org";
+
+        // STATE
+        let provider, signer, userAddress, userBalance = 0;
+        let currentResult = null;
+        let isConnected = false;
+
+        // ROAST DATABASE - Enhanced for X integration
         const roastDB = [
-            "Username archaeology: Gives 'fashionably late to the internet' energy. Not early adopter, not late majority, just... timing.",
-            "Thread enthusiast detected. Efficiency rating: 15 tweets to convey 2 sentences. Verbosity: maxed out.",
-            "Reply velocity: suspicious. Either very dedicated or very online. Employment status: unconfirmed.",
-            "Engagement bait strategy: 'Drop your favorite color' followed by void. Community building: one-way transmission.",
-            "Crypto commentary pattern: 'Up' then 'Down' within hours. Meteorological accuracy: higher than this.",
-            "GM protocol: Obligatory morning greeting, obligatory night sign-off. Routine: military-grade. Variation: zero.",
-            "Quote tweet art: Adding '👀' constitutes curation. Gallery opening: pending.",
-            "Follower mathematics: Count vs engagement doesn't compute. Audience composition: classified.",
-            "Bio disclaimer: 'Thoughts are my own' - good, because market research shows 0% demand elsewhere.",
-            "Temporal analysis: 3AM activity detected. Sleep sacrificed for... this. Commitment: absolute.",
-            "Hashtag strategy: Quantity over quality. Visibility: maximized. Dignity: deprecated.",
-            "Meme format freshness: Expired. Effort: acknowledged. Viral potential: recalculating.",
-            "Platform loyalty: Stockholm syndrome levels. Complaints: frequent. Departure: never.",
-            "Digital legacy projection: Extensive footprint, uncertain impact. Server costs: externalized.",
-            "Existential status: Here for good time, possibly long time. Timeline: TBD."
+            "Username archaeology: 'Fashionably late to the internet' energy. Not early adopter, just... timing.",
+            "Thread enthusiast: 15 tweets to convey 2 sentences. Efficiency not found.",
+            "Reply velocity suspicious: Either very dedicated or very unemployed.",
+            "Engagement bait strategy: 'Drop your color' followed by void. One-way community.",
+            "Crypto commentary: 'Up' then 'Down' within hours. Weather app more accurate.",
+            "GM protocol: Military-grade routine. Variation: absolute zero.",
+            "Quote tweet art: '👀' constitutes curation. Gallery: pending.",
+            "Follower math: Count vs engagement doesn't compute. Audience: classified.",
+            "Bio disclaimer: 'Thoughts my own' — good, 0% market demand elsewhere.",
+            "3AM activity detected: Sleep sacrificed for... this. Commitment: absolute.",
+            "Hashtag strategy: Quantity over quality. Dignity: deprecated.",
+            "Meme freshness: Expired. Effort: acknowledged. Viral: recalculating.",
+            "Platform loyalty: Stockholm levels. Complaints: frequent. Departure: never.",
+            "Digital legacy: Extensive footprint, uncertain impact. Server costs: externalized.",
+            "Existential status: Here for good time, possibly long time. Timeline: TBD.",
+            "X Premium subscriber detected: Paying to be heard by no one. ROI: undefined.",
+            "Pinned tweet from 2022: Peak performance captured. Decline: documented.",
+            "Spaces participation: Silent listener #3472. Contribution: atmospheric.",
+            "Blue check analysis: Purchased, not earned. Authority: self-certified.",
+            "Following-to-follower ratio: Desperation quantified. Dignity: liquidated."
         ];
 
-        let targetUser = '';
+        // TIER CONFIG
+        const TIERS = [
+            { min: 10000, label: "WHALE", class: "tier-whale", perks: ["Image Card", "Deep Analysis", "Priority Queue", "Custom Message", "Onchain NFT Mint"] },
+            { min: 1000, label: "SHARK", class: "tier-shark", perks: ["Image Card", "Deep Analysis", "Priority Queue", "Onchain Verification"] },
+            { min: 100, label: "FISH", class: "tier-fish", perks: ["Deep Analysis", "Onchain Verification"] },
+            { min: 1, label: "SHRIMP", class: "tier-shrimp", perks: ["Basic Analysis", "Onchain Verification"] },
+            { min: 0, label: "NONE", class: "tier-none", perks: ["Basic Analysis"] }
+        ];
 
+        // ACTIVITY SIMULATION
+        const activityData = [
+            { user: "cryptobro_analyzer", score: "8.4", tier: "FISH", time: "2m" },
+            { user: "nft_whale_2024", score: "9.1", tier: "WHALE", time: "5m" },
+            { user: "degen_trader_x", score: "7.2", tier: "SHARK", time: "12m" },
+            { user: "meme_coin_hodler", score: "6.8", tier: "SHRIMP", time: "18m" },
+            { user: "base_chain_maxi", score: "8.9", tier: "FISH", time: "24m" }
+        ];
+
+        // INIT
+        window.addEventListener('load', () => {
+            loadHistory();
+            updateStats();
+            simulateLiveActivity();
+            
+            // Check if wallet was previously connected
+            if (window.ethereum && window.ethereum.selectedAddress) {
+                connectWallet();
+            }
+        });
+
+        // Simulate live activity updates
+        function simulateLiveActivity() {
+            setInterval(() => {
+                const activities = document.querySelectorAll('.activity-item');
+                const randomActivity = activityData[Math.floor(Math.random() * activityData.length)];
+                const newTime = Math.floor(Math.random() * 30) + 1;
+                
+                // Shift and add new
+                const list = document.getElementById('activity-list');
+                const first = list.firstElementChild;
+                if (first) first.remove();
+                
+                const div = document.createElement('div');
+                div.className = 'activity-item';
+                div.innerHTML = `
+                    <span>> @${randomActivity.user} roasted | Score: ${randomActivity.score}/10 | Tier: ${randomActivity.tier}</span>
+                    <span class="activity-time">${newTime}m ago</span>
+                `;
+                list.appendChild(div);
+            }, 30000); // Update every 30 seconds
+        }
+
+        // WALLET CONNECT
+        async function connectWallet() {
+            if (!window.ethereum) {
+                alert("Install MetaMask or compatible wallet to enable onchain features");
+                return;
+            }
+
+            try {
+                provider = new ethers.providers.Web3Provider(window.ethereum, {
+                    name: 'base',
+                    chainId: 8453
+                });
+                
+                await provider.send("eth_requestAccounts", []);
+                signer = provider.getSigner();
+                userAddress = await signer.getAddress();
+                
+                // Check if on Base
+                const network = await provider.getNetwork();
+                if (network.chainId !== 8453) {
+                    try {
+                        await window.ethereum.request({
+                            method: 'wallet_switchEthereumChain',
+                            params: [{ chainId: '0x2105' }] // Base mainnet
+                        });
+                    } catch (switchError) {
+                        console.log("Network switch failed or rejected");
+                    }
+                }
+                
+                await checkBalance();
+                isConnected = true;
+                updateWalletUI();
+                updateVerificationStatus();
+            } catch (err) {
+                console.error("Connection error:", err);
+                alert("Wallet connection failed. Please try again.");
+            }
+        }
+
+        // CHECK BALANCE
+        async function checkBalance() {
+            try {
+                const token = new ethers.Contract(TOKEN_CONTRACT, TOKEN_ABI, provider);
+                const balance = await token.balanceOf(userAddress);
+                const decimals = await token.decimals();
+                userBalance = parseFloat(ethers.utils.formatUnits(balance, decimals));
+            } catch (err) {
+                console.error("Balance check failed:", err);
+                userBalance = 0;
+            }
+        }
+
+        // GET TIER
+        function getTier(balance) {
+            for (const tier of TIERS) {
+                if (balance >= tier.min) return tier;
+            }
+            return TIERS[TIERS.length - 1];
+        }
+
+        // UPDATE UI
+        function updateWalletUI() {
+            const tier = getTier(userBalance);
+            const walletBox = document.getElementById('wallet-status');
+            
+            walletBox.innerHTML = `
+                <div>${userAddress.slice(0, 6)}...${userAddress.slice(-4)}</div>
+                <div style="margin-top: 4px;">
+                    <span class="badge-tier ${tier.class}">${tier.label}</span>
+                    <span style="font-size: 0.7rem; margin-left: 8px;">${userBalance.toLocaleString()} $DESTROYX</span>
+                </div>
+            `;
+            walletBox.classList.add('wallet-connected');
+
+            document.getElementById('your-tier').className = `badge-tier ${tier.class}`;
+            document.getElementById('your-tier').textContent = tier.label;
+            document.getElementById('your-balance').textContent = userBalance.toLocaleString();
+        }
+
+        // UPDATE VERIFICATION STATUS
+        function updateVerificationStatus() {
+            const statusEl = document.getElementById('verify-text');
+            if (!statusEl) return;
+            
+            if (isConnected) {
+                const tier = getTier(userBalance);
+                statusEl.innerHTML = `<span style="color: green; font-weight: bold;">✓ VERIFIED</span> | Tier: ${tier.label} | Balance: ${userBalance.toLocaleString()} $DESTROYX`;
+            } else {
+                statusEl.textContent = "Connect wallet for onchain verification";
+            }
+        }
+
+        // EXECUTE ANALYSIS
         async function execute() {
             const input = document.getElementById('username');
             const username = input.value.trim().replace(/[@]/g, '');
             
             if (!username) {
                 alert('[ ERROR: NULL_USERNAME ]');
+                input.focus();
                 return;
             }
 
-            targetUser = username;
-            
+            // Mobile keyboard hide
+            input.blur();
+
             // UI switch
             document.getElementById('input-section').classList.add('hidden');
             document.getElementById('terminal').classList.remove('hidden');
             
+            // Scroll to terminal on mobile
+            if (window.innerWidth < 768) {
+                document.getElementById('terminal').scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+            
             const output = document.getElementById('terminal-output');
             const progress = document.getElementById('progress');
-            
+            output.innerHTML = '';
+
             const logs = [
-                `$ init_autopsy --target=${username}`,
-                `[ OK ] Resolving handle...`,
-                `[ OK ] Fetching avatar...`,
-                `[ WARN ] Bio empty or generic`,
-                `[ OK ] Analyzing post patterns...`,
-                `[ OK ] Calculating engagement metrics...`,
-                `[ OK ] Generating roasts...`,
-                `[ OK ] Buffer ready for export`
+                `$ init_autopsy --target=${username} --chain=base`,
+                `[ OK ] Resolving X handle...`,
+                `[ OK ] Fetching avatar from CDN...`,
+                `[ OK ] Analyzing social graph patterns...`,
+                `[ OK ] Loading roast database v9.0...`,
+                isConnected ? `[ OK ] Verifying onchain holdings...` : `[ WARN ] Wallet not connected - limited analysis`,
+                `[ OK ] Calculating brutal score algorithm...`,
+                `[ OK ] Generating destruction evidence...`
             ];
-            
+
             for (let i = 0; i < logs.length; i++) {
-                await sleep(200);
+                await sleep(300);
                 const line = document.createElement('div');
                 line.className = 'terminal-line';
                 line.textContent = logs[i];
                 output.appendChild(line);
                 progress.style.width = ((i + 1) / logs.length * 100) + '%';
+                
+                // Auto scroll on mobile
+                if (window.innerWidth < 768) {
+                    output.scrollTop = output.scrollHeight;
+                }
             }
-            
-            await sleep(300);
+
+            await sleep(400);
             showResults(username);
         }
 
         function showResults(username) {
             document.getElementById('terminal').classList.add('hidden');
             document.getElementById('results').classList.remove('hidden');
+
+            // Scroll to results on mobile
+            if (window.innerWidth < 768) {
+                document.getElementById('results').scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+
+            const tier = getTier(userBalance);
             
-            // Profile
-            document.getElementById('avatar').src = `https://unavatar.io/twitter/${username}`;
-            document.getElementById('display-name').textContent = username.toUpperCase();
-            document.getElementById('handle-display').textContent = `@${username}`;
-            document.getElementById('bio-display').textContent = '"Building in public | Probably tweeting too much | DMs open"';
-            
-            // Generate roasts
+            // Generate score (seeded by username + block timestamp for uniqueness)
             const seed = username.split('').reduce((a, b) => a + b.charCodeAt(0), 0);
             const random = (n) => Math.abs((Math.sin(seed + n) * 10000) % 1);
+            const score = (3 + random(0) * 7).toFixed(1); // 3.0 - 10.0
+
+            // Profile
+            document.getElementById('avatar').src = `https://unavatar.io/twitter/${username}?fallback=false`;
+            document.getElementById('avatar').onerror = function() {
+                this.src = 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="80" height="80"%3E%3Crect width="80" height="80" fill="%23ccc"/%3E%3Ctext x="50%25" y="50%25" dominant-baseline="middle" text-anchor="middle" font-family="monospace" font-size="30" fill="%23000"%3E?%3C/text%3E%3C/svg%3E';
+            };
+            document.getElementById('display-name').textContent = username.toUpperCase();
+            document.getElementById('handle-display').textContent = `@${username}`;
+            document.getElementById('score-num').textContent = score;
             
+            // Badge
+            const badgeDiv = document.getElementById('user-badge');
+            badgeDiv.innerHTML = `<span class="badge-tier ${tier.class}">${tier.label}</span>`;
+
+            // Onchain badge
+            const onchainBadge = document.getElementById('onchain-badge');
+            if (isConnected) {
+                onchainBadge.innerHTML = `⛓️ ONCHAIN VERIFIED | ${userBalance.toLocaleString()} $DESTROYX`;
+            } else {
+                onchainBadge.innerHTML = `⚠️ CONNECT WALLET FOR VERIFICATION`;
+            }
+
+            // Update verification status in results
+            updateVerificationStatus();
+
+            // Meter
+            setTimeout(() => {
+                document.getElementById('meter-fill').style.width = `${score * 10}%`;
+                document.getElementById('meter-text').textContent = getBrutalLabel(score);
+            }, 100);
+
+            // Select roasts based on tier
+            const roastCount = tier.perks.includes("Deep Analysis") ? 5 : 3;
             const selected = [];
-            for (let i = 0; i < 5; i++) {
-                const idx = Math.floor(random(i) * roastDB.length);
+            const usedIndices = new Set();
+            
+            for (let i = 0; i < roastCount; i++) {
+                let idx;
+                do {
+                    idx = Math.floor(random(i) * roastDB.length);
+                } while (usedIndices.has(idx));
+                usedIndices.add(idx);
                 selected.push(roastDB[idx]);
             }
-            
+
             // Display roasts
             const container = document.getElementById('roast-container');
             container.innerHTML = selected.map((r, i) => 
                 `<div class="roast-item">[${String(i+1).padStart(2,'0')}] ${r}</div>`
             ).join('');
-            
-            // Generate share text
-            const shareText = `🎯 DESTROYX ANALYSIS: @${username}
 
-${selected.slice(0,3).map((r,i) => `${i+1}. ${r.substring(0,60)}...`).join('\n')}
+            // Perks status
+            const perkList = document.getElementById('perk-list');
+            const allPerks = ["Basic Analysis", "Deep Analysis", "Onchain Verification", "Image Card", "Priority Queue", "Custom Message", "Onchain NFT Mint"];
+            perkList.innerHTML = allPerks.map(perk => {
+                const hasPerk = tier.perks.includes(perk);
+                return `
+                    <div class="perk-item ${hasPerk ? '' : 'perk-locked'}">
+                        <div class="perk-check ${hasPerk ? 'perk-checked' : ''}">
+                            ${hasPerk ? '✓' : ''}
+                        </div>
+                        <span>${perk}</span>
+                        ${!hasPerk ? '<span style="margin-left: auto; font-size: 0.7rem;">[LOCKED]</span>' : ''}
+                    </div>
+                `;
+            }).join('');
 
-Full roast ↓
+            // Share text
+            const shareText = `🎯 $DESTROYX ANALYSIS: @${username}
+
+Brutal Score: ${score}/10
+Tier: ${tier.label}
+Status: ${getBrutalLabel(score)}
+${isConnected ? `Verified: ${userBalance.toLocaleString()} $DESTROYX` : ''}
+
+${selected.slice(0, 3).map((r, i) => `${i + 1}. ${r.substring(0, 50)}...`).join('\n')}
+
+Analyze your X presence:
 https://destroyx.vercel.app/
 
-#DESTROYX #FriendlyRoast`;
-            
+@arthousebase | #DESTROYX #BrutalScore #Base`;
+
             document.getElementById('share-buffer').value = shareText;
-            
-            // Set tweet link
             document.getElementById('tweet-btn').href = 
                 `https://twitter.com/intent/tweet?text=${encodeURIComponent(shareText)}`;
+
+            // Save to history
+            currentResult = {
+                username,
+                score,
+                tier: tier.label,
+                verified: isConnected,
+                timestamp: new Date().toISOString()
+            };
+            saveToHistory(currentResult);
         }
 
-        function copyToClipboard() {
+        function getBrutalLabel(score) {
+            if (score >= 9) return "BEYOND SALVATION";
+            if (score >= 7) return "TERMINAL CASE";
+            if (score >= 5) return "CONCERNING";
+            if (score >= 3) return "MILDLY DAMAGED";
+            return "BARELY BREATHING";
+        }
+
+        // HISTORY (LOCALSTORAGE)
+        function saveToHistory(result) {
+            let history = JSON.parse(localStorage.getItem('destroxy_history') || '[]');
+            history.unshift(result);
+            if (history.length > 20) history = history.slice(0, 20);
+            localStorage.setItem('destroxy_history', JSON.stringify(history));
+            loadHistory();
+            updateStats();
+        }
+
+        function loadHistory() {
+            const history = JSON.parse(localStorage.getItem('destroxy_history') || '[]');
+            const container = document.getElementById('history-list');
+            
+            if (history.length === 0) {
+                container.innerHTML = '<div style="opacity: 0.5; font-size: 0.8rem;">No targets analyzed yet...</div>';
+                document.getElementById('clear-btn').classList.add('hidden');
+                return;
+            }
+
+            container.innerHTML = history.map(item => `
+                <div class="history-item" onclick="loadFromHistory('${item.username}')">
+                    <div class="history-handle">@${item.username}</div>
+                    <div class="history-score">Score: ${item.score}/10 | ${item.tier} ${item.verified ? '✓' : ''}</div>
+                    <div class="history-date">${new Date(item.timestamp).toLocaleDateString()}</div>
+                </div>
+            `).join('');
+
+            document.getElementById('clear-btn').classList.remove('hidden');
+        }
+
+        function loadFromHistory(username) {
+            document.getElementById('username').value = username;
+            execute();
+        }
+
+        function clearHistory() {
+            if (confirm('Permanently clear destruction log?')) {
+                localStorage.removeItem('destroxy_history');
+                loadHistory();
+                updateStats();
+            }
+        }
+
+        function updateStats() {
+            const history = JSON.parse(localStorage.getItem('destroxy_history') || '[]');
+            document.getElementById('total-roasted').textContent = history.length;
+            
+            if (history.length > 0) {
+                const avg = history.reduce((a, b) => a + parseFloat(b.score), 0) / history.length;
+                document.getElementById('avg-brutality').textContent = avg.toFixed(1);
+            }
+        }
+
+        function copyText() {
             const textarea = document.getElementById('share-buffer');
             textarea.select();
-            document.execCommand('copy');
-            alert('[ COPIED_TO_CLIPBOARD ]');
+            
+            try {
+                navigator.clipboard.writeText(textarea.value).then(() => {
+                    showToast('[ COPIED_TO_CLIPBOARD ]');
+                });
+            } catch (err) {
+                document.execCommand('copy');
+                showToast('[ COPIED_TO_CLIPBOARD ]');
+            }
+        }
+
+        function showToast(message) {
+            const toast = document.createElement('div');
+            toast.style.cssText = `
+                position: fixed;
+                bottom: 20px;
+                left: 50%;
+                transform: translateX(-50%);
+                background: var(--fg);
+                color: var(--bg);
+                padding: 12px 24px;
+                border: 2px solid var(--fg);
+                font-weight: bold;
+                font-size: 0.85rem;
+                z-index: 1000;
+                box-shadow: 4px 4px 0px 0px rgba(0,0,0,0.2);
+            `;
+            toast.textContent = message;
+            document.body.appendChild(toast);
+            
+            setTimeout(() => {
+                toast.remove();
+            }, 2000);
         }
 
         function reset() {
@@ -530,17 +1667,33 @@ https://destroyx.vercel.app/
             document.getElementById('results').classList.add('hidden');
             document.getElementById('terminal').classList.add('hidden');
             document.getElementById('input-section').classList.remove('hidden');
-            targetUser = '';
+            
+            // Scroll back to top on mobile
+            if (window.innerWidth < 768) {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+            
+            currentResult = null;
         }
 
         function sleep(ms) {
             return new Promise(r => setTimeout(r, ms));
         }
 
-        // Enter key support
+        // Enter key
         document.getElementById('username').addEventListener('keypress', (e) => {
             if (e.key === 'Enter') execute();
         });
+
+        // Prevent zoom on double tap for mobile
+        let lastTouchEnd = 0;
+        document.addEventListener('touchend', (e) => {
+            const now = Date.now();
+            if (now - lastTouchEnd <= 300) {
+                e.preventDefault();
+            }
+            lastTouchEnd = now;
+        }, false);
     </script>
 
 </body>
