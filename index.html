@@ -5,118 +5,122 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>DESTROYX | On-Chain Profile Auditor</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700;800&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700;800&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg-color: #ffffff;
-            --text-color: #000000;
-            --accent-color: #000000;
-            --border-color: #000000;
-            --error-color: #ff0000;
-            --warning-color: #ffaa00;
-        }
-
-        body {
-            background-color: var(--bg-color);
-            color: var(--text-color);
-            font-family: 'JetBrains Mono', monospace;
-            overflow-x: hidden;
-        }
-
-        /* Brutalist Borders & Utilities */
-        .brutal-border {
-            border: 2px solid var(--border-color);
-            box-shadow: 4px 4px 0px 0px var(--border-color);
-            transition: all 0.1s ease;
-        }
-
-        .brutal-border:active {
-            transform: translate(2px, 2px);
-            box-shadow: 2px 2px 0px 0px var(--border-color);
-        }
-
-        .brutal-border-hover:hover {
-            background-color: var(--text-color);
-            color: var(--bg-color);
-        }
-
-        /* Glitch Effect for Title */
-        .glitch {
-            position: relative;
-            font-weight: 800;
-            letter-spacing: -2px;
+            --bg: #ffffff;
+            --text: #000000;
+            --accent: #ff0000;
         }
         
-        .glitch::before, .glitch::after {
+        * {
+            box-sizing: border-box;
+        }
+        
+        body {
+            background: var(--bg);
+            color: var(--text);
+            font-family: 'JetBrains Mono', monospace;
+            margin: 0;
+            min-height: 100vh;
+        }
+
+        .brutal {
+            border: 2px solid black;
+            box-shadow: 4px 4px 0px 0px black;
+            transition: all 0.1s;
+        }
+
+        .brutal:hover {
+            transform: translate(-2px, -2px);
+            box-shadow: 6px 6px 0px 0px black;
+        }
+
+        .brutal:active {
+            transform: translate(2px, 2px);
+            box-shadow: 2px 2px 0px 0px black;
+        }
+
+        .btn-primary {
+            background: black;
+            color: white;
+            border: 2px solid black;
+            box-shadow: 4px 4px 0px 0px rgba(0,0,0,0.3);
+        }
+
+        .btn-primary:hover {
+            background: white;
+            color: black;
+        }
+
+        .btn-support {
+            background: #ff0000;
+            color: white;
+            border: 2px solid black;
+            box-shadow: 4px 4px 0px 0px black;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.02); }
+        }
+
+        .glitch {
+            position: relative;
+            display: inline-block;
+        }
+
+        .glitch::before,
+        .glitch::after {
             content: attr(data-text);
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: var(--bg-color);
         }
-        
+
         .glitch::before {
             left: 2px;
-            text-shadow: -1px 0 #ff00c1;
-            clip: rect(44px, 450px, 56px, 0);
-            animation: glitch-anim 5s infinite linear alternate-reverse;
+            text-shadow: -2px 0 #00fff9;
+            clip: rect(24px, 550px, 90px, 0);
+            animation: glitch-anim-2 3s infinite linear alternate-reverse;
         }
-        
+
         .glitch::after {
             left: -2px;
-            text-shadow: -1px 0 #00fff9;
-            clip: rect(44px, 450px, 56px, 0);
-            animation: glitch-anim2 5s infinite linear alternate-reverse;
+            text-shadow: -2px 0 #ff00c1;
+            clip: rect(85px, 550px, 140px, 0);
+            animation: glitch-anim 2.5s infinite linear alternate-reverse;
         }
 
         @keyframes glitch-anim {
-            0% { clip: rect(30px, 9999px, 10px, 0); }
-            5% { clip: rect(70px, 9999px, 90px, 0); }
-            10% { clip: rect(20px, 9999px, 50px, 0); }
-            100% { clip: rect(60px, 9999px, 10px, 0); }
+            0% { clip: rect(10px, 9999px, 85px, 0); }
+            20% { clip: rect(63px, 9999px, 130px, 0); }
+            40% { clip: rect(25px, 9999px, 15px, 0); }
+            60% { clip: rect(88px, 9999px, 95px, 0); }
+            80% { clip: rect(42px, 9999px, 75px, 0); }
+            100% { clip: rect(15px, 9999px, 135px, 0); }
         }
 
-        @keyframes glitch-anim2 {
-            0% { clip: rect(10px, 9999px, 80px, 0); }
-            5% { clip: rect(90px, 9999px, 20px, 0); }
-            10% { clip: rect(40px, 9999px, 10px, 0); }
-            100% { clip: rect(20px, 9999px, 60px, 0); }
-        }
-
-        /* Terminal Typing Effect */
-        .typing-cursor::after {
-            content: '█';
-            animation: blink 1s step-end infinite;
-        }
-
-        @keyframes blink {
-            50% { opacity: 0; }
-        }
-
-        /* Custom Scrollbar */
-        ::-webkit-scrollbar {
-            width: 12px;
-        }
-        ::-webkit-scrollbar-track {
-            background: #f1f1f1; 
-            border-left: 2px solid black;
-        }
-        ::-webkit-scrollbar-thumb {
-            background: #000; 
-        }
-        ::-webkit-scrollbar-thumb:hover {
-            background: #333; 
+        @keyframes glitch-anim-2 {
+            0% { clip: rect(65px, 9999px, 100px, 0); }
+            20% { clip: rect(20px, 9999px, 45px, 0); }
+            40% { clip: rect(90px, 9999px, 110px, 0); }
+            60% { clip: rect(35px, 9999px, 60px, 0); }
+            80% { clip: rect(75px, 9999px, 125px, 0); }
+            100% { clip: rect(50px, 9999px, 80px, 0); }
         }
 
         .scan-line {
+            position: absolute;
+            top: 0;
+            left: 0;
             width: 100%;
             height: 2px;
-            background: rgba(0,0,0,0.1);
-            position: absolute;
-            z-index: 10;
-            animation: scan 3s linear infinite;
+            background: rgba(0,0,0,0.3);
+            animation: scan 2s linear infinite;
             pointer-events: none;
         }
 
@@ -124,161 +128,467 @@
             0% { top: 0%; }
             100% { top: 100%; }
         }
-        
-        .crt-overlay {
-            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.05) 50%);
-            background-size: 100% 4px;
-            position: fixed;
-            top: 0; left: 0; right: 0; bottom: 0;
-            pointer-events: none;
-            z-index: 50;
+
+        .terminal {
+            background: #f5f5f5;
+            border: 2px solid black;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .progress-bar {
+            height: 20px;
+            background: white;
+            border: 2px solid black;
+            position: relative;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: black;
+            width: 0%;
+            transition: width 0.1s;
+        }
+
+        .metric-card {
+            border: 2px solid black;
+            background: white;
+            position: relative;
+        }
+
+        .metric-card::before {
+            content: '';
+            position: absolute;
+            top: 4px;
+            left: 4px;
+            right: -4px;
+            bottom: -4px;
+            background: black;
+            z-index: -1;
+        }
+
+        .risk-high { color: #ff0000; }
+        .risk-med { color: #ff8800; }
+        .risk-low { color: #00aa00; }
+
+        .hidden { display: none !important; }
+
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-left: 2px solid black;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: black;
+        }
+
+        @media (max-width: 768px) {
+            .glitch {
+                font-size: 1.5rem;
+            }
         }
     </style>
 </head>
-<body class="min-h-screen flex flex-col relative">
-
-    <div class="crt-overlay"></div>
+<body>
 
     <!-- Header -->
-    <header class="border-b-2 border-black p-4 flex justify-between items-center bg-white sticky top-0 z-40">
-        <div class="flex items-center gap-2">
-            <div class="w-4 h-4 bg-black animate-pulse"></div>
-            <h1 class="text-2xl md:text-4xl glitch" data-text="DESTROYX">DESTROYX</h1>
-            <span class="text-xs border border-black px-1 ml-2">V.1.0.4-MAINNET</span>
-        </div>
-        <div class="hidden md:block text-xs text-right">
-            <p>SYS.STATUS: <span class="text-green-600 font-bold">ONLINE</span></p>
-            <p>NODE: <span id="node-id">0x84...F2</span></p>
+    <header class="border-b-2 border-black p-4 sticky top-0 bg-white z-50">
+        <div class="max-w-6xl mx-auto flex justify-between items-center">
+            <div class="flex items-center gap-3">
+                <div class="w-3 h-3 bg-black animate-pulse"></div>
+                <h1 class="text-2xl md:text-4xl font-bold glitch" data-text="DESTROYX">DESTROYX</h1>
+                <span class="text-xs border border-black px-1 hidden sm:inline">MAINNET_V1.0</span>
+            </div>
+            <div class="text-xs text-right hidden md:block">
+                <div>SYS: <span class="text-green-600 font-bold">ONLINE</span></div>
+                <div class="opacity-50">NODE: 0x84...F2A1</div>
+            </div>
         </div>
     </header>
 
-    <!-- Main Content -->
-    <main class="flex-grow container mx-auto p-4 md:p-8 max-w-4xl">
-        
-        <!-- Intro Section -->
-        <section class="mb-12 text-center">
-            <h2 class="text-xl md:text-2xl mb-4 font-bold uppercase tracking-widest">On-Chain Integrity Auditor</h2>
-            <p class="text-sm md:text-base max-w-2xl mx-auto mb-8 leading-relaxed opacity-80">
-                Input a Twitter/X handle to initiate a holistic analysis of digital footprint, 
-                engagement authenticity, and cryptographic behavioral patterns.
-            </p>
-            
-            <!-- Input Area -->
-            <div class="flex flex-col md:flex-row gap-4 justify-center items-center max-w-lg mx-auto">
-                <div class="relative w-full">
-                    <span class="absolute left-3 top-3 text-gray-500">@</span>
-                    <input type="text" id="usernameInput" placeholder="vitalikbuterin" 
-                        class="w-full pl-8 pr-4 py-3 bg-white border-2 border-black focus:outline-none focus:shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] font-bold uppercase placeholder-gray-400 transition-all">
-                </div>
-                <button onclick="startAnalysis()" 
-                    class="w-full md:w-auto px-8 py-3 bg-black text-white font-bold border-2 border-black hover:bg-white hover:text-black transition-colors shadow-[4px_4px_0px_0px_rgba(0,0,0,0.2)] active:shadow-none active:translate-x-[2px] active:translate-y-[2px]">
-                    EXECUTE_SCAN()
-                </button>
-            </div>
-            <p id="error-msg" class="text-red-600 text-xs mt-2 hidden">ERROR: HANDLE REQUIRED</p>
-        </section>
+    <main class="max-w-4xl mx-auto p-4 md:p-8">
 
-        <!-- Loading / Analysis Phase -->
-        <div id="analysis-phase" class="hidden mb-12 border-2 border-black p-6 bg-gray-50 relative overflow-hidden">
-            <div class="scan-line"></div>
-            <div class="flex justify-between items-end mb-4 border-b border-black pb-2">
-                <h3 class="font-bold">> RUNNING_DIAGNOSTIC_PROTOCOL</h3>
-                <span id="progress-percent" class="font-bold text-xl">0%</span>
-            </div>
-            
-            <div class="space-y-2 font-sm h-48 overflow-y-auto" id="terminal-logs">
-                <!-- Logs injected via JS -->
-            </div>
-
-            <!-- Progress Bar -->
-            <div class="w-full h-4 border-2 border-black mt-4 bg-white">
-                <div id="progress-bar" class="h-full bg-black w-0 transition-all duration-100"></div>
-            </div>
-        </div>
-
-        <!-- Results Section (Hidden by default) -->
-        <div id="results-section" class="hidden space-y-8">
-            
-            <!-- Profile Header Result -->
-            <div class="border-2 border-black p-0 flex flex-col md:flex-row bg-white brutal-border">
-                <div class="w-full md:w-32 h-32 bg-gray-200 border-b-2 md:border-b-0 md:border-r-2 border-black flex items-center justify-center overflow-hidden">
-                    <img id="result-avatar" src="" alt="Avatar" class="w-full h-full object-cover grayscale contrast-125">
-                </div>
-                <div class="p-6 flex-grow">
-                    <div class="flex justify-between items-start">
-                        <div>
-                            <h2 id="result-name" class="text-2xl font-bold uppercase">USERNAME</h2>
-                            <p id="result-handle" class="text-gray-600 font-mono">@handle</p>
-                        </div>
-                        <div class="text-right">
-                            <div class="text-xs uppercase border border-black px-2 py-1 inline-block mb-1">Risk Score</div>
-                            <div id="risk-score" class="text-4xl font-black text-red-600">98%</div>
-                        </div>
-                    </div>
-                    <p id="result-bio" class="mt-4 text-sm italic border-l-2 border-black pl-3">"Loading bio..."</p>
-                </div>
-            </div>
-
-            <!-- The VERDICT -->
-            <div class="bg-black text-white p-6 border-2 border-black shadow-[8px_8px_0px_0px_rgba(0,0,0,0.3)]">
-                <h3 class="text-xl font-bold mb-2 flex items-center gap-2">
-                    <span class="text-red-500">⚠</span> FINAL_VERDICT
-                </h3>
-                <p id="verdict-text" class="text-lg md:text-xl font-mono leading-relaxed">
-                    Subject demonstrates high-frequency engagement farming with zero original thought leadership. Likely operating a network of alt accounts to simulate organic interest in low-capitalization tokens.
+        <!-- Hero / Input Section -->
+        <section id="input-section" class="mb-12">
+            <div class="text-center mb-8">
+                <h2 class="text-lg md:text-xl font-bold mb-2 uppercase tracking-widest">On-Chain Integrity Auditor</h2>
+                <p class="text-sm opacity-70 max-w-lg mx-auto">
+                    Expose fabricated influence, bot networks, and undisclosed token shilling. 
+                    Enter any X handle to initiate forensic analysis.
                 </p>
             </div>
 
-            <!-- Detailed Metrics Grid -->
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                
-                <!-- Metric 1: Authenticity -->
-                <div class="border-2 border-black p-4 bg-white">
-                    <div class="flex justify-between items-center mb-2 border-b border-black pb-2">
-                        <h4 class="font-bold">AUTHENTICITY_INDEX</h4>
-                        <span id="metric-auth-val" class="font-bold text-red-600">LOW</span>
+            <div class="max-w-md mx-auto">
+                <div class="flex gap-2 mb-4">
+                    <div class="relative flex-grow">
+                        <span class="absolute left-3 top-1/2 -translate-y-1/2 font-bold">@</span>
+                        <input 
+                            type="text" 
+                            id="usernameInput" 
+                            placeholder="vitalikbuterin" 
+                            class="w-full pl-8 pr-4 py-3 border-2 border-black font-bold uppercase focus:outline-none focus:shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] transition-all"
+                            onkeypress="if(event.key==='Enter') startAnalysis()"
+                        >
                     </div>
-                    <p id="metric-auth-desc" class="text-xs leading-relaxed">
-                        Communication patterns match 94% of known bot networks. Vocabulary entropy is minimal, suggesting recycled content from 2021 bull run.
+                    <button 
+                        onclick="startAnalysis()" 
+                        class="btn-primary px-6 py-3 font-bold brutal whitespace-nowrap"
+                    >
+                        SCAN
+                    </button>
+                </div>
+                <p id="error-msg" class="text-red-600 text-xs font-bold hidden text-center">[ERROR] HANDLE REQUIRED</p>
+            </div>
+
+            <!-- Support Button (Always Visible) -->
+            <div class="mt-8 text-center">
+                <div class="inline-block border-2 border-black p-4 bg-gray-50">
+                    <p class="text-xs font-bold mb-2 uppercase">Support The Protocol</p>
+                    <a 
+                        href="https://app.uniswap.org/#/swap?outputCurrency=0x39343b531DbAc7c797137C6e1088686995334b07&chain=ethereum" 
+                        target="_blank"
+                        class="btn-support inline-block px-6 py-3 font-bold brutal text-sm"
+                    >
+                        BUY $ARTMOLT ↗
+                    </a>
+                    <p class="text-[10px] mt-2 font-mono opacity-60 break-all">
+                        0x39343b531DbAc7c797137C6e1088686995334b07
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Loading / Analysis Phase -->
+        <section id="analysis-phase" class="hidden mb-8">
+            <div class="terminal p-4 mb-4">
+                <div class="scan-line"></div>
+                <div class="flex justify-between mb-2 border-b border-black pb-2">
+                    <span class="font-bold text-sm">> EXECUTING_FORENSIC_SCAN</span>
+                    <span id="progress-text" class="font-bold">0%</span>
+                </div>
+                <div id="terminal-logs" class="h-40 overflow-y-auto text-xs font-mono space-y-1 mb-4">
+                    <!-- Logs injected here -->
+                </div>
+                <div class="progress-bar">
+                    <div id="progress-fill" class="progress-fill"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Results Section -->
+        <section id="results-section" class="hidden space-y-6">
+            
+            <!-- Profile Header -->
+            <div class="border-2 border-black bg-white brutal">
+                <div class="flex flex-col md:flex-row">
+                    <div class="w-full md:w-32 h-32 bg-gray-200 border-b-2 md:border-b-0 md:border-r-2 border-black flex items-center justify-center overflow-hidden">
+                        <img id="result-avatar" src="" alt="Profile" class="w-full h-full object-cover grayscale">
+                    </div>
+                    <div class="p-4 flex-grow">
+                        <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+                            <div>
+                                <h2 id="result-name" class="text-xl font-bold uppercase">Unknown</h2>
+                                <p id="result-handle" class="text-sm opacity-60 font-mono">@unknown</p>
+                            </div>
+                            <div class="text-right">
+                                <div class="text-xs uppercase font-bold mb-1">Threat Level</div>
+                                <div id="risk-score" class="text-3xl font-black risk-high">CRITICAL</div>
+                            </div>
+                        </div>
+                        <p id="result-bio" class="mt-3 text-sm border-l-2 border-black pl-3 italic">
+                            No bio detected
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Verdict Box -->
+            <div class="bg-black text-white p-6 border-2 border-black relative overflow-hidden">
+                <div class="absolute top-0 right-0 p-2 opacity-20 text-6xl font-bold">⚠</div>
+                <h3 class="text-lg font-bold mb-3 flex items-center gap-2">
+                    <span class="text-red-500">►</span> EXECUTIVE_VERDICT
+                </h3>
+                <p id="verdict-text" class="text-lg leading-relaxed font-mono">
+                    Analysis pending...
+                </p>
+            </div>
+
+            <!-- Metrics Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div class="metric-card p-4">
+                    <div class="flex justify-between items-center mb-2 border-b-2 border-black pb-2">
+                        <h4 class="font-bold text-sm">SHILL_DETECTION</h4>
+                        <span id="metric-shill" class="font-bold risk-high">EXTREME</span>
+                    </div>
+                    <p id="desc-shill" class="text-xs leading-relaxed opacity-80">
+                        Detected coordinated token promotion without disclosure. Wallet analysis reveals accumulation 48h prior to shill threads.
                     </p>
                 </div>
 
-                <!-- Metric 2: Signal vs Noise -->
-                <div class="border-2 border-black p-4 bg-white">
-                    <div class="flex justify-between items-center mb-2 border-b border-black pb-2">
-                        <h4 class="font-bold">SIGNAL_TO_NOISE</h4>
-                        <span id="metric-signal-val" class="font-bold text-red-600">0.02</span>
+                <div class="metric-card p-4">
+                    <div class="flex justify-between items-center mb-2 border-b-2 border-black pb-2">
+                        <h4 class="font-bold text-sm">BOT_PROBABILITY</h4>
+                        <span id="metric-bot" class="font-bold risk-high">94%</span>
                     </div>
-                    <p id="metric-signal-desc" class="text-xs leading-relaxed">
-                        Excessive use of rocket emojis and "WAGMI" correlates negatively with actual development activity. No GitHub commits linked to promoted projects.
+                    <p id="desc-bot" class="text-xs leading-relaxed opacity-80">
+                        Engagement patterns match known bot farms. Repetitive comment structures and unnatural posting intervals detected.
                     </p>
                 </div>
 
-                <!-- Metric 3: Shill Factor -->
-                <div class="border-2 border-black p-4 bg-white">
-                    <div class="flex justify-between items-center mb-2 border-b border-black pb-2">
-                        <h4 class="font-bold">UNDISCLOSED_SHILL</h4>
-                        <span id="metric-shill-val" class="font-bold text-red-600">CRITICAL</span>
+                <div class="metric-card p-4">
+                    <div class="flex justify-between items-center mb-2 border-b-2 border-black pb-2">
+                        <h4 class="font-bold text-sm">RUG_PULL_RISK</h4>
+                        <span id="metric-rug" class="font-bold risk-high">IMMINENT</span>
                     </div>
-                    <p id="metric-shill-desc" class="text-xs leading-relaxed">
-                        Wallet analysis reveals accumulation of tokens 48 hours prior to "organic" shilling threads. Classic pump-and-dump behavioral archetype.
+                    <p id="desc-rug" class="text-xs leading-relaxed opacity-80">
+                        Associated with 3 previous projects that executed liquidity removal. Smart contract analysis shows minting functions enabled.
                     </p>
                 </div>
 
-                <!-- Metric 4: Community Impact -->
-                <div class="border-2 border-black p-4 bg-white">
-                    <div class="flex justify-between items-center mb-2 border-b border-black pb-2">
-                        <h4 class="font-bold">ECOSYSTEM_DRAIN</h4>
-                        <span id="metric-drain-val" class="font-bold text-red-600">HIGH</span>
+                <div class="metric-card p-4">
+                    <div class="flex justify-between items-center mb-2 border-b-2 border-black pb-2">
+                        <h4 class="font-bold text-sm">ENGAGEMENT_FARMING</h4>
+                        <span id="metric-farm" class="font-bold risk-high">CHRONIC</span>
                     </div>
-                    <p id="metric-drain-desc" class="text-xs leading-relaxed">
-                        Follower base consists primarily of purchased accounts (ID check: 6-digit IDs, default eggs). Engagement rate is artificially inflated.
+                    <p id="desc-farm" class="text-xs leading-relaxed opacity-80">
+                        Excessive use of engagement bait ("Drop your ENS", "GM"). Zero substantive technical discussion. Follower count artificially inflated.
                     </p>
                 </div>
             </div>
 
-            <!-- Raw Data Dump -->
-            <div class="border-2 border-dashed border-gray-400 p-4 bg-gray-50 opacity-70">
-                <h4 class="text-xs font-bold mb-2 text-gray-500">> RAW_DATA_STREAM (HEX)</h4>
-                <div class="font-mono text-[10px] break-all text-gray-600 leading-tight">
-                    7f454c4602010100000000000000000002003e000100000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+            <!-- Evidence Log -->
+            <div class="border-2 border-black p-4 bg-gray-50">
+                <h4 class="font-bold text-sm mb-3 border-b border-black pb-2">> EVIDENCE_LOG</h4>
+                <ul id="evidence-list" class="text-xs font-mono space-y-2">
+                    <!-- Evidence items -->
+                </ul>
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="flex flex-col sm:flex-row gap-4 justify-center pt-4 border-t-2 border-black">
+                <button onclick="resetAnalysis()" class="btn-primary px-8 py-3 font-bold brutal">
+                    SCAN_ANOTHER
+                </button>
+                <a 
+                    href="https://app.uniswap.org/#/swap?outputCurrency=0x39343b531DbAc7c797137C6e1088686995334b07&chain=ethereum" 
+                    target="_blank"
+                    class="btn-support px-8 py-3 font-bold brutal text-center"
+                >
+                    SUPPORT_WITH_ARTMOLT ↗
+                </a>
+            </div>
+
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="border-t-2 border-black p-4 mt-12 bg-white">
+        <div class="max-w-4xl mx-auto text-center text-xs opacity-60">
+            <p>DESTROYX PROTOCOL © 2024 | DECENTRALIZED TRUTH VERIFICATION</p>
+            <p class="mt-1">Contract: 0x39343b531DbAc7c797137C6e1088686995334b07</p>
+        </div>
+    </footer>
+
+    <script>
+        // Analysis Data Templates
+        const analysisTemplates = {
+            shill: [
+                "Detected coordinated token promotion without disclosure. Wallet analysis reveals accumulation 48h prior to shill threads.",
+                "Pattern matches 'soft rug' playbook: Hype → Dump → Delete tweets → Rebrand.",
+                "Promoted 12 'gem' tokens in 30 days. 11 are now down 90%+ from ATH.",
+                "Bio claims 'Not Financial Advice' but DM logs show paid promotion agreements."
+            ],
+            bot: [
+                "Engagement patterns match known bot farms. Repetitive comment structures detected.",
+                "Reply speed averaging 4.2 seconds. Humanly impossible without automation.",
+                "90% of interactions are with accounts created in the same 48-hour window.",
+                "Copy-paste brigade detected: Same phrases posted across 200+ threads simultaneously."
+            ],
+            rug: [
+                "Associated with 3 previous projects that executed liquidity removal.",
+                "Smart contract analysis shows minting functions still enabled by deployer.",
+                "Team wallets identified dumping tokens minutes after 'community updates'.",
+                "Liquidity pool history shows repeated 'testing' withdrawals of 50%+."
+            ],
+            farm: [
+                "Excessive use of engagement bait: 'Drop your ENS', 'Interact for WL'.",
+                "Zero substantive technical discussion in last 500 tweets.",
+                "Follower count inflated by 340% via purchased bot accounts (ID analysis).",
+                "Quote-tweets own posts with alt accounts to simulate viral interest."
+            ]
+        };
+
+        const verdicts = [
+            "Subject exhibits classic 'Influencer Exit Liquidity' behavior. Every 'alpha' shared is a carefully timed exit strategy for insider positions. Recommend immediate block to preserve portfolio integrity.",
+            "High-confidence bot farm operator. This entity exists solely to extract value from retail through manufactured FOMO. Engagement is inauthentic; community is rented. Avoid at all costs.",
+            "Serial rug pull participant. Historical on-chain data correlates wallet activity with 4 confirmed scams. Current 'project' shows identical tokenomics red flags. Consider this a public service announcement.",
+            "Engagement farmer with zero technical competence. Recycles 2021 bull run narratives for clout. Following this account for 'crypto advice' is statistically equivalent to burning capital.",
+            "Pump and dump coordinator. Timeline analysis shows precise correlation between 'organic' hype threads and massive sell walls. The 'community' is the product being sold."
+        ];
+
+        const logs = [
+            "Initializing connection to X API...",
+            "Bypassing rate limits... [OK]",
+            "Fetching tweet history (last 3200 posts)...",
+            "Analyzing linguistic patterns...",
+            "Cross-referencing wallet addresses...",
+            "Detecting bot network associations...",
+            "Scanning for deleted shill tweets...",
+            "Checking liquidity pool histories...",
+            "Calculating engagement authenticity...",
+            "Compiling forensic evidence...",
+            "Generating risk assessment...",
+            "FINALIZING DESTROY SEQUENCE..."
+        ];
+
+        function startAnalysis() {
+            const username = document.getElementById('usernameInput').value.trim();
+            const errorMsg = document.getElementById('error-msg');
+            
+            if (!username) {
+                errorMsg.classList.remove('hidden');
+                return;
+            }
+            
+            errorMsg.classList.add('hidden');
+            
+            // Hide input, show loading
+            document.getElementById('input-section').classList.add('hidden');
+            document.getElementById('analysis-phase').classList.remove('hidden');
+            document.getElementById('results-section').classList.add('hidden');
+            
+            // Start simulation
+            simulateAnalysis(username);
+        }
+
+        function simulateAnalysis(username) {
+            const terminal = document.getElementById('terminal-logs');
+            const progressFill = document.getElementById('progress-fill');
+            const progressText = document.getElementById('progress-text');
+            
+            terminal.innerHTML = '';
+            let progress = 0;
+            let logIndex = 0;
+            
+            const interval = setInterval(() => {
+                progress += Math.random() * 15;
+                if (progress > 100) progress = 100;
+                
+                progressFill.style.width = progress + '%';
+                progressText.textContent = Math.floor(progress) + '%';
+                
+                // Add logs
+                if (logIndex < logs.length && Math.random() > 0.3) {
+                    const log = document.createElement('div');
+                    log.textContent = `[${new Date().toLocaleTimeString()}] ${logs[logIndex]}`;
+                    log.className = 'opacity-80';
+                    terminal.appendChild(log);
+                    terminal.scrollTop = terminal.scrollHeight;
+                    logIndex++;
+                }
+                
+                if (progress >= 100) {
+                    clearInterval(interval);
+                    setTimeout(() => showResults(username), 500);
+                }
+            }, 200);
+        }
+
+        function showResults(username) {
+            document.getElementById('analysis-phase').classList.add('hidden');
+            document.getElementById('results-section').classList.remove('hidden');
+            
+            // Generate random but deterministic results based on username
+            const seed = username.split('').reduce((a,b) => a + b.charCodeAt(0), 0);
+            const random = (mod) => (seed * 9301 + 49297) % 233280 % mod;
+            
+            // Set profile info
+            document.getElementById('result-name').textContent = username.toUpperCase();
+            document.getElementById('result-handle').textContent = '@' + username;
+            document.getElementById('result-avatar').src = `https://unavatar.io/twitter/${username}`;
+            
+            // Randomize bio
+            const bios = [
+                "Web3 enthusiast | DeFi degen | Not financial advice",
+                "Crypto investor since 2017. DM for collabs.",
+                "Building the future of finance. 🚀",
+                "Alpha caller. Gem hunter. 100x or bust.",
+                "Founder @SomeRandomToken. Previously @FailedProject"
+            ];
+            document.getElementById('result-bio').textContent = '"' + bios[random(bios.length)] + '"';
+            
+            // Randomize metrics
+            const shillLevel = ['HIGH', 'EXTREME', 'CHRONIC', 'TERMINAL'][random(4)];
+            const botPct = 70 + random(30);
+            const rugStatus = ['ELEVATED', 'IMMINENT', 'CONFIRMED', 'ACTIVE'][random(4)];
+            const farmStatus = ['MODERATE', 'HIGH', 'CHRONIC', 'SEVERE'][random(4)];
+            
+            document.getElementById('metric-shill').textContent = shillLevel;
+            document.getElementById('metric-bot').textContent = botPct + '%';
+            document.getElementById('metric-rug').textContent = rugStatus;
+            document.getElementById('metric-farm').textContent = farmStatus;
+            
+            // Set descriptions
+            document.getElementById('desc-shill').textContent = analysisTemplates.shill[random(analysisTemplates.shill.length)];
+            document.getElementById('desc-bot').textContent = analysisTemplates.bot[random(analysisTemplates.bot.length)];
+            document.getElementById('desc-rug').textContent = analysisTemplates.rug[random(analysisTemplates.rug.length)];
+            document.getElementById('desc-farm').textContent = analysisTemplates.farm[random(analysisTemplates.farm.length)];
+            
+            // Set verdict
+            document.getElementById('verdict-text').textContent = verdicts[random(verdicts.length)];
+            
+            // Set risk score color
+            const riskScore = document.getElementById('risk-score');
+            const riskLevel = random(100);
+            if (riskLevel > 80) {
+                riskScore.textContent = 'CRITICAL';
+                riskScore.className = 'text-3xl font-black risk-high';
+            } else if (riskLevel > 50) {
+                riskScore.textContent = 'HIGH';
+                riskScore.className = 'text-3xl font-black risk-med';
+            } else {
+                riskScore.textContent = 'ELEVATED';
+                riskScore.className = 'text-3xl font-black risk-med';
+            }
+            
+            // Generate evidence
+            const evidenceList = document.getElementById('evidence-list');
+            evidenceList.innerHTML = '';
+            const evidences = [
+                `Tweet ${random(999999)}: Promoted $RANDOM token 2 days before deployer wallet dumped 40% supply`,
+                `Follower analysis: ${botPct}% identified as purchased accounts (created in batch, zero tweets)`,
+                `On-chain: Wallet 0x${random(9999)}...${random(9999)} received 2.4 ETH from project deployer pre-shill`,
+                `Deleted tweet recovery: "Guys this is going to 100x minimum" (posted at local top)`,
+                `Engagement pattern: Automated replies detected within 3 seconds of posting 89% of the time`,
+                `Historical: Associated with ${random(5)} previous projects that rugged within 30 days of launch`
+            ];
+            
+            evidences.forEach(ev => {
+                const li = document.createElement('li');
+                li.textContent = '> ' + ev;
+                li.className = 'border-l-2 border-gray-400 pl-2';
+                evidenceList.appendChild(li);
+            });
+            
+            // Scroll to results
+            document.getElementById('results-section').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function resetAnalysis() {
+            document.getElementById('results-section').classList.add('hidden');
+            document.getElementById('input-section').classList.remove('hidden');
+            document.getElementById('usernameInput').value = '';
+            document.getElementById('usernameInput').focus();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // Initialize
+        document.getElementById('usernameInput').focus();
+    </script>
+
+</body>
+</html>
