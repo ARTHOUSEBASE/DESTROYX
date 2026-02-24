@@ -59,6 +59,19 @@
             animation: pulse 2s infinite;
         }
 
+        .btn-share {
+            background: #000000;
+            color: white;
+            border: 2px solid black;
+            box-shadow: 4px 4px 0px 0px rgba(0,0,0,0.3);
+        }
+
+        .btn-share:hover {
+            background: #1DA1F2;
+            color: white;
+            border-color: #1DA1F2;
+        }
+
         @keyframes pulse {
             0%, 100% { transform: scale(1); }
             50% { transform: scale(1.02); }
@@ -165,6 +178,15 @@
             z-index: -1;
         }
 
+        .metric-card.featured {
+            border: 3px solid #ff0000;
+            background: #fff5f5;
+        }
+
+        .metric-card.featured::before {
+            background: #ff0000;
+        }
+
         .risk-high { color: #ff0000; }
         .risk-med { color: #ff8800; }
         .risk-low { color: #00aa00; }
@@ -195,20 +217,13 @@
             font-weight: bold;
         }
 
-        .interaction-item {
-            border: 2px solid black;
-            padding: 12px;
-            margin-bottom: 8px;
-            background: white;
-            position: relative;
-        }
-
-        .interaction-item.negative {
+        .critique-box.featured {
+            border-left: 4px solid #ff0000;
             background: #fff5f5;
         }
 
-        .interaction-item.neutral {
-            background: #fffff5;
+        .critique-box.featured::before {
+            background: #ff0000;
         }
 
         .badge {
@@ -222,7 +237,19 @@
 
         .badge-red { background: #ff0000; color: white; }
         .badge-orange { background: #ff8800; color: black; }
-        .badge-gray { background: #cccccc; color: black; }
+        .badge-purple { background: #8800ff; color: white; }
+        .badge-black { background: #000000; color: white; }
+
+        .share-preview {
+            background: #f8f8f8;
+            border: 2px dashed #cccccc;
+            padding: 16px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 12px;
+            line-height: 1.6;
+            white-space: pre-wrap;
+            word-break: break-word;
+        }
 
         ::-webkit-scrollbar {
             width: 10px;
@@ -235,9 +262,17 @@
             background: black;
         }
 
-        .strike-through {
-            text-decoration: line-through;
-            text-decoration-thickness: 2px;
+        .countdown {
+            font-size: 48px;
+            font-weight: 800;
+            text-align: center;
+            color: #ff0000;
+            animation: blink 1s infinite;
+        }
+
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.3; }
         }
 
         @media (max-width: 768px) {
@@ -253,11 +288,11 @@
             <div class="flex items-center gap-3">
                 <div class="w-3 h-3 bg-black animate-pulse"></div>
                 <h1 class="text-2xl md:text-4xl font-bold glitch" data-text="DESTROYX">DESTROYX</h1>
-                <span class="text-xs border border-black px-1 hidden sm:inline">ACCOUNT_AUTOPSY_V4.0</span>
+                <span class="text-xs border border-black px-1 hidden sm:inline">AUTOPSY_V5.0</span>
             </div>
             <div class="text-xs text-right hidden md:block">
                 <div>SYS: <span class="text-green-600 font-bold">ONLINE</span></div>
-                <div class="opacity-50">MODE: HARSH_TRUTH</div>
+                <div class="opacity-50">MODE: MAXIMUM_OVERDRIVE</div>
             </div>
         </div>
     </header>
@@ -267,9 +302,10 @@
         <!-- Input -->
         <section id="input-section" class="mb-12">
             <div class="text-center mb-8">
-                <h2 class="text-lg md:text-xl font-bold mb-2 uppercase tracking-widest">Account Autopsy</h2>
+                <h2 class="text-lg md:text-xl font-bold mb-2 uppercase tracking-widest">Public Execution</h2>
                 <p class="text-sm opacity-70 max-w-lg mx-auto">
-                    Brutal critique of X accounts. No simulations. Pure pattern recognition and behavioral analysis.
+                    12-point forensic analysis. Brutal honesty. Shareable destruction. 
+                    <span class="text-red-600 font-bold">Warning: May cause ego death.</span>
                 </p>
             </div>
 
@@ -280,7 +316,7 @@
                         <input 
                             type="text" 
                             id="usernameInput" 
-                            placeholder="elonmusk" 
+                            placeholder="vitalikbuterin" 
                             class="w-full pl-8 pr-4 py-3 border-2 border-black font-bold uppercase focus:outline-none focus:shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] transition-all"
                             onkeypress="if(event.key==='Enter') startAnalysis()"
                         >
@@ -289,22 +325,22 @@
                         onclick="startAnalysis()" 
                         class="btn-primary px-6 py-3 font-bold brutal whitespace-nowrap"
                     >
-                        AUTOPSY
+                        EXECUTE
                     </button>
                 </div>
-                <p id="error-msg" class="text-red-600 text-xs font-bold hidden text-center">[ERROR] SUBJECT REQUIRED</p>
+                <p id="error-msg" class="text-red-600 text-xs font-bold hidden text-center">[ERROR] VICTIM REQUIRED</p>
             </div>
 
             <!-- Support -->
             <div class="mt-8 text-center">
                 <div class="inline-block border-2 border-black p-4 bg-gray-50">
-                    <p class="text-xs font-bold mb-2 uppercase">Fund The Destruction</p>
+                    <p class="text-xs font-bold mb-2 uppercase">Fuel The Machine</p>
                     <a 
                         href="https://app.uniswap.org/#/swap?outputCurrency=0x78305eF4299edb868d5fc0bb13B4AAa71cc63ba3&chain=ethereum" 
                         target="_blank"
                         class="btn-support inline-block px-6 py-3 font-bold brutal text-sm"
                     >
-                        BUY TOKEN ↗
+                        BUY $DESTROY ↗
                     </a>
                     <p class="text-[10px] mt-2 font-mono opacity-60 break-all">
                         0x78305eF4299edb868d5fc0bb13B4AAa71cc63ba3
@@ -318,7 +354,7 @@
             <div class="terminal p-4 mb-4">
                 <div class="scan-line"></div>
                 <div class="flex justify-between mb-2 border-b-2 border-black pb-2">
-                    <span class="font-bold text-sm">> PERFORMING_AUTOPSY</span>
+                    <span class="font-bold text-sm">> PERFORMING_PUBLIC_EXECUTION</span>
                     <span id="progress-text" class="font-bold">0%</span>
                 </div>
                 <div id="terminal-logs" class="h-48 overflow-y-auto text-xs font-mono space-y-1"></div>
@@ -334,8 +370,11 @@
             <!-- Identity Header -->
             <div class="border-2 border-black bg-white brutal">
                 <div class="flex flex-col md:flex-row">
-                    <div class="w-full md:w-32 h-32 bg-gray-200 border-b-2 md:border-b-0 md:border-r-2 border-black flex items-center justify-center overflow-hidden">
+                    <div class="w-full md:w-32 h-32 bg-gray-200 border-b-2 md:border-b-0 md:border-r-2 border-black flex items-center justify-center overflow-hidden relative">
                         <img id="result-avatar" src="" alt="Profile" class="w-full h-full object-cover grayscale">
+                        <div class="absolute bottom-0 left-0 right-0 bg-black text-white text-[10px] text-center py-1">
+                            EVIDENCE #1
+                        </div>
                     </div>
                     <div class="p-4 flex-grow">
                         <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
@@ -344,8 +383,8 @@
                                 <p id="result-handle" class="text-sm opacity-60 font-mono">@unknown</p>
                             </div>
                             <div class="text-right">
-                                <div class="text-xs uppercase font-bold mb-1">Worth</div>
-                                <div id="worth-score" class="text-3xl font-black risk-high">WORTHLESS</div>
+                                <div class="text-xs uppercase font-bold mb-1">Social Value</div>
+                                <div id="worth-score" class="text-3xl font-black risk-high">NEGATIVE</div>
                             </div>
                         </div>
                         <p id="result-bio" class="mt-3 text-sm border-l-2 border-black pl-3 italic opacity-70">
@@ -355,10 +394,18 @@
                 </div>
             </div>
 
+            <!-- Share Button Top -->
+            <div class="text-center">
+                <button onclick="openShareModal()" class="btn-share px-8 py-4 font-bold brutal text-lg w-full md:w-auto">
+                    📢 SHARE EXECUTION TO X
+                </button>
+                <p class="text-xs mt-2 opacity-60">Let them know they were destroyed</p>
+            </div>
+
             <!-- THE VERDICT -->
             <div class="bg-black text-white p-6 border-2 border-black">
                 <h3 class="text-lg font-bold mb-4 flex items-center gap-2">
-                    <span class="text-red-500 text-2xl">⚡</span> EXECUTIVE_SUMMARY
+                    <span class="text-red-500 text-2xl">⚡</span> DEATH_SENTENCE
                 </h3>
                 <p id="verdict-text" class="text-xl leading-relaxed font-mono mb-4">
                     Subject under examination...
@@ -366,75 +413,133 @@
                 <div id="verdict-tags" class="flex flex-wrap gap-2"></div>
             </div>
 
-            <!-- CRITIQUE SECTIONS -->
+            <!-- 12 CRITIQUE SECTIONS -->
 
-            <!-- 1. Identity & Branding Critique -->
+            <!-- 1. Identity Crisis -->
+            <div class="metric-card featured p-6">
+                <h3 class="font-bold text-lg mb-4 border-b-2 border-red-600 pb-2 text-red-600 flex justify-between">
+                    <span>01. IDENTITY_DYSPHORIA</span>
+                    <span class="text-xs bg-red-600 text-white px-2 py-1">CRITICAL</span>
+                </h3>
+                <div id="critique-identity" class="space-y-3"></div>
+            </div>
+
+            <!-- 2. Content Vomit -->
             <div class="metric-card p-6">
                 <h3 class="font-bold text-lg mb-4 border-b-2 border-black pb-2">
-                    01. IDENTITY & SELF-PERCEPTION
+                    02. CONTENT_VOMIT_PROTOCOL
                 </h3>
-                <div id="critique-identity" class="space-y-3">
-                    <!-- Dynamic content -->
-                </div>
+                <div id="critique-content" class="space-y-3"></div>
             </div>
 
-            <!-- 2. Content & Voice Critique -->
+            <!-- 3. Engagement Prostitution -->
             <div class="metric-card p-6">
                 <h3 class="font-bold text-lg mb-4 border-b-2 border-black pb-2">
-                    02. CONTENT_ARCHITECTURE
+                    03. ENGAGEMENT_PROSTITUTION
                 </h3>
-                <div id="critique-content" class="space-y-3">
-                    <!-- Dynamic content -->
-                </div>
+                <div id="critique-engagement" class="space-y-3"></div>
             </div>
 
-            <!-- 3. Interaction Patterns -->
+            <!-- 4. Reply Guy Pathology -->
             <div class="metric-card p-6">
                 <h3 class="font-bold text-lg mb-4 border-b-2 border-black pb-2">
-                    03. SOCIAL_BEHAVIOR & INTERACTION_PATTERNS
+                    04. REPLY_GUY_PATHOLOGY
                 </h3>
-                <div id="critique-interaction" class="space-y-3">
-                    <!-- Dynamic content -->
-                </div>
+                <div id="critique-reply" class="space-y-3"></div>
             </div>
 
-            <!-- 4. Follower & Network Analysis -->
+            <!-- 5. Network Mirage -->
             <div class="metric-card p-6">
                 <h3 class="font-bold text-lg mb-4 border-b-2 border-black pb-2">
-                    04. NETWORK_INTEGRITY & INFLUENCE_METRICS
+                    05. NETWORK_MIRAGE
                 </h3>
-                <div id="critique-network" class="space-y-3">
-                    <!-- Dynamic content -->
-                </div>
+                <div id="critique-network" class="space-y-3"></div>
             </div>
 
-            <!-- 5. Behavioral Red Flags -->
-            <div class="metric-card p-6 border-red-600">
-                <h3 class="font-bold text-lg mb-4 border-b-2 border-red-600 pb-2 text-red-600">
-                    05. PATHOLOGICAL_BEHAVIORS_DETECTED
+            <!-- 6. Temporal Delusion -->
+            <div class="metric-card p-6">
+                <h3 class="font-bold text-lg mb-4 border-b-2 border-black pb-2">
+                    06. TEMPORAL_DELUSION
+                    <span class="text-xs font-normal opacity-60 ml-2">(Time Wasted Analysis)</span>
                 </h3>
-                <div id="critique-pathology" class="space-y-3">
-                    <!-- Dynamic content -->
-                </div>
+                <div id="critique-time" class="space-y-3"></div>
             </div>
 
-            <!-- Raw Evidence -->
+            <!-- 7. Vocabulary Poverty -->
+            <div class="metric-card p-6">
+                <h3 class="font-bold text-lg mb-4 border-b-2 border-black pb-2">
+                    07. VOCABULARY_IMPOVERISHMENT
+                </h3>
+                <div id="critique-vocab" class="space-y-3"></div>
+            </div>
+
+            <!-- 8. Authenticity Deficit -->
+            <div class="metric-card p-6">
+                <h3 class="font-bold text-lg mb-4 border-b-2 border-black pb-2">
+                    08. AUTHENTICITY_BANKRUPTCY
+                </h3>
+                <div id="critique-authentic" class="space-y-3"></div>
+            </div>
+
+            <!-- 9. Attention Economics -->
+            <div class="metric-card p-6">
+                <h3 class="font-bold text-lg mb-4 border-b-2 border-black pb-2">
+                    09. ATTENTION_EXTRACTION_ECONOMICS
+                </h3>
+                <div id="critique-economics" class="space-y-3"></div>
+            </div>
+
+            <!-- 10. Meme Comprehension -->
+            <div class="metric-card p-6">
+                <h3 class="font-bold text-lg mb-4 border-b-2 border-black pb-2">
+                    10. MEME_LITERACY_FAILURE
+                </h3>
+                <div id="critique-meme" class="space-y-3"></div>
+            </div>
+
+            <!-- 11. Platform Stockholm -->
+            <div class="metric-card p-6">
+                <h3 class="font-bold text-lg mb-4 border-b-2 border-black pb-2">
+                    11. PLATFORM_STOCKHOLM_SYNDROME
+                </h3>
+                <div id="critique-stockholm" class="space-y-3"></div>
+            </div>
+
+            <!-- 12. Existential Summary -->
+            <div class="metric-card featured p-6">
+                <h3 class="font-bold text-lg mb-4 border-b-2 border-red-600 pb-2 text-red-600 flex justify-between">
+                    <span>12. EXISTENTIAL_VOID_SUMMARY</span>
+                    <span class="text-xs bg-red-600 text-white px-2 py-1">TERMINAL</span>
+                </h3>
+                <div id="critique-existential" class="space-y-3"></div>
+            </div>
+
+            <!-- Evidence Log -->
             <div class="border-2 border-black p-4 bg-gray-100">
-                <h4 class="font-bold text-sm mb-3 border-b-2 border-black pb-2">> FORENSIC_EVIDENCE_LOG</h4>
+                <h4 class="font-bold text-sm mb-3 border-b-2 border-black pb-2">> FORENSIC_EVIDENCE_LOG (12 COUNTS)</h4>
                 <ul id="evidence-list" class="text-xs font-mono space-y-2"></ul>
+            </div>
+
+            <!-- Share Section Bottom -->
+            <div class="border-2 border-black p-6 bg-black text-white text-center">
+                <h3 class="font-bold text-xl mb-4">THE DAMAGE IS DONE</h3>
+                <p class="text-sm mb-4 opacity-80">Share this destruction. Tag the victim. Let them know.</p>
+                <button onclick="openShareModal()" class="btn-share px-8 py-4 font-bold brutal text-lg bg-white text-black hover:bg-[#1DA1F2] hover:text-white hover:border-[#1DA1F2]">
+                    🚀 POST TO X / TWITTER
+                </button>
             </div>
 
             <!-- Actions -->
             <div class="flex flex-col sm:flex-row gap-4 justify-center pt-4 border-t-2 border-black">
                 <button onclick="resetAnalysis()" class="btn-primary px-8 py-3 font-bold brutal">
-                    AUTOPSY_ANOTHER
+                    DESTROY_ANOTHER
                 </button>
                 <a 
                     href="https://app.uniswap.org/#/swap?outputCurrency=0x78305eF4299edb868d5fc0bb13B4AAa71cc63ba3&chain=ethereum" 
                     target="_blank"
                     class="btn-support px-8 py-3 font-bold brutal text-center"
                 >
-                    SUPPORT_DESTRUCTION ↗
+                    FUEL_THE_DESTROYER ↗
                 </a>
             </div>
 
@@ -442,146 +547,167 @@
 
     </main>
 
+    <!-- Share Modal -->
+    <div id="share-modal" class="hidden fixed inset-0 bg-black bg-opacity-90 z-50 flex items-center justify-center p-4">
+        <div class="bg-white border-2 border-black max-w-lg w-full p-6 brutal relative" style="box-shadow: 8px 8px 0px 0px rgba(255,0,0,1);">
+            <button onclick="closeShareModal()" class="absolute top-2 right-2 w-8 h-8 border-2 border-black flex items-center justify-center font-bold hover:bg-red-600 hover:text-white">×</button>
+            
+            <h3 class="font-bold text-xl mb-4 border-b-2 border-black pb-2">PREPARE PUBLIC HUMILIATION</h3>
+            
+            <div class="mb-4">
+                <label class="text-xs font-bold block mb-2">EXECUTION TEXT (Editable):</label>
+                <textarea id="share-text" class="w-full h-48 border-2 border-black p-3 font-mono text-xs resize-none focus:outline-none" style="font-family: 'JetBrains Mono', monospace;"></textarea>
+            </div>
+            
+            <div class="flex gap-2 mb-4">
+                <button onclick="copyToClipboard()" class="flex-1 border-2 border-black py-2 font-bold text-xs hover:bg-gray-100">
+                    COPY TEXT
+                </button>
+                <button onclick="shareToX()" class="flex-1 bg-black text-white border-2 border-black py-2 font-bold text-xs hover:bg-[#1DA1F2] hover:border-[#1DA1F2]">
+                    POST TO X →
+                </button>
+            </div>
+            
+            <p class="text-[10px] opacity-60 text-center">
+                Generated by DESTROYX | 0x78305eF4299edb868d5fc0bb13B4AAa71cc63ba3
+            </p>
+        </div>
+    </div>
+
     <footer class="border-t-2 border-black p-4 mt-12 bg-white">
         <div class="max-w-4xl mx-auto text-center text-xs opacity-60">
-            <p>DESTROYX ACCOUNT AUTOPSY © 2024</p>
-            <p class="mt-1">0x78305eF4299edb868d5fc0bb13B4AAa71cc63ba3</p>
+            <p>DESTROYX PUBLIC EXECUTION SYSTEM © 2024</p>
+            <p class="mt-1">Contract: 0x78305eF4299edb868d5fc0bb13B4AAa71cc63ba3</p>
+            <p class="mt-2 text-[10px]">Not responsible for damaged egos, blocked accounts, or viral humiliation.</p>
         </div>
     </footer>
 
     <script>
+        let currentShareText = '';
+        let currentUsername = '';
+
         const critiqueDatabase = {
-            identity: {
-                handlePatterns: [
-                    { pattern: /\d{4,}$/, critique: "Numeric suffix suggests bot farm origin or identity crisis. Original handle likely suspended." },
-                    { pattern: /^[a-z]+_[a-z]+_\d+$/i, critique: "Underscore_separator_with_numbers format screams 'I wanted @coolname but it was taken in 2009'." },
-                    { pattern: /(official|real|verified)/i, critique: "Protesting too much. If you have to say you're 'real', you're compensating for something." },
-                    { pattern: /(crypto|btc|eth|sol|nft|defi|web3|alpha|gem|100x)/i, critique: "Username is a billboard for financial desperation. Every tweet is a sales pitch you didn't ask for." },
-                    { pattern: /^[a-z]{4,6}$/i, critique: "Four-letter handle? Either early adopter with nothing left to say, or purchased account with stolen clout." }
-                ],
-                bioPatterns: [
-                    { pattern: /(not financial advice|nfa|dyor)/i, critique: "Legal disclaimer in bio = preparing for the lawsuit. Acknowledges they're giving terrible advice." },
-                    { pattern: /(opinions are my own|views my own)/i, critique: "Corporate drone or wannabe influencer terrified of employer discovery. Zero original thought permitted." },
-                    { pattern: /(entrepreneur|founder|ceo|investor)/i, critique: "Unemployed with extra steps. 'Founder' of nothing with no revenue." },
-                    { pattern: /(🚀|💎|🌙|🔥)/, critique: "Emoji bio detected. Communication level: toddler. Substitutes symbols for substance." },
-                    { pattern: /(link in bio|check link|bio for)/i, critique: "Every interaction is transactional. You're not a person to them, you're a conversion metric." }
-                ]
-            },
+            identity: [
+                "Username screams 'I wanted the cool handle but settled in 2014'. Digital participation trophy.",
+                "Numeric suffix detected: Either bot farm survivor or identity so common you needed digits to differentiate. Neither is flattering.",
+                "Handle length analysis: 4-6 characters suggests early adopter with nothing left to say, or purchased clout. Both pathetic.",
+                "Underscore abuse: Using '_' as spaces indicates aesthetic bankruptcy. Design sense: terminated.",
+                "Protest too much: 'Real', 'Official', 'Verified' in handle means neither real, official, nor verified. Compensating hard.",
+                "Crypto billboard: Handle contains token symbols. Personality = portfolio. Existence = exit liquidity."
+            ],
             
-            content: {
-                archetypes: [
-                    {
-                        name: "Engagement Farmer",
-                        signs: ["gm", "wagmi", "drop your", "interact for", "first"],
-                        critique: "Content strategy: beg for attention. Zero value creation, maximum extraction. The digital equivalent of a panhandler."
-                    },
-                    {
-                        name: "Threadboi",
-                        signs: ["thread", "🧵", "1/", "read this"],
-                        critique: "Takes 15 tweets to say what fits in 2. Confuses length with insight. Each thread is a desperate attempt to game the algorithm."
-                    },
-                    {
-                        name: "Reply Guy",
-                        signs: [],
-                        behavior: "high_reply_ratio",
-                        critique: "Cannot create, only respond. Parasitic existence attaching to viral tweets for visibility. Original thought: none detected."
-                    },
-                    {
-                        name: "Crypto Shaman",
-                        signs: ["alpha", "gem", "next 100x", "accumulating", "diamond hands"],
-                        critique: "Financial advice from someone who bought the 2021 top. Every 'alpha' is exit liquidity for their bags."
-                    },
-                    {
-                        name: "Motivational Parasite",
-                        signs: ["grind", "hustle", "mindset", "sigma", "wake up"],
-                        critique: "Repackages toxic productivity as wisdom. Hasn't slept in 3 years, calls it discipline. Selling burnout as a lifestyle."
-                    }
-                ]
-            },
+            content: [
+                "Content archetype: Threadboi. Takes 20 tweets to say 2 sentences. Confuses length with insight. Each thread is algorithmic desperation.",
+                "Engagement farmer detected. 'GM', 'WAGMI', 'Drop your ETH' = digital panhandling. Zero value creation, maximum extraction.",
+                "Reply Guy Prime: Cannot create, only respond. Parasitic attachment to viral tweets for visibility. Original thought: not found.",
+                "Motivational parasite: Repackages burnout as 'grindset'. Hasn't slept in 2 years, calls it discipline. Selling destruction as lifestyle.",
+                "Crypto shaman: Every observation routed through token price. 'Coffee up 2% today' mentality. Financial nihilism disguised as alpha.",
+                "News aggregator cosplay: Retweets headlines with '👀'. Adds zero analysis. Thinks curation is creation. It's not."
+            ],
             
-            interaction: {
-                behaviors: [
-                    {
-                        type: "fast_reply",
-                        critique: "Reply velocity inhuman. Automated or obsessive. Either way, unhealthy relationship with screen."
-                    },
-                    {
-                        type: "copy_paste",
-                        critique: "Same comment posted across 50+ threads. Ctrl+C, Ctrl+V, Ctrl+Dignity."
-                    },
-                    {
-                        type: "tag_spam",
-                        critique: "Tags 10 accounts per tweet. Network built on notification harassment."
-                    },
-                    {
-                        type: "ratio_chaser",
-                        critique: "Deliberately controversial for engagement. Provokes to profit. Civil discourse: terminated."
-                    }
-                ]
-            },
+            engagement: [
+                "Engagement prostitution: Trading likes for likes, follows for follows. Relationships built on transaction, not connection.",
+                "Like-chasing behavior: Deletes tweets under 10 likes. Self-worth determined by algorithm. Dignity: surrendered.",
+                "Comment section infestation: 'First', 'Early', 'Let's go' = auditory pollution. Contribution: zero. Presence: unwelcome.",
+                "Tag spam network: Mentions 15 accounts per post. Friendships built on notification harassment. Social skills: malware.",
+                "Ratio anxiety: Checks engagement stats every 4 minutes. Validation addiction: clinical. Self-esteem: externalized."
+            ],
             
-            network: {
-                critiques: [
-                    "Follower/Following ratio suggests purchased audience. Real influence: minimal.",
-                    "Network analysis reveals circular amplification. Same 50 accounts boosting each other in infinite mediocrity loop.",
-                    "Zero meaningful conversations detected. All interactions are transactional: like-for-like, follow-for-follow.",
-                    "Influence score negative. Following this account statistically decreases timeline quality.",
-                    "Community health: TERMINAL. Followers are either bots or victims waiting to be rugged."
-                ]
-            },
+            reply: [
+                "Reply velocity: Inhuman. 47 seconds average response time. Either automated or obsessive. Both require intervention.",
+                "Copy-paste brigade: Same comment posted across 200 threads. Ctrl+C, Ctrl+V, Ctrl+Dignity. Creativity: zero.",
+                "Contrarian for clout: Disagrees with popular opinion deliberately. Provokes for profit. Civil discourse: terminated.",
+                "Reply guy hierarchy: Measures worth by 'top reply' status. Competes for attention under celebrity tweets. Dignity: absent.",
+                "Thread hijacker: Derails conversations to make it about them. Social awareness: zero. Main character syndrome: terminal."
+            ],
             
-            pathology: {
-                redFlags: [
-                    {
-                        flag: "Main Character Syndrome",
-                        evidence: "Believes every minor inconvenience deserves a thread. Life is not that interesting.",
-                        severity: "HIGH"
-                    },
-                    {
-                        flag: "Platform Stockholm Syndrome",
-                        evidence: "Complains about X daily, posts 47 times per day. Addicted to abuse.",
-                        severity: "CRITICAL"
-                    },
-                    {
-                        flag: "Reply Guy Pathology",
-                        evidence: "Cannot scroll past without commenting. Silence is unbearable. Validation required every 3 minutes.",
-                        severity: "HIGH"
-                    },
-                    {
-                        flag: "Crypto Brain Rot",
-                        evidence: "Every observation routed through token price. 'Coffee is up 2% today' mentality.",
-                        severity: "TERMINAL"
-                    },
-                    {
-                        flag: "Influencer Cosplay",
-                        evidence: "Acts like thought leader, thinks like affiliate marketer. Authority manufactured, not earned.",
-                        severity: "EXTREME"
-                    }
-                ]
-            }
+            network: [
+                "Follower mirage: 50,000 followers, 12 likes per tweet. Math doesn't lie. Audience: purchased. Influence: simulated.",
+                "Circular amplification pact: Same 50 accounts boost each other infinitely. Engagement: incestuous. Reach: illusion.",
+                "Bot follower analysis: 60-80% estimated non-human. Talking to an audience of mirrors and Russian click farms.",
+                "Influencer cosplay: Acts like thought leader, thinks like affiliate marketer. Authority: manufactured. Expertise: fabricated.",
+                "Network health: TERMINAL. Following this account statistically decreases timeline quality and IQ."
+            ],
+            
+            temporal: [
+                "Time audit: Estimated 6+ hours daily on platform. Productivity: destroyed. Life: on hold. For what? Digital scraps.",
+                "Posting velocity: 47 tweets/day. Quality threshold: never met. Quantity over quality: always. Impact: negative.",
+                "Doomscrolling patterns: Active 2AM-4AM. Sleep schedule: ruined. Mental health: compromised. For infinite scroll.",
+                "Archive analysis: 5 years, 50,000 tweets, zero achievements. Legacy: digital noise. Contribution: heat death.",
+                "Opportunity cost: Hours spent crafting tweets vs. building something real. Regret: pending. Denial: active."
+            ],
+            
+            vocabulary: [
+                "Vocabulary impoverishment: 200 unique words across 10,000 tweets. Communication range: toddler with WiFi.",
+                "Emoji substitution: Uses 🚀 instead of explaining value. Literacy level: hieroglyphics. Complexity: avoided.",
+                "Buzzword saturation: 'Synergy', 'Disruption', 'Web3', 'AI' = verbal confetti. Meaning: evacuated. Substance: none.",
+                "Abbreviation abuse: 'ngmi', 'wagmi', 'fud', 'hopium' = linguistic decay. Expressing complex emotions in 4 letters. Tragic.",
+                "Quote tweet commentary: 'This' + emoji = entire personality. Critical thinking: outsourced. Originality: extinct."
+            ],
+            
+            authenticity: [
+                "Authenticity bankruptcy: Voice changes based on trending topics. Chameleon with no base color. Self: undiscovered.",
+                "Personality rental: Adopts opinions based on engagement potential. Beliefs: transactional. Spine: absent.",
+                "Forced vulnerability: 'Opening up' about struggles for likes. Trauma: monetized. Connection: manufactured.",
+                "Brand safety obsession: Deletes controversial tweets. Courage: zero. Legacy: sanitized nothingness.",
+                "Influencer accent: Suddenly uses words like 'space' and 'ecosystem'. Natural speech: terminated. Performance: always on."
+            ],
+            
+            economics: [
+                "Attention extraction economy: You are the product being sold. Every interaction harvested for ad revenue. Dignity: collateral damage.",
+                "Platform sharecropping: Creates content for free, platform profits. Digital serfdom disguised as 'community'. Exploitation: normalized.",
+                "Influencer industrial complex: Selling courses on success they haven't achieved. Pyramid scheme of clout. Victims: hopeful.",
+                "Sponsorship desperation: Promotes products they'd never use. Integrity: negotiable. Price: surprisingly low.",
+                "Engagement farming ROI: 10,000 hours invested, $12.47 returned. Hustle culture: exposed. Math: devastating."
+            ],
+            
+            meme: [
+                "Meme comprehension: Dead on arrival. Explains jokes in replies. Humor: surgically removed. Fun: prohibited.",
+                "Format abuse: Uses 2020 meme templates in 2024. Cultural awareness: zero. Relevance: expired.",
+                "Reaction image dependency: Cannot express emotion without GIF. Emotional intelligence: outsourced to Giphy.",
+                "Meme misinterpretation: Takes satire literally. Context: lost. Irony: undetected. Intelligence: questioned.",
+                "Forced meme creation: 'How do you do, fellow kids' energy. Viral attempt #47: failed. Self-awareness: zero."
+            ],
+            
+            stockholm: [
+                "Platform Stockholm Syndrome: Complains about X daily, posts 47 times daily. Abuse: acknowledged. Leaving: impossible.",
+                "Algorithmic submission: Posts at 'optimal times' like digital livestock. Autonomy: surrendered. Schedule: dictated.",
+                "Verification anxiety: Blue checkmark as personality substitute. Status symbol: purchased. Importance: simulated.",
+                "Update rage cycle: Hates every platform change, adapts immediately. Resistance: performative. Compliance: absolute.",
+                "Digital sharecropping loyalty: Defends platform that exploits them. Stockholm: advanced. Escape plan: none."
+            ],
+            
+            existential: [
+                "Existential audit: 10 years, 100,000 posts, zero meaningful impact. Legacy: digital dust. Purpose: unfound.",
+                "Mortality denial: Believes tweets immortalize them. Reality: server costs. Permanence: illusion. Forgotten: inevitable.",
+                "Contribution analysis: Net subtractor from collective intelligence. Silence would be service. Noise: continues.",
+                "Digital epitaph: 'Here lies [username]. Posted a lot. Said nothing. Left no mark.' Obituary: optimized for SEO.",
+                "Final assessment: This account represents everything wrong with attention economy. Existence: justified only by cautionary tale value."
+            ]
         };
 
         const verdicts = [
-            "This account is a monument to digital emptiness. Every tweet is a cry for relevance in a void of actual achievement. Recommendation: Unfollow, block, forget.",
-            "Subject exhibits advanced parasitic behavior—extracting attention without contributing value. Network effect: negative. Existence: justified only by ad revenue to X Corp.",
-            "A case study in manufactured importance. Handle purchased, followers bought, opinions recycled. Originality: zero. Impact: detrimental to collective IQ.",
-            "The account that proves quantity is not quality. 50,000 tweets, zero thoughts worth reading. A cautionary tale in real-time.",
-            "Digital equivalent of a spam folder that learned to type. Every interaction is extraction, every post is promotion, every follower is a mark."
+            "AUTOPSY CONCLUSION: This account is a monument to digital futility. Every tweet a cry for relevance in a void of achievement. Recommendation: Unfollow, block, forget. Let the void consume itself.",
+            "FORENSIC FINDING: Advanced parasitic entity detected. Extracts attention without contributing value. Network effect: negative. Existence: justified only by ad revenue to platform. Human equivalent: popup ad.",
+            "PATHOLOGY REPORT: Manufactured importance with zero foundation. Handle purchased, followers bought, opinions recycled. Originality: extinct. Impact: detrimental to timeline quality. Avoid at all costs.",
+            "BEHAVIORAL ANALYSIS: Quantity without quality. 50,000 tweets, zero thoughts worth reading. The digital equivalent of a spam folder that learned to type. Legacy: cautionary tale.",
+            "FINAL DIAGNOSIS: Everything wrong with social media, concentrated. Extraction economy participant, authenticity bankrupt, attention addicted. Block for mental health preservation."
         ];
 
-        async function startAnalysis() {
+        function startAnalysis() {
             const username = document.getElementById('usernameInput').value.trim().replace('@', '');
             if (!username) {
                 document.getElementById('error-msg').classList.remove('hidden');
                 return;
             }
             
+            currentUsername = username;
             document.getElementById('error-msg').classList.add('hidden');
             document.getElementById('input-section').classList.add('hidden');
             document.getElementById('analysis-phase').classList.remove('hidden');
             document.getElementById('results-section').classList.add('hidden');
             
-            await performAutopsy(username);
+            performAutopsy(username);
         }
 
         async function performAutopsy(username) {
@@ -600,21 +726,28 @@
             };
 
             const steps = [
-                `Initializing autopsy protocol for @${username}...`,
-                "Fetching avatar metadata...",
-                "Analyzing handle linguistics...",
-                "Scanning bio for insecurity indicators...",
-                "Detecting content archetype...",
-                "Mapping interaction patterns...",
-                "Auditing network integrity...",
-                "Identifying pathological behaviors...",
-                "Compiling destruction report..."
+                `Initializing public execution for @${username}...`,
+                "Extracting avatar for evidence file...",
+                "Analyzing handle linguistics and insecurity markers...",
+                "Scanning bio for compensation indicators...",
+                "Detecting content archetype and mental pathology...",
+                "Mapping engagement prostitution patterns...",
+                "Auditing reply guy behavior and velocity...",
+                "Analyzing network mirage and bot percentage...",
+                "Calculating temporal waste and opportunity cost...",
+                "Scanning vocabulary impoverishment...",
+                "Testing authenticity bankruptcy levels...",
+                "Analyzing attention extraction economics...",
+                "Evaluating meme literacy failure...",
+                "Diagnosing platform Stockholm syndrome...",
+                "Compiling existential void summary...",
+                "Preparing shareable destruction report..."
             ];
 
             let progress = 0;
             
             for (let i = 0; i < steps.length; i++) {
-                await new Promise(r => setTimeout(r, 300));
+                await new Promise(r => setTimeout(r, 250));
                 addLog(steps[i]);
                 progress = ((i + 1) / steps.length) * 100;
                 progressFill.style.width = progress + '%';
@@ -637,25 +770,22 @@
             document.getElementById('result-handle').textContent = '@' + username;
             document.getElementById('result-avatar').src = `https://unavatar.io/twitter/${username}`;
             
-            // Generate bio based on patterns
+            // Generate bio
             const bioTemplates = [
-                "Web3 enthusiast | DYOR | Not financial advice | Building the future",
-                "Crypto investor since 2017. Alpha caller. Gem hunter.",
-                "Founder @SomethingWeb3 | Prev @FailedStartup | Forbes 30U30",
-                "GM ☀️ | Coffee addict ☕ | Building in public 📈",
-                "Professional reply guy. Thoughts my own. Link in bio."
+                "Web3 enthusiast | Building the future | DYOR",
+                "Crypto investor | Alpha caller | Not financial advice",
+                "Founder | Investor | Helping others win",
+                "GM ☀️ | Coffee addict | Building in public",
+                "Professional reply guy | Thoughts my own"
             ];
-            document.getElementById('result-bio').textContent = `"${bioTemplates[random(bioTemplates.length)]}"`;
-            
-            // Determine archetype
-            const archetypes = critiqueDatabase.content.archetypes;
-            const detectedArchetype = archetypes[random(archetypes.length)];
+            const bio = bioTemplates[random(bioTemplates.length)];
+            document.getElementById('result-bio').textContent = `"${bio}"`;
             
             // Worth Score
             const worthScore = document.getElementById('worth-score');
             const worthValue = random(100);
             if (worthValue > 80) {
-                worthScore.textContent = "PARASITE";
+                worthScore.textContent = "PARASITIC";
                 worthScore.className = "text-3xl font-black risk-high";
             } else if (worthValue > 50) {
                 worthScore.textContent = "WORTHLESS";
@@ -666,146 +796,133 @@
             }
             
             // Verdict
-            document.getElementById('verdict-text').textContent = verdicts[random(verdicts.length)];
+            const verdict = verdicts[random(verdicts.length)];
+            document.getElementById('verdict-text').textContent = verdict;
             
             // Tags
             const tags = document.getElementById('verdict-tags');
             tags.innerHTML = '';
-            const tagList = [detectedArchetype.name, "Attention Extractor", "Network Parasite", "Content Recycler"];
-            tagList.forEach(tag => {
+            const tagList = ["Attention Extractor", "Content Recycler", "Engagement Farmer", "Reply Guy Prime", "Network Parasite", "Authenticity Bankrupt"];
+            tagList.sort(() => 0.5 - random(1)).slice(0, 4).forEach(tag => {
                 const span = document.createElement('span');
                 span.className = "badge badge-red";
                 span.textContent = tag.toUpperCase();
                 tags.appendChild(span);
             });
             
-            // SECTION 1: Identity Critique
-            const idContainer = document.getElementById('critique-identity');
-            idContainer.innerHTML = '';
-            
-            // Check handle patterns
-            critiqueDatabase.identity.handlePatterns.forEach(({pattern, critique}) => {
-                if (pattern.test(username)) {
-                    idContainer.appendChild(createCritiqueBox(critique, "negative"));
-                }
-            });
-            
-            // Bio critique
-            const bio = document.getElementById('result-bio').textContent;
-            critiqueDatabase.identity.bioPatterns.forEach(({pattern, critique}) => {
-                if (pattern.test(bio)) {
-                    idContainer.appendChild(createCritiqueBox(critique, "negative"));
-                }
-            });
-            
-            // Default if no matches
-            if (idContainer.children.length === 0) {
-                idContainer.appendChild(createCritiqueBox(
-                    "Generic handle with no distinguishing features. Forgettable by design. Brand identity: absent.",
-                    "neutral"
-                ));
-            }
-            
-            // SECTION 2: Content Critique
-            const contentContainer = document.getElementById('critique-content');
-            contentContainer.innerHTML = '';
-            
-            contentContainer.appendChild(createCritiqueBox(
-                `Archetype detected: ${detectedArchetype.name}. ${detectedArchetype.critique}`,
-                "negative"
-            ));
-            
-            contentContainer.appendChild(createCritiqueBox(
-                `Content velocity: ${5 + random(20)} posts/day. Quality threshold: never met. Posting frequency inversely correlated with insight depth.`,
-                "negative"
-            ));
-            
-            // SECTION 3: Interaction Critique
-            const interactionContainer = document.getElementById('critique-interaction');
-            interactionContainer.innerHTML = '';
-            
-            const interactionCritiques = [
-                "Reply velocity: 47 seconds average. Inhuman response time suggests automation or obsessive refreshing.",
-                "Interaction pattern: 90% replies, 8% retweets, 2% original posts. Cannot create, only react.",
-                "Network behavior: Tags 12 accounts per post. Relationships built on notification harassment.",
-                "Engagement strategy: Deliberately contrarian on popular tweets. Provokes for profit. Civil discourse: none."
-            ];
-            
-            interactionCritiques.slice(0, 2 + random(2)).forEach(critique => {
-                interactionContainer.appendChild(createCritiqueBox(critique, "negative"));
-            });
-            
-            // SECTION 4: Network Critique
-            const networkContainer = document.getElementById('critique-network');
-            networkContainer.innerHTML = '';
-            
-            const followers = Math.floor(random(900000) + 10000);
-            const following = Math.floor(followers * (0.05 + random(0.3)));
-            const ratio = (followers / following).toFixed(1);
-            
-            networkContainer.appendChild(createCritiqueBox(
-                `Follower/Following ratio: ${ratio}:1. ${ratio > 10 ? 'Classic influencer asymmetry. Broadcasts but never listens.' : 'Desperate follow-back fishing. Network built on reciprocity, not respect.'}`,
-                "negative"
-            ));
-            
-            networkContainer.appendChild(createCritiqueBox(
-                `Network health analysis: ${Math.floor(random(40) + 30)}% mutual amplification detected. Same 50 accounts in circular visibility pact. Organic reach: simulated.`,
-                "negative"
-            ));
-            
-            networkContainer.appendChild(createCritiqueBox(
-                `Influence quality: ${Math.floor(random(100))}% bot followers estimated. Real humans: negligible. Talking to an audience of mirrors.`,
-                "negative"
-            ));
-            
-            // SECTION 5: Pathology
-            const pathologyContainer = document.getElementById('critique-pathology');
-            pathologyContainer.innerHTML = '';
-            
-            const pathologies = critiqueDatabase.pathology.redFlags;
-            const selectedPathologies = pathologies.sort(() => 0.5 - random(1)).slice(0, 2 + random(2));
-            
-            selectedPathologies.forEach(({flag, evidence, severity}) => {
-                const div = document.createElement('div');
-                div.className = "critique-box negative border-red-600";
-                div.innerHTML = `
-                    <div class="flex justify-between items-start mb-2">
-                        <span class="font-bold text-red-600">${flag}</span>
-                        <span class="badge badge-red text-[10px]">${severity}</span>
-                    </div>
-                    <p class="text-sm">${evidence}</p>
-                `;
-                pathologyContainer.appendChild(div);
-            });
+            // Populate all 12 critique sections
+            populateCritiqueSection('critique-identity', critiqueDatabase.identity, random, true);
+            populateCritiqueSection('critique-content', critiqueDatabase.content, random, false);
+            populateCritiqueSection('critique-engagement', critiqueDatabase.engagement, random, false);
+            populateCritiqueSection('critique-reply', critiqueDatabase.reply, random, false);
+            populateCritiqueSection('critique-network', critiqueDatabase.network, random, false);
+            populateCritiqueSection('critique-time', critiqueDatabase.temporal, random, false);
+            populateCritiqueSection('critique-vocab', critiqueDatabase.vocabulary, random, false);
+            populateCritiqueSection('critique-authentic', critiqueDatabase.authenticity, random, false);
+            populateCritiqueSection('critique-economics', critiqueDatabase.economics, random, false);
+            populateCritiqueSection('critique-meme', critiqueDatabase.meme, random, false);
+            populateCritiqueSection('critique-stockholm', critiqueDatabase.stockholm, random, false);
+            populateCritiqueSection('critique-existential', critiqueDatabase.existential, random, true);
             
             // Evidence Log
             const evidenceList = document.getElementById('evidence-list');
             evidenceList.innerHTML = '';
             const evidences = [
-                `Handle pattern: ${username} matches ${random(100) > 50 ? 'bot farm naming convention' : 'influencer wannabe archetype'}`,
-                `Bio analysis: ${random(3) + 2} insecurity indicators detected`,
-                `Content classification: ${detectedArchetype.name} with ${random(40) + 60}% confidence`,
-                `Interaction velocity: ${random(50) + 10} actions/hour (sustainable human rate: 5-10)`,
-                `Network circularity: ${random(30) + 20}% of engagement from mutual amplification pact`,
-                `Pathology screening: ${selectedPathologies.length} major disorders flagged`,
-                `Overall threat: Timeline contamination ${random(40) + 60}% probability`
+                `Identity markers: Handle pattern suggests ${random(100) > 50 ? 'bot farm survivor' : 'desperate early adopter'}`,
+                `Bio analysis: ${random(3) + 2} compensation mechanisms detected`,
+                `Content classification: ${['Threadboi', 'Reply Guy', 'Engagement Farmer', 'Crypto Shaman'][random(4)]} archetype confirmed`,
+                `Engagement velocity: ${random(50) + 20} actions/hour (sustainable rate: 5)`,
+                `Reply pattern: ${random(80) + 10}% replies vs ${random(20)}% original content`,
+                `Network health: ${random(40) + 30}% bot followers estimated`,
+                `Temporal audit: ${random(6) + 2} hours daily, ${(random(5) + 1) * 1000} hours total wasted`,
+                `Vocabulary: ${random(100) + 100} unique words across entire history`,
+                `Authenticity score: ${random(20)}% (calculated)`,
+                `Economic value extracted: $${random(50)}.47 vs ${(random(5) + 1) * 1000} hours invested`,
+                `Meme literacy: ${['Failed', 'Terrible', 'Non-existent', 'Cringe'][random(4)]}`,
+                `Platform dependency: ${random(40) + 60}% Stockholm syndrome indicators`
             ];
             
-            evidences.forEach(ev => {
+            evidences.forEach((ev, i) => {
                 const li = document.createElement('li');
-                li.textContent = '> ' + ev;
+                li.textContent = `${(i + 1).toString().padStart(2, '0')}. ${ev}`;
                 li.className = 'border-l-2 border-gray-400 pl-2';
                 evidenceList.appendChild(li);
             });
             
+            // Prepare share text
+            prepareShareText(username, verdict, bio);
+            
             document.getElementById('results-section').scrollIntoView({ behavior: 'smooth' });
         }
 
-        function createCritiqueBox(text, tone) {
-            const div = document.createElement('div');
-            div.className = `critique-box ${tone}`;
-            div.innerHTML = `<p class="text-sm leading-relaxed">${text}</p>`;
-            return div;
+        function populateCritiqueSection(id, critiques, random, featured) {
+            const container = document.getElementById(id);
+            container.innerHTML = '';
+            
+            // Select 2-3 random critiques
+            const selected = critiques.sort(() => 0.5 - random(1)).slice(0, 2 + random(2));
+            
+            selected.forEach(text => {
+                const div = document.createElement('div');
+                div.className = `critique-box ${featured ? 'featured' : ''}`;
+                div.innerHTML = `<p class="text-sm leading-relaxed">${text}</p>`;
+                container.appendChild(div);
+            });
+        }
+
+        function prepareShareText(username, verdict, bio) {
+            const seed = username.split('').reduce((a,b) => a + b.charCodeAt(0), 0);
+            const random = (mod) => Math.abs((Math.sin(seed) * 10000) % mod);
+            
+            const roasts = [
+                `Just got autopsied by DESTROYX and the diagnosis is devastating 💀`,
+                `My entire X existence got dismantled by a bot. The accuracy is illegal.`,
+                `They found 47 different ways I'm wasting my life on this app. Impressive.`,
+                `Public execution completed. Ego: destroyed. Timeline: contaminated.`
+            ];
+            
+            currentShareText = `🚨 AUTOPSY RESULTS: @${username} 🚨
+
+"${bio}"
+
+📊 VERDICT: ${verdict.substring(0, 100)}...
+
+🔴 12-POINT DESTRUCTION:
+• Identity: Compensating hard
+• Content: Algorithmic desperation  
+• Engagement: Digital panhandling
+• Network: 60% bot followers
+• Time wasted: ${(random(5) + 1) * 1000}+ hours
+• Vocabulary: 200 unique words
+
+${roasts[random(roasts.length)]}
+
+Get destroyed too 👇
+destroix.github.io
+
+@${username} #DESTROYX #AccountAutopsy`;
+        }
+
+        function openShareModal() {
+            document.getElementById('share-text').value = currentShareText;
+            document.getElementById('share-modal').classList.remove('hidden');
+        }
+
+        function closeShareModal() {
+            document.getElementById('share-modal').classList.add('hidden');
+        }
+
+        function copyToClipboard() {
+            const text = document.getElementById('share-text').value;
+            navigator.clipboard.writeText(text).then(() => {
+                alert('COPIED TO CLIPBOARD. PASTE AND DESTROY.');
+            });
+        }
+
+        function shareToX() {
+            const text = encodeURIComponent(document.getElementById('share-text').value);
+            const url = `https://twitter.com/intent/tweet?text=${text}`;
+            window.open(url, '_blank');
         }
 
         function resetAnalysis() {
@@ -813,8 +930,15 @@
             document.getElementById('input-section').classList.remove('hidden');
             document.getElementById('usernameInput').value = '';
             document.getElementById('usernameInput').focus();
+            currentShareText = '';
+            currentUsername = '';
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
+
+        // Close modal on outside click
+        document.getElementById('share-modal').addEventListener('click', (e) => {
+            if (e.target.id === 'share-modal') closeShareModal();
+        });
 
         document.getElementById('usernameInput').focus();
     </script>
